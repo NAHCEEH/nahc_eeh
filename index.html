@@ -1661,6 +1661,7 @@
                     </div>
 
                     <!-- 자녀 여부 -->
+                    
                     <div class="input-group">
                         <label class="input-label">자녀가 있으신가요? *</label>
                         <div class="radio-group">
@@ -1673,6 +1674,15 @@
                                 <span class="radio-label">아니오</span>
                             </label>
                         </div>
+                    </div>
+
+                    <!-- 자녀 정보 입력 (자녀가 있을 때만 표시) -->
+                    <div class="input-group" id="childrenInfoGroup" style="display: none;">
+                        <label class="input-label">자녀 정보</label>
+                        <div id="childrenInfoContainer">
+                            <!-- 자녀 정보가 여기에 동적으로 추가됩니다 -->
+                        </div>
+                        <button type="button" class="add-button" id="addChildBtn" style="margin-top: 10px;">자녀 추가</button>
                     </div>
 
                     <!-- 부모님 영양제 -->
@@ -1689,7 +1699,15 @@
                             </label>
                         </div>
                     </div>
-                </div>
+
+                    <!-- 부모님 정보 입력 (부모님 영양제를 찾을 때만 표시) -->
+                    <div class="input-group" id="parentsInfoGroup" style="display: none;">
+                        <label class="input-label">부모님 정보</label>
+                        <div id="parentsInfoContainer">
+                            <!-- 부모님 정보가 여기에 동적으로 추가됩니다 -->
+                        </div>
+                        <button type="button" class="add-button" id="addParentBtn" style="margin-top: 10px;">부모님 추가</button>
+                    </div>
 
                 <div class="form-navigation">
                     <button type="button" class="nav-button back" id="personalInfoBackBtn">이전</button>
