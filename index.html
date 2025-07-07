@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인 맞춤형 영양제 추천 챗봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app-container {
+            width: 375px;
+            height: 812px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all 0.5s ease;
+        }
+
+        .screen.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .screen.inactive {
+            opacity: 0;
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+
+        /* Intro Screen */
+        .intro-screen {
+            background: linear-gradient(135deg, #a8b5ff 0%, #8b9dc3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .intro-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><circle cx="100" cy="100" r="30" fill="rgba(255,255,255,0.1)"/><circle cx="300" cy="150" r="20" fill="rgba(255,255,255,0.1)"/><circle cx="200" cy="300" r="25" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+
+        .pill-icon {
+            width: 120px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            z-index: 1;
+        }
+
+        .pill-icon::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .intro-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .intro-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 50px;
+            line-height: 1.5;
+            z-index: 1;
+        }
+
+        .start-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+        }
+
+        /* Login Screen */
+        .login-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .app-logo {
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 20px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .app-logo::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .login-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .login-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .bottom-section {
+            margin-top: auto;
+            padding-top: 30px;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .guest-access {
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            color: #666;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .guest-access:hover {
+            background: #eeeeee;
+            border-color: #ccc;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 300px;
+            padding: 30px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .modal-message {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .modal-button.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal-button.secondary {
+            background: #f5f5f5;
+            color: #666;
+            border: 1px solid #e0e0e0;
+        }
+
+        .modal-button.secondary:hover {
+            background: #eeeeee;
+        }
+
+        /* Signup Screen */
+        .signup-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .signup-title {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .signup-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .input-row .input-group {
+            flex: 1;
+        }
+
+        .action-button {
+            padding: 16px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            height: fit-content;
+        }
+
+        .action-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .action-button.success {
+            border-color: #28a745;
+            color: #28a745;
+        }
+
+        .action-button.success:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .recommend-button {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border: none;
+            color: white;
+        }
+
+        .recommend-button:hover {
+            background: linear-gradient(135deg, #ff8a8e, #fdafdf);
+        }
+
+        .form-navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button.back {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+
+        .nav-button.back:hover {
+            background: #eeeeee;
+        }
+
+        .nav-button.create {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .nav-button.create:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button.create:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .required-notice {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .validation-message {
+            font-size: 12px;
+            margin-top: 5px;
+            padding: 5px 0;
+        }
+
+        .validation-message.success {
+            color: #28a745;
+        }
+
+        .validation-message.error {
+            color: #dc3545;
+        }
+
+        .nickname-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Personal Info Screen Styles */
+        .personal-info-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+            overflow-y: auto;
+        }
+
+        .personal-info-screen .signup-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .personal-info-content {
+            flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .personal-info-screen::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .personal-info-screen::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .personal-info-screen::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .personal-info-screen::-webkit-scrollbar-thumb:hover {
+            background: #5a6fd8;
+        }
+
+        .important-notice {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #f39c12;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            min-width: 300px;
+        }
+
+        .notice-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .notice-text {
+            font-size: 14px;
+            color: #856404;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.4;
+            white-space: nowrap;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .radio-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .radio-option input[type="radio"] {
+            margin: 0;
+            margin-right: 8px;
+            accent-color: #667eea;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .radio-option:has(input[type="radio"]:checked) {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-label {
+            font-size: 16px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        /* Health Concerns Screen Styles */
+        .health-concerns-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+            height: 100%;
+        }
+
+        .concerns-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            max-height: calc(100vh - 350px);
+            padding-right: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #f0f0f0;
+        }
+
+        .concerns-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .concerns-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .concerns-container::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .concerns-container::-webkit-scrollbar-thumb:hover {
+            background: #5a6fd8;
+        }
+
+        .scroll-indicator {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+            transition: all 0.3s ease;
+            opacity: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .concern-item {
+            margin-bottom: 12px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            gap: 12px;
+        }
+
+        .checkbox-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            margin: 0;
+            accent-color: #667eea;
+            transform: scale(1.2);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .checkbox-option input[type="checkbox"]:checked + .checkbox-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .checkbox-option:has(input[type="checkbox"]:checked) {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        /* Chatbot Settings Screen Styles */
+        .chatbot-settings-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+            overflow-y: auto;
+        }
+
+        .chatbot-settings-screen .signup-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chatbot-settings-content {
+            flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .chatbot-settings-screen::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-settings-screen::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .chatbot-settings-screen::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .chatbot-settings-screen::-webkit-scrollbar-thumb:hover {
+            background: #5a6fd8;
+        }
+
+        .tone-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .tone-option {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            gap: 12px;
+        }
+
+        .tone-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .tone-option input[type="radio"] {
+            margin: 0;
+            accent-color: #667eea;
+            transform: scale(1.2);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .tone-option input[type="radio"]:checked + .tone-label .tone-title {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .tone-option:has(input[type="radio"]:checked) {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .tone-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .tone-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .tone-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.3;
+        }
+
+        /* Current Supplements Screen Styles */
+        .current-supplements-screen {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 40px 40px;
+            overflow-y: auto;
+        }
+
+        .current-supplements-screen .signup-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .supplements-content {
+            flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .current-supplements-screen::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .current-supplements-screen::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .current-supplements-screen::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .current-supplements-screen::-webkit-scrollbar-thumb:hover {
+            background: #5a6fd8;
+        }
+
+        .supplements-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .supplement-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            gap: 8px;
+        }
+
+        .supplement-checkbox:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .supplement-checkbox input[type="checkbox"] {
+            margin: 0;
+            accent-color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .supplement-checkbox input[type="checkbox"]:checked + .supplement-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .supplement-checkbox:has(input[type="checkbox"]:checked) {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .supplement-label {
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            line-height: 1.2;
+        }
+
+        .custom-supplement {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .custom-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 15px;
+        }
+
+        .custom-input-container .input-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .add-button {
+            padding: 16px 20px;
+            border: 2px solid #28a745;
+            background: white;
+            color: #28a745;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            height: fit-content;
+        }
+
+        .add-button:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .custom-supplements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .custom-supplement-tag {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .remove-supplement {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-supplement:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Signup Complete Screen Styles */
+        .signup-complete-screen {
+            background: linear-gradient(135deg, #a8b5ff 0%, #8b9dc3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            text-align: center;
+        }
+
+        .signup-complete-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><circle cx="100" cy="100" r="30" fill="rgba(255,255,255,0.1)"/><circle cx="300" cy="150" r="20" fill="rgba(255,255,255,0.1)"/><circle cx="200" cy="300" r="25" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+
+        .complete-content {
+            z-index: 1;
+            position: relative;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .complete-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .complete-message {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .complete-summary {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-label {
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .complete-button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .complete-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .complete-button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Intro Screen -->
+        <div class="intro-screen screen active" id="introScreen">
+            <div class="pill-icon"></div>
+            <h1 class="intro-title">맞춤형 영양제 추천</h1>
+            <p class="intro-subtitle">
+                개인 생체 정보를 기반으로<br>
+                당신에게 맞는 영양제를 추천해드려요
+            </p>
+            <button class="start-button" id="startBtn">시작하기</button>
+        </div>
+
+        <!-- Login Screen -->
+        <div class="login-screen screen inactive" id="loginScreen">
+            <div class="login-header">
+                <div class="app-logo"></div>
+                <h2 class="login-title">로그인</h2>
+                <p class="login-subtitle">건강한 하루를 시작해보세요</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label class="input-label" for="userId">아이디</label>
+                    <input 
+                        type="text" 
+                        id="userId" 
+                        class="input-field" 
+                        placeholder="아이디를 입력해주세요"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="password">비밀번호</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="input-field" 
+                        placeholder="비밀번호를 입력해주세요"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-button">로그인</button>
+
+                <div class="bottom-section">
+                    <div class="signup-link">
+                        <a href="#" id="signupLink">회원가입</a>
+                    </div>
+
+                    <div class="guest-access" id="guestBtn">
+                        그냥 쓸래요
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Signup Screen -->
+        <div class="signup-screen screen inactive" id="signupScreen">
+            <div class="signup-header">
+                <div class="app-logo"></div>
+                <h2 class="signup-title">회원가입</h2>
+                <p class="signup-subtitle">개인 맞춤 영양제 추천을 위한 정보를 입력해주세요</p>
+            </div>
+
+            <form class="signup-form" id="signupForm">
+                <!-- 닉네임 -->
+                <div class="input-group" style="position: relative;">
+                    <label class="input-label" for="nickname">닉네임 *</label>
+                    <div class="input-row">
+                        <div class="input-group" style="margin-bottom: 0;">
+                            <input 
+                                type="text" 
+                                id="nickname" 
+                                class="input-field" 
+                                placeholder="닉네임을 입력해주세요"
+                                required
+                            >
+                            <div class="nickname-suggestions" id="nicknameSuggestions"></div>
+                        </div>
+                        <button type="button" class="action-button recommend-button" id="recommendBtn">추천</button>
+                        <button type="button" class="action-button" id="checkNicknameBtn">중복확인</button>
+                    </div>
+                    <div class="validation-message" id="nicknameValidation"></div>
+                </div>
+
+                <!-- 이름 -->
+                <div class="input-group">
+                    <label class="input-label" for="realName">이름 *</label>
+                    <input 
+                        type="text" 
+                        id="realName" 
+                        class="input-field" 
+                        placeholder="실명을 입력해주세요"
+                        required
+                    >
+                </div>
+
+                <!-- 아이디 -->
+                <div class="input-group">
+                    <label class="input-label" for="signupUserId">아이디 *</label>
+                    <input 
+                        type="text" 
+                        id="signupUserId" 
+                        class="input-field" 
+                        placeholder="아이디를 입력해주세요"
+                        required
+                    >
+                    <div class="validation-message" id="userIdValidation"></div>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="input-group">
+                    <label class="input-label" for="signupPassword">비밀번호 *</label>
+                    <input 
+                        type="password" 
+                        id="signupPassword" 
+                        class="input-field" 
+                        placeholder="비밀번호를 입력해주세요"
+                        required
+                    >
+                    <div class="validation-message" id="passwordValidation"></div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="nav-button back" id="backBtn">이전</button>
+                    <button type="submit" class="nav-button create" id="createBtn">다음</button>
+                </div>
+
+                <div class="required-notice">
+                    * 필수입력
+                </div>
+            </form>
+        </div>
+
+        <!-- Signup Complete Screen -->
+        <div class="signup-complete-screen screen inactive" id="signupCompleteScreen">
+            <div class="complete-content">
+                <div class="success-icon">✅</div>
+                <h2 class="complete-title">회원가입이 완료되었습니다!</h2>
+                <p class="complete-message">
+                    개인 맞춤형 영양제 추천을 위한<br>
+                    모든 정보가 성공적으로 등록되었습니다
+                </p>
+                
+                <div class="complete-summary" id="completeSummary">
+                    <!-- 여기에 사용자 정보 요약이 표시됩니다 -->
+                </div>
+
+                <button class="complete-button" id="goToMainBtn">메인 페이지로 이동</button>
+            </div>
+        </div>
+
+        <!-- Current Supplements Screen -->
+        <div class="current-supplements-screen screen inactive" id="currentSupplementsScreen">
+            <div class="signup-header">
+                <div class="app-logo"></div>
+                <h2 class="signup-title">현재 복용 중인 영양제</h2>
+                <p class="signup-subtitle">현재 복용 중인 영양제를 알려주세요</p>
+            </div>
+
+            <form class="signup-form" id="currentSupplementsForm">
+                <div class="supplements-content">
+                    <!-- 복용 여부 -->
+                    <div class="input-group">
+                        <label class="input-label">현재 영양제를 복용하고 계신가요? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="takingSupplements" value="yes" required>
+                                <span class="radio-label">네</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="takingSupplements" value="no" required>
+                                <span class="radio-label">아니오</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 영양제 목록 -->
+                    <div class="supplements-list" id="supplementsList" style="display: none;">
+                        <div class="input-group">
+                            <label class="input-label">복용 중인 영양제를 선택하거나 직접 입력해주세요</label>
+                            
+                            <!-- 일반적인 영양제 체크박스 목록 -->
+                            <div class="supplements-checkboxes">
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="vitamin-c">
+                                    <span class="supplement-label">비타민 C</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="vitamin-d">
+                                    <span class="supplement-label">비타민 D</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="vitamin-b">
+                                    <span class="supplement-label">비타민 B복합체</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="omega-3">
+                                    <span class="supplement-label">오메가3</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="probiotics">
+                                    <span class="supplement-label">유산균</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="magnesium">
+                                    <span class="supplement-label">마그네슘</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="calcium">
+                                    <span class="supplement-label">칼슘</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="iron">
+                                    <span class="supplement-label">철분</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="zinc">
+                                    <span class="supplement-label">아연</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="collagen">
+                                    <span class="supplement-label">콜라겐</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="lutein">
+                                    <span class="supplement-label">루테인</span>
+                                </label>
+                                <label class="supplement-checkbox">
+                                    <input type="checkbox" name="supplements" value="coq10">
+                                    <span class="supplement-label">코엔자임 Q10</span>
+                                </label>
+                            </div>
+
+                            <!-- 직접 입력 영역 -->
+                            <div class="custom-supplement">
+                                <label class="input-label" for="customSupplement">기타 (직접 입력)</label>
+                                <div class="custom-input-container">
+                                    <input 
+                                        type="text" 
+                                        id="customSupplement" 
+                                        class="input-field" 
+                                        placeholder="복용 중인 다른 영양제가 있다면 입력해주세요"
+                                    >
+                                    <button type="button" class="add-button" id="addSupplementBtn">추가</button>
+                                </div>
+                                <div class="custom-supplements-list" id="customSupplementsList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="nav-button back" id="currentSupplementsBackBtn">이전</button>
+                    <button type="submit" class="nav-button create" id="currentSupplementsNextBtn">완료</button>
+                </div>
+
+                <div class="required-notice">
+                    * 필수선택
+                </div>
+            </form>
+        </div>
+
+        <!-- Chatbot Settings Screen -->
+        <div class="chatbot-settings-screen screen inactive" id="chatbotSettingsScreen">
+            <div class="signup-header">
+                <div class="app-logo"></div>
+                <h2 class="signup-title">챗봇 설정</h2>
+                <p class="signup-subtitle">챗봇의 역할과 말투를 설정해주세요</p>
+            </div>
+
+            <form class="signup-form" id="chatbotSettingsForm">
+                <div class="chatbot-settings-content">
+                    <!-- 챗봇 역할 설정 -->
+                    <div class="input-group">
+                        <label class="input-label">챗봇에게 역할을 정해줄까요? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="setRole" value="yes" required>
+                                <span class="radio-label">네</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="setRole" value="no" required>
+                                <span class="radio-label">아니오</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 말투 선택 -->
+                    <div class="input-group" id="toneSelectionGroup" style="display: none;">
+                        <label class="input-label">말투는 어떻게 할까요? *</label>
+                        <div class="tone-options">
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="friendly" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">다정한 버전</span>
+                                    <span class="tone-description">친근하고 따뜻한 말투로 대화해요</span>
+                                </span>
+                            </label>
+
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="strict" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">엄격한 버전</span>
+                                    <span class="tone-description">정확하고 전문적인 말투로 조언해요</span>
+                                </span>
+                            </label>
+
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="casual" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">편안한 버전</span>
+                                    <span class="tone-description">친구같이 편안하고 자연스러운 말투예요</span>
+                                </span>
+                            </label>
+
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="professional" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">전문가 버전</span>
+                                    <span class="tone-description">의료진처럼 신뢰할 수 있는 말투로 설명해요</span>
+                                </span>
+                            </label>
+
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="cheerful" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">밝은 버전</span>
+                                    <span class="tone-description">활기차고 긍정적인 에너지로 응원해요</span>
+                                </span>
+                            </label>
+
+                            <label class="tone-option">
+                                <input type="radio" name="tone" value="calm" required>
+                                <span class="tone-label">
+                                    <span class="tone-title">차분한 버전</span>
+                                    <span class="tone-description">안정감 있고 침착한 말투로 안내해요</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="nav-button back" id="chatbotSettingsBackBtn">이전</button>
+                    <button type="submit" class="nav-button create" id="chatbotSettingsNextBtn">다음</button>
+                </div>
+
+                <div class="required-notice">
+                    * 필수선택
+                </div>
+            </form>
+        </div>
+
+        <!-- Health Concerns Screen -->
+        <div class="health-concerns-screen screen inactive" id="healthConcernsScreen">
+            <div class="signup-header">
+                <div class="app-logo"></div>
+                <h2 class="signup-title">건강 고민</h2>
+                <p class="signup-subtitle">요즘 건강 고민을 선택해주세요 (복수 선택 가능)</p>
+            </div>
+
+            <form class="signup-form" id="healthConcernsForm">
+                <div class="scroll-indicator">↓ 아래로 스크롤해서 더 많은 옵션을 확인하세요 ↓</div>
+                
+                <div class="concerns-container">
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="concentration">
+                            <span class="checkbox-label">집중력이 부족한 것 같다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="pregnancy">
+                            <span class="checkbox-label">아기와 임산부에게 좋은 영양제가 필요하다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="hangover">
+                            <span class="checkbox-label">숙취해소가 잘 되지 않는다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="fatigue">
+                            <span class="checkbox-label">피로가 쉽게 쌓이고 회복이 느리다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="immunity">
+                            <span class="checkbox-label">면역력이 약해진 것 같다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="digestion">
+                            <span class="checkbox-label">소화가 잘 안되고 속이 불편하다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="sleep">
+                            <span class="checkbox-label">잠을 잘 자지 못하고 수면의 질이 나쁘다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="joints">
+                            <span class="checkbox-label">관절이나 뼈가 아프고 불편하다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="skin">
+                            <span class="checkbox-label">피부 트러블이나 노화가 신경쓰인다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="memory">
+                            <span class="checkbox-label">기억력이 예전보다 떨어진 것 같다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="eyes">
+                            <span class="checkbox-label">눈이 자주 피로하고 시력이 걱정된다</span>
+                        </label>
+                    </div>
+
+                    <div class="concern-item">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="concerns" value="stress">
+                            <span class="checkbox-label">스트레스가 많고 마음이 불안하다</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="nav-button back" id="healthConcernsBackBtn">이전</button>
+                    <button type="submit" class="nav-button create" id="healthConcernsNextBtn">다음</button>
+                </div>
+
+                <div class="required-notice">
+                    최소 1개 이상 선택해주세요
+                </div>
+            </form>
+        </div>
+
+        <!-- Personal Info Screen -->
+        <div class="personal-info-screen screen inactive" id="personalInfoScreen">
+            <div class="signup-header">
+                <div class="app-logo"></div>
+                <h2 class="signup-title">개인 정보</h2>
+                <div class="important-notice">
+                    <span class="notice-icon">⚠️</span>
+                    <p class="notice-text">이 정보를 기반으로 영양제를 추천해드립니다.</p>
+                </div>
+            </div>
+
+            <form class="signup-form" id="personalInfoForm">
+                <div class="personal-info-content">
+                    <!-- 성별 -->
+                    <div class="input-group">
+                        <label class="input-label">성별 *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="male" required>
+                                <span class="radio-label">남성</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="gender" value="female" required>
+                                <span class="radio-label">여성</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 나이 -->
+                    <div class="input-group">
+                        <label class="input-label" for="age">나이 *</label>
+                        <input 
+                            type="number" 
+                            id="age" 
+                            class="input-field" 
+                            placeholder="나이를 입력해주세요"
+                            min="1"
+                            max="120"
+                            required
+                        >
+                    </div>
+
+                    <!-- 임산부 여부 -->
+                    <div class="input-group">
+                        <label class="input-label">임산부 이신가요? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="pregnancy" value="yes" required>
+                                <span class="radio-label">예</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="pregnancy" value="no" required>
+                                <span class="radio-label">아니요</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 자녀 여부 -->
+                    <div class="input-group">
+                        <label class="input-label">자녀가 있으신가요? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="hasChildren" value="yes" required>
+                                <span class="radio-label">네</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="hasChildren" value="no" required>
+                                <span class="radio-label">아니오</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 부모님 영양제 -->
+                    <div class="input-group">
+                        <label class="input-label">부모님께 맞춰진 영양제를 찾으시나요? *</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="forParents" value="yes" required>
+                                <span class="radio-label">네</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="forParents" value="no" required>
+                                <span class="radio-label">아니오</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" class="nav-button back" id="personalInfoBackBtn">이전</button>
+                    <button type="submit" class="nav-button create" id="personalInfoNextBtn">다음</button>
+                </div>
+
+                <div class="required-notice">
+                    * 필수입력
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal for Guest Access Confirmation -->
+        <div class="modal-overlay" id="guestModal">
+            <div class="modal-content">
+                <div class="modal-icon">⚠️</div>
+                <h3 class="modal-title">잠시만요!</h3>
+                <p class="modal-message">정보가 없으면<br>영양제 추천이 어려울 수 있어요</p>
+                <div class="modal-buttons">
+                    <button class="modal-button primary" id="provideInfoBtn">정보주기</button>
+                    <button class="modal-button secondary" id="continueGuestBtn">괜찮아요</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM 요소들 가져오기
+        const startBtn = document.getElementById('startBtn');
+        const introScreen = document.getElementById('introScreen');
+        const loginScreen = document.getElementById('loginScreen');
+        const signupScreen = document.getElementById('signupScreen');
+        const personalInfoScreen = document.getElementById('personalInfoScreen');
+        const healthConcernsScreen = document.getElementById('healthConcernsScreen');
+        const chatbotSettingsScreen = document.getElementById('chatbotSettingsScreen');
+        const currentSupplementsScreen = document.getElementById('currentSupplementsScreen');
+        const signupCompleteScreen = document.getElementById('signupCompleteScreen');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const personalInfoForm = document.getElementById('personalInfoForm');
+        const healthConcernsForm = document.getElementById('healthConcernsForm');
+        const chatbotSettingsForm = document.getElementById('chatbotSettingsForm');
+        const currentSupplementsForm = document.getElementById('currentSupplementsForm');
+        const signupLink = document.getElementById('signupLink');
+        const guestBtn = document.getElementById('guestBtn');
+        const guestModal = document.getElementById('guestModal');
+        const provideInfoBtn = document.getElementById('provideInfoBtn');
+        const continueGuestBtn = document.getElementById('continueGuestBtn');
+        const backBtn = document.getElementById('backBtn');
+        const personalInfoBackBtn = document.getElementById('personalInfoBackBtn');
+        const healthConcernsBackBtn = document.getElementById('healthConcernsBackBtn');
+        const chatbotSettingsBackBtn = document.getElementById('chatbotSettingsBackBtn');
+        const currentSupplementsBackBtn = document.getElementById('currentSupplementsBackBtn');
+        const goToMainBtn = document.getElementById('goToMainBtn');
+        const recommendBtn = document.getElementById('recommendBtn');
+        const checkNicknameBtn = document.getElementById('checkNicknameBtn');
+
+        // 시작하기 버튼 클릭 이벤트
+        startBtn.addEventListener('click', function() {
+            console.log('시작하기 버튼 클릭됨'); // 디버깅용
+            showLoginScreen();
+        });
+
+        // 로그인 화면 보여주기 함수
+        function showLoginScreen() {
+            introScreen.classList.remove('active');
+            introScreen.classList.add('inactive');
+            
+            loginScreen.classList.remove('inactive');
+            loginScreen.classList.add('active');
+        }
+
+        // 로그인 폼 제출 이벤트
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('password').value;
+            
+            if (userId && password) {
+                alert(`${userId}님, 로그인 성공! 이제 챗봇 화면으로 이동합니다.`);
+                // 여기서 실제 로그인 처리 후 챗봇 화면으로 이동
+            }
+        });
+
+        // 회원가입 링크 클릭 이벤트
+        signupLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSignupPage();
+        });
+
+        // 게스트 모드 버튼 클릭 이벤트
+        guestBtn.addEventListener('click', function() {
+            showGuestModal();
+        });
+
+        // 게스트 모달 보여주기
+        function showGuestModal() {
+            guestModal.classList.add('show');
+        }
+
+        // 게스트 모달 숨기기
+        function hideGuestModal() {
+            guestModal.classList.remove('show');
+        }
+
+        // 정보주기 버튼 클릭 이벤트 (회원가입으로 이동)
+        provideInfoBtn.addEventListener('click', function() {
+            hideGuestModal();
+            showSignupPage();
+        });
+
+        // 괜찮아요 버튼 클릭 이벤트 (게스트 모드 진행)
+        continueGuestBtn.addEventListener('click', function() {
+            hideGuestModal();
+            alert('게스트 모드로 챗봇을 이용하실 수 있습니다.\n맞춤 추천은 제한적일 수 있어요.');
+        });
+
+        // 회원가입 페이지 보여주기 함수
+        function showSignupPage() {
+            loginScreen.classList.remove('active');
+            loginScreen.classList.add('inactive');
+            
+            signupScreen.classList.remove('inactive');
+            signupScreen.classList.add('active');
+        }
+
+        // 회원가입 완료 페이지 보여주기 함수
+        function showSignupCompletePage() {
+            currentSupplementsScreen.classList.remove('active');
+            currentSupplementsScreen.classList.add('inactive');
+            
+            signupCompleteScreen.classList.remove('inactive');
+            signupCompleteScreen.classList.add('active');
+            
+            // 사용자 정보 요약 생성
+            generateCompleteSummary();
+        }
+
+        // 메인 페이지로 이동 (로그인 페이지로)
+        function goToMainPage() {
+            signupCompleteScreen.classList.remove('active');
+            signupCompleteScreen.classList.add('inactive');
+            
+            loginScreen.classList.remove('inactive');
+            loginScreen.classList.add('active');
+        }
+
+        // 현재영양제 페이지 보여주기 함수
+        function showCurrentSupplementsPage() {
+            chatbotSettingsScreen.classList.remove('active');
+            chatbotSettingsScreen.classList.add('inactive');
+            
+            currentSupplementsScreen.classList.remove('inactive');
+            currentSupplementsScreen.classList.add('active');
+        }
+
+        // 챗봇설정 페이지로 돌아가기 (현재영양제에서)
+        function showChatbotSettingsPageFromCurrentSupplements() {
+            currentSupplementsScreen.classList.remove('active');
+            currentSupplementsScreen.classList.add('inactive');
+            
+            chatbotSettingsScreen.classList.remove('inactive');
+            chatbotSettingsScreen.classList.add('active');
+        }
+
+        // 챗봇설정 페이지 보여주기 함수
+        function showChatbotSettingsPage() {
+            healthConcernsScreen.classList.remove('active');
+            healthConcernsScreen.classList.add('inactive');
+            
+            chatbotSettingsScreen.classList.remove('inactive');
+            chatbotSettingsScreen.classList.add('active');
+        }
+
+        // 건강고민 페이지로 돌아가기 (챗봇설정에서)
+        function showHealthConcernsPageFromChatbotSettings() {
+            chatbotSettingsScreen.classList.remove('active');
+            chatbotSettingsScreen.classList.add('inactive');
+            
+            healthConcernsScreen.classList.remove('inactive');
+            healthConcernsScreen.classList.add('active');
+        }
+
+        // 건강고민 페이지 보여주기 함수
+        function showHealthConcernsPage() {
+            personalInfoScreen.classList.remove('active');
+            personalInfoScreen.classList.add('inactive');
+            
+            healthConcernsScreen.classList.remove('inactive');
+            healthConcernsScreen.classList.add('active');
+        }
+
+        // 개인정보 페이지로 돌아가기 (건강고민에서)
+        function showPersonalInfoPageFromHealthConcerns() {
+            healthConcernsScreen.classList.remove('active');
+            healthConcernsScreen.classList.add('inactive');
+            
+            personalInfoScreen.classList.remove('inactive');
+            personalInfoScreen.classList.add('active');
+        }
+
+        // 개인정보 페이지 보여주기 함수
+        function showPersonalInfoPage() {
+            signupScreen.classList.remove('active');
+            signupScreen.classList.add('inactive');
+            
+            personalInfoScreen.classList.remove('inactive');
+            personalInfoScreen.classList.add('active');
+        }
+
+        // 회원가입 페이지로 돌아가기 (개인정보에서)
+        function showSignupPageFromPersonalInfo() {
+            personalInfoScreen.classList.remove('active');
+            personalInfoScreen.classList.add('inactive');
+            
+            signupScreen.classList.remove('inactive');
+            signupScreen.classList.add('active');
+        }
+
+        // 로그인 페이지로 돌아가기
+        function showLoginPage() {
+            signupScreen.classList.remove('active');
+            signupScreen.classList.add('inactive');
+            
+            loginScreen.classList.remove('inactive');
+            loginScreen.classList.add('active');
+        }
+
+        // 이전 버튼 클릭 이벤트
+        backBtn.addEventListener('click', function() {
+            showLoginPage();
+        });
+
+        // 개인정보 페이지 이전 버튼 클릭 이벤트
+        personalInfoBackBtn.addEventListener('click', function() {
+            showSignupPageFromPersonalInfo();
+        });
+
+        // 건강고민 페이지 이전 버튼 클릭 이벤트
+        healthConcernsBackBtn.addEventListener('click', function() {
+            showPersonalInfoPageFromHealthConcerns();
+        });
+
+        // 챗봇설정 페이지 이전 버튼 클릭 이벤트
+        chatbotSettingsBackBtn.addEventListener('click', function() {
+            showHealthConcernsPageFromChatbotSettings();
+        });
+
+        // 현재영양제 페이지 이전 버튼 클릭 이벤트
+        currentSupplementsBackBtn.addEventListener('click', function() {
+            showChatbotSettingsPageFromCurrentSupplements();
+        });
+
+        // 메인 페이지로 이동 버튼 클릭 이벤트
+        goToMainBtn.addEventListener('click', function() {
+            goToMainPage();
+        });
+
+        // 챗봇 역할 설정 여부에 따른 말투 선택 표시/숨김
+        const roleRadios = document.querySelectorAll('input[name="setRole"]');
+        const toneSelectionGroup = document.getElementById('toneSelectionGroup');
+        const toneRadios = document.querySelectorAll('input[name="tone"]');
+
+        roleRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'yes') {
+                    // '네'를 선택하면 말투 선택 표시
+                    toneSelectionGroup.style.display = 'block';
+                    // 말투 라디오 버튼들을 required로 설정
+                    toneRadios.forEach(toneRadio => {
+                        toneRadio.required = true;
+                    });
+                } else if (this.value === 'no') {
+                    // '아니오'를 선택하면 말투 선택 숨김
+                    toneSelectionGroup.style.display = 'none';
+                    // 말투 라디오 버튼들의 required 해제 및 선택 해제
+                    toneRadios.forEach(toneRadio => {
+                        toneRadio.required = false;
+                        toneRadio.checked = false;
+                    });
+                }
+            });
+        });
+
+        // 스크롤 인디케이터 관리
+        const concernsContainer = document.querySelector('.concerns-container');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+
+        if (concernsContainer && scrollIndicator) {
+            concernsContainer.addEventListener('scroll', function() {
+                if (this.scrollTop > 50) {
+                    scrollIndicator.style.opacity = '0';
+                    scrollIndicator.style.transform = 'translateY(-10px)';
+                } else {
+                    scrollIndicator.style.opacity = '1';
+                    scrollIndicator.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // 닉네임 추천 기능
+        const nicknamePool = [
+            '건강한토끼', '활력충전', '영양만점', '헬시라이프', '비타민킹',
+            '웰빙마스터', '건강지킴이', '에너지부스터', '라이프케어', '헬스가디언',
+            '영양사친구', '건강한하루', '활기찬생활', '웰니스맨', '헬스메이트'
+        ];
+
+        recommendBtn.addEventListener('click', function() {
+            const suggestions = document.getElementById('nicknameSuggestions');
+            const randomNicknames = [];
+            
+            // 랜덤하게 5개 선택
+            while (randomNicknames.length < 5) {
+                const randomNick = nicknamePool[Math.floor(Math.random() * nicknamePool.length)];
+                if (!randomNicknames.includes(randomNick)) {
+                    randomNicknames.push(randomNick);
+                }
+            }
+            
+            // 추천 목록 표시
+            suggestions.innerHTML = '';
+            randomNicknames.forEach(nick => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.textContent = nick;
+                item.addEventListener('click', function() {
+                    document.getElementById('nickname').value = nick;
+                    suggestions.style.display = 'none';
+                });
+                suggestions.appendChild(item);
+            });
+            
+            suggestions.style.display = 'block';
+        });
+
+        // 닉네임 중복확인 기능
+        const existingNicknames = ['admin', 'test', '건강이', 'user123']; // 가상의 기존 닉네임들
+
+        checkNicknameBtn.addEventListener('click', function() {
+            const nickname = document.getElementById('nickname').value;
+            const validation = document.getElementById('nicknameValidation');
+            
+            if (!nickname) {
+                validation.textContent = '닉네임을 입력해주세요.';
+                validation.className = 'validation-message error';
+                return;
+            }
+            
+            if (existingNicknames.includes(nickname)) {
+                validation.textContent = '이미 사용중인 닉네임입니다.';
+                validation.className = 'validation-message error';
+                checkNicknameBtn.textContent = '중복확인';
+                checkNicknameBtn.className = 'action-button';
+            } else {
+                validation.textContent = '사용 가능한 닉네임입니다.';
+                validation.className = 'validation-message success';
+                checkNicknameBtn.textContent = '확인완료';
+                checkNicknameBtn.className = 'action-button success';
+            }
+        });
+
+        // 회원가입 폼 제출 이벤트 (개인정보 페이지로 이동)
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nickname = document.getElementById('nickname').value;
+            const realName = document.getElementById('realName').value;
+            const userId = document.getElementById('signupUserId').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            if (!nickname || !realName || !userId || !password) {
+                alert('모든 필수 항목을 입력해주세요.');
+                return;
+            }
+            
+            // 닉네임 중복확인 여부 체크
+            if (checkNicknameBtn.textContent !== '확인완료') {
+                alert('닉네임 중복확인을 완료해주세요.');
+                return;
+            }
+            
+            // 개인정보 페이지로 이동
+            showPersonalInfoPage();
+        });
+
+        // 개인정보 폼 제출 이벤트 (건강고민 페이지로 이동)
+        personalInfoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const age = document.getElementById('age').value;
+            const pregnancy = document.querySelector('input[name="pregnancy"]:checked');
+            const hasChildren = document.querySelector('input[name="hasChildren"]:checked');
+            const forParents = document.querySelector('input[name="forParents"]:checked');
+            
+            if (!gender || !age || !pregnancy || !hasChildren || !forParents) {
+                alert('모든 필수 항목을 입력해주세요.');
+                return;
+            }
+            
+            if (age < 1 || age > 120) {
+                alert('올바른 나이를 입력해주세요.');
+                return;
+            }
+            
+            // 건강고민 페이지로 이동
+            showHealthConcernsPage();
+        });
+
+        // 건강고민 폼 제출 이벤트 (챗봇설정 페이지로 이동)
+        healthConcernsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const selectedConcerns = document.querySelectorAll('input[name="concerns"]:checked');
+            
+            if (selectedConcerns.length === 0) {
+                alert('최소 1개 이상의 건강 고민을 선택해주세요.');
+                return;
+            }
+            
+            // 챗봇설정 페이지로 이동
+            showChatbotSettingsPage();
+        });
+
+        // 챗봇설정 폼 제출 이벤트 (현재영양제 페이지로 이동)
+        chatbotSettingsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const setRole = document.querySelector('input[name="setRole"]:checked');
+            
+            if (!setRole) {
+                alert('챗봇 역할 설정 여부를 선택해주세요.');
+                return;
+            }
+            
+            // 역할을 설정한다고 선택했으면 말투도 선택해야 함
+            if (setRole.value === 'yes') {
+                const tone = document.querySelector('input[name="tone"]:checked');
+                if (!tone) {
+                    alert('말투를 선택해주세요.');
+                    return;
+                }
+            }
+            
+            // 현재영양제 페이지로 이동
+            showCurrentSupplementsPage();
+        });
+
+        // 영양제 복용 여부에 따른 목록 표시/숨김
+        const supplementRadios = document.querySelectorAll('input[name="takingSupplements"]');
+        const supplementsList = document.getElementById('supplementsList');
+
+        supplementRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'yes') {
+                    supplementsList.style.display = 'block';
+                } else {
+                    supplementsList.style.display = 'none';
+                    // 모든 체크박스 해제
+                    document.querySelectorAll('input[name="supplements"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    // 커스텀 영양제 목록 초기화
+                    const customList = document.getElementById('customSupplementsList');
+                    customList.innerHTML = '';
+                    document.getElementById('customSupplement').value = '';
+                }
+            });
+        });
+
+        // 커스텀 영양제 추가 기능
+        const addSupplementBtn = document.getElementById('addSupplementBtn');
+        const customSupplementInput = document.getElementById('customSupplement');
+        const customSupplementsList = document.getElementById('customSupplementsList');
+
+        addSupplementBtn.addEventListener('click', function() {
+            const supplementName = customSupplementInput.value.trim();
+            if (supplementName) {
+                addCustomSupplement(supplementName);
+                customSupplementInput.value = '';
+            }
+        });
+
+        customSupplementInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const supplementName = this.value.trim();
+                if (supplementName) {
+                    addCustomSupplement(supplementName);
+                    this.value = '';
+                }
+            }
+        });
+
+        function addCustomSupplement(name) {
+            const tag = document.createElement('div');
+            tag.className = 'custom-supplement-tag';
+            tag.innerHTML = `
+                ${name}
+                <button type="button" class="remove-supplement" onclick="this.parentElement.remove()">×</button>
+            `;
+            customSupplementsList.appendChild(tag);
+        }
+
+        // 현재영양제 폼 제출 이벤트 (회원가입 완료 페이지로 이동)
+        currentSupplementsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const takingSupplements = document.querySelector('input[name="takingSupplements"]:checked');
+            
+            if (!takingSupplements) {
+                alert('영양제 복용 여부를 선택해주세요.');
+                return;
+            }
+            
+            // 회원가입 완료 페이지로 이동
+            showSignupCompletePage();
+        });
+
+        // 사용자 정보 요약 생성 함수
+        function generateCompleteSummary() {
+            const nickname = document.getElementById('nickname').value;
+            const realName = document.getElementById('realName').value;
+            const age = document.getElementById('age').value;
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const selectedConcerns = document.querySelectorAll('input[name="concerns"]:checked');
+            const setRole = document.querySelector('input[name="setRole"]:checked');
+            const tone = document.querySelector('input[name="tone"]:checked');
+            const takingSupplements = document.querySelector('input[name="takingSupplements"]:checked');
+            
+            let summaryHTML = '';
+            
+            // 기본 정보
+            summaryHTML += `
+                <div class="summary-item">
+                    <span class="summary-label">이름</span>
+                    <span class="summary-value">${realName} (${nickname})</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">나이/성별</span>
+                    <span class="summary-value">${age}세 / ${gender.value === 'male' ? '남성' : '여성'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">건강 고민</span>
+                    <span class="summary-value">${selectedConcerns.length}개 선택</span>
+                </div>
+            `;
+            
+            // 챗봇 설정
+            if (setRole.value === 'yes' && tone) {
+                const toneNames = {
+                    'friendly': '다정한 버전',
+                    'strict': '엄격한 버전',
+                    'casual': '편안한 버전',
+                    'professional': '전문가 버전',
+                    'cheerful': '밝은 버전',
+                    'calm': '차분한 버전'
+                };
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-label">챗봇 말투</span>
+                        <span class="summary-value">${toneNames[tone.value]}</span>
+                    </div>
+                `;
+            } else {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-label">챗봇 말투</span>
+                        <span class="summary-value">기본 설정</span>
+                    </div>
+                `;
+            }
+            
+            // 영양제 정보
+            if (takingSupplements.value === 'yes') {
+                const selectedSupplements = document.querySelectorAll('input[name="supplements"]:checked');
+                const customSupplements = document.querySelectorAll('.custom-supplement-tag');
+                const totalSupplements = selectedSupplements.length + customSupplements.length;
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-label">복용 중인 영양제</span>
+                        <span class="summary-value">${totalSupplements}개</span>
+                    </div>
+                `;
+            } else {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span class="summary-label">복용 중인 영양제</span>
+                        <span class="summary-value">없음</span>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('completeSummary').innerHTML = summaryHTML;
+        }
+
+        // 입력 필드 실시간 유효성 검사
+        document.getElementById('signupUserId').addEventListener('input', function() {
+            const userId = this.value;
+            const validation = document.getElementById('userIdValidation');
+            
+            if (userId.length < 4) {
+                validation.textContent = '아이디는 4자 이상이어야 합니다.';
+                validation.className = 'validation-message error';
+            } else {
+                validation.textContent = '사용 가능한 아이디입니다.';
+                validation.className = 'validation-message success';
+            }
+        });
+
+        document.getElementById('signupPassword').addEventListener('input', function() {
+            const password = this.value;
+            const validation = document.getElementById('passwordValidation');
+            
+            if (password.length < 6) {
+                validation.textContent = '비밀번호는 6자 이상이어야 합니다.';
+                validation.className = 'validation-message error';
+            } else {
+                validation.textContent = '사용 가능한 비밀번호입니다.';
+                validation.className = 'validation-message success';
+            }
+        });
+
+        // 외부 클릭 시 닉네임 추천 목록 숨기기
+        document.addEventListener('click', function(e) {
+            const suggestions = document.getElementById('nicknameSuggestions');
+            if (!e.target.closest('.input-group')) {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // 모달 외부 클릭 시 닫기
+        guestModal.addEventListener('click', function(e) {
+            if (e.target === guestModal) {
+                hideGuestModal();
+            }
+        });
+
+        // 입력 필드 애니메이션 효과
+        const inputs = document.querySelectorAll('.input-field');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // 페이지 로드 확인
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('페이지 로드 완료');
+        });
+    </script>
+</body>
+</html>

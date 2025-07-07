@@ -1,0 +1,37 @@
+// 공통 함수들
+function saveUserData(userData) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+}
+
+function getCurrentUser() {
+    return JSON.parse(localStorage.getItem('currentUser'));
+}
+
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'index.html';
+}
+
+// 페이지별 초기화
+if (window.location.pathname.includes('main.html')) {
+    // 메인 페이지 로드 시
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+            alert('로그인이 필요합니다.');
+            window.location.href = 'index.html';
+        }
+    });
+} else if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+    // 인덱스 페이지 로드 시
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = getCurrentUser();
+        if (currentUser && !currentUser.isGuest) {
+            // 이미 로그인되어 있으면 메인으로
+            window.location.href = 'main.html';
+        }
+    });
+}
