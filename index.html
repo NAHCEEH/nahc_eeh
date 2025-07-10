@@ -1349,6 +1349,126 @@
         .complete-button:active {
             transform: translateY(-1px);
         }
+        /* 2. CSS 섹션에 이 스타일들을 추가하세요 */
+
+.upload-section {
+    border: 3px dashed #ddd;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin: 15px 0;
+}
+
+.upload-section:hover {
+    border-color: #D4C3B1;
+    background-color: #f8f9ff;
+}
+
+.upload-section.dragover {
+    border-color: #D4C3B1;
+    background-color: #e3f2fd;
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.upload-text {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.upload-subtext {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-btn {
+    background: linear-gradient(135deg, #D4C3B1 0%, #C4B19F 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-weight: 500;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 195, 177, 0.4);
+}
+
+.preview-container {
+    margin-top: 20px;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.preview-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.preview-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.remove-btn:hover {
+    background: rgba(255, 0, 0, 1);
+}
+
+.file-count {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(212, 195, 177, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    color: #A68B6B;
+    font-weight: 500;
+}
     </style>
 </head>
 <body>
@@ -1939,58 +2059,23 @@
                     <!-- 영양제 목록 -->
                     <div class="supplements-list" id="supplementsList" style="display: none;">
                         <div class="input-group">
-                            <label class="input-label">복용 중인 영양제를 선택하거나 직접 입력해주세요</label>
+                            <label class="input-label">복용 중인 영양제 사진을 첨부해주세요</label>
                             
-                            <!-- 일반적인 영양제 체크박스 목록 -->
-                            <div class="supplements-checkboxes">
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="vitamin-c">
-                                    <span class="supplement-label">비타민 C</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="vitamin-d">
-                                    <span class="supplement-label">비타민 D</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="vitamin-b">
-                                    <span class="supplement-label">비타민 B복합체</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="omega-3">
-                                    <span class="supplement-label">오메가3</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="probiotics">
-                                    <span class="supplement-label">유산균</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="magnesium">
-                                    <span class="supplement-label">마그네슘</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="calcium">
-                                    <span class="supplement-label">칼슘</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="iron">
-                                    <span class="supplement-label">철분</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="zinc">
-                                    <span class="supplement-label">아연</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="collagen">
-                                    <span class="supplement-label">콜라겐</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="lutein">
-                                    <span class="supplement-label">루테인</span>
-                                </label>
-                                <label class="supplement-checkbox">
-                                    <input type="checkbox" name="supplements" value="coq10">
-                                    <span class="supplement-label">코엔자임 Q10</span>
-                                </label>
+                            <!-- 사진 업로드 섹션 -->
+                            <div class="upload-section" id="uploadArea">
+                                <div class="upload-icon">📷</div>
+                                <div class="upload-text">영양제 사진을 업로드하세요</div>
+                                <div class="upload-subtext">여러 장의 사진을 한 번에 업로드할 수 있습니다<br>
+                                JPG, PNG 파일만 지원됩니다 (최대 10MB)</div>
+                                <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                                    파일 선택
+                                </button>
+                                <input type="file" id="fileInput" class="file-input" multiple accept="image/*">
+                            </div>
+                    
+                            <div class="preview-container" id="previewContainer" style="display: none;">
+                                <div class="file-count" id="fileCount"></div>
+                                <div class="preview-grid" id="previewGrid"></div>
                             </div>
 
                             <!-- 직접 입력 영역 -->
@@ -2819,92 +2904,216 @@
             showCurrentSupplementsPage();
         });
 
-        // 영양제 관련 이벤트
-        const takingSupplementsYes = document.getElementById('takingSupplementsYes');
-        const takingSupplementsNo = document.getElementById('takingSupplementsNo');
-        const supplementsList = document.getElementById('supplementsList');
+        
+        // 3. JavaScript에서 기존 영양제 관련 코드를 이 코드로 교체하세요
 
-        takingSupplementsYes.addEventListener('change', function() {
-            if (this.checked) {
-                supplementsList.style.display = 'block';
-            }
-        });
+// 파일 업로드 관련 변수
+let uploadedFiles = [];
 
-        takingSupplementsNo.addEventListener('change', function() {
-            if (this.checked) {
-                supplementsList.style.display = 'none';
-                document.querySelectorAll('input[name="supplements"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
-                const customList = document.getElementById('customSupplementsList');
-                customList.innerHTML = '';
-                document.getElementById('customSupplement').value = '';
-            }
-        });
+// 영양제 관련 이벤트 (기존 코드 수정)
+const takingSupplementsYes = document.getElementById('takingSupplementsYes');
+const takingSupplementsNo = document.getElementById('takingSupplementsNo');
+const supplementsList = document.getElementById('supplementsList');
 
-        // 커스텀 영양제 추가 기능
-        const addSupplementBtn = document.getElementById('addSupplementBtn');
-        const customSupplementInput = document.getElementById('customSupplement');
-        const customSupplementsList = document.getElementById('customSupplementsList');
+takingSupplementsYes.addEventListener('change', function() {
+    if (this.checked) {
+        supplementsList.style.display = 'block';
+    }
+});
 
-        addSupplementBtn.addEventListener('click', function() {
-            const supplementName = customSupplementInput.value.trim();
-            if (supplementName) {
-                addCustomSupplement(supplementName);
-                customSupplementInput.value = '';
-            }
-        });
+takingSupplementsNo.addEventListener('change', function() {
+    if (this.checked) {
+        supplementsList.style.display = 'none';
+        clearFiles(); // 파일 초기화
+        const customList = document.getElementById('customSupplementsList');
+        customList.innerHTML = '';
+        document.getElementById('customSupplement').value = '';
+    }
+});
 
-        customSupplementInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const supplementName = this.value.trim();
-                if (supplementName) {
-                    addCustomSupplement(supplementName);
-                    this.value = '';
-                }
-            }
-        });
+// 파일 업로드 관련 요소들
+const uploadArea = document.getElementById('uploadArea');
+const fileInput = document.getElementById('fileInput');
+const previewContainer = document.getElementById('previewContainer');
+const previewGrid = document.getElementById('previewGrid');
+const fileCount = document.getElementById('fileCount');
 
-        function addCustomSupplement(name) {
-            const tag = document.createElement('div');
-            tag.className = 'custom-supplement-tag';
-            tag.innerHTML = `
-                ${name}
-                <button type="button" class="remove-supplement" onclick="this.parentElement.remove()">×</button>
-            `;
-            customSupplementsList.appendChild(tag);
+// 드래그 앤 드롭 이벤트
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
+});
+
+// 파일 선택 이벤트
+fileInput.addEventListener('change', (e) => {
+    const files = Array.from(e.target.files);
+    handleFiles(files);
+});
+
+function handleFiles(files) {
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    
+    if (imageFiles.length === 0) {
+        alert('이미지 파일만 업로드할 수 있습니다.');
+        return;
+    }
+
+    imageFiles.forEach(file => {
+        if (file.size > 10 * 1024 * 1024) { // 10MB 제한
+            alert(`파일 "${file.name}"이 너무 큽니다. 10MB 이하의 파일만 업로드할 수 있습니다.`);
+            return;
         }
 
-        // 현재영양제 폼 제출 이벤트
-        currentSupplementsForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const takingSupplements = document.querySelector('input[name="takingSupplements"]:checked');
-            
-            if (!takingSupplements) {
-                alert('영양제 복용 여부를 선택해주세요.');
-                return;
-            }
-            
-            showSignupCompletePage();
-        });
-
-        // 스크롤 인디케이터 관리
-        const concernsContainer = document.querySelector('.concerns-container');
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-
-        if (concernsContainer && scrollIndicator) {
-            concernsContainer.addEventListener('scroll', function() {
-                if (this.scrollTop > 50) {
-                    scrollIndicator.style.opacity = '0';
-                    scrollIndicator.style.transform = 'translateY(-10px)';
-                } else {
-                    scrollIndicator.style.opacity = '1';
-                    scrollIndicator.style.transform = 'translateY(0)';
-                }
-            });
+        if (uploadedFiles.length >= 10) { // 최대 10개 파일
+            alert('최대 10개의 파일만 업로드할 수 있습니다.');
+            return;
         }
+
+        uploadedFiles.push(file);
+        createPreview(file);
+    });
+
+    updateFileCount();
+    showPreviewContainer();
+}
+
+function createPreview(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        previewItem.innerHTML = `
+            <img src="${e.target.result}" alt="미리보기" class="preview-image">
+            <button class="remove-btn" onclick="removeFile('${file.name}')" title="삭제">×</button>
+        `;
+        previewGrid.appendChild(previewItem);
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeFile(fileName) {
+    uploadedFiles = uploadedFiles.filter(file => file.name !== fileName);
+    updatePreviewGrid();
+    updateFileCount();
+    
+    if (uploadedFiles.length === 0) {
+        hidePreviewContainer();
+    }
+}
+
+function updatePreviewGrid() {
+    previewGrid.innerHTML = '';
+    uploadedFiles.forEach(file => {
+        createPreview(file);
+    });
+}
+
+function updateFileCount() {
+    fileCount.textContent = `업로드된 파일: ${uploadedFiles.length}개`;
+}
+
+function showPreviewContainer() {
+    previewContainer.style.display = 'block';
+}
+
+function hidePreviewContainer() {
+    previewContainer.style.display = 'none';
+}
+
+function clearFiles() {
+    uploadedFiles = [];
+    previewGrid.innerHTML = '';
+    hidePreviewContainer();
+    fileInput.value = '';
+}
+
+// 커스텀 영양제 추가 기능 (기존 코드 유지)
+const addSupplementBtn = document.getElementById('addSupplementBtn');
+const customSupplementInput = document.getElementById('customSupplement');
+const customSupplementsList = document.getElementById('customSupplementsList');
+
+addSupplementBtn.addEventListener('click', function() {
+    const supplementName = customSupplementInput.value.trim();
+    if (supplementName) {
+        addCustomSupplement(supplementName);
+        customSupplementInput.value = '';
+    }
+});
+
+customSupplementInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const supplementName = this.value.trim();
+        if (supplementName) {
+            addCustomSupplement(supplementName);
+            this.value = '';
+        }
+    }
+});
+
+function addCustomSupplement(name) {
+    const tag = document.createElement('div');
+    tag.className = 'custom-supplement-tag';
+    tag.innerHTML = `
+        ${name}
+        <button type="button" class="remove-supplement" onclick="this.parentElement.remove()">×</button>
+    `;
+    customSupplementsList.appendChild(tag);
+}
+
+// 현재영양제 폼 제출 이벤트 (수정됨)
+currentSupplementsForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const takingSupplements = document.querySelector('input[name="takingSupplements"]:checked');
+    
+    if (!takingSupplements) {
+        alert('영양제 복용 여부를 선택해주세요.');
+        return;
+    }
+    
+    if (takingSupplements.value === 'yes' && uploadedFiles.length === 0) {
+        const customSupplements = document.querySelectorAll('.custom-supplement-tag');
+        if (customSupplements.length === 0) {
+            alert('영양제 사진을 업로드하거나 직접 입력해주세요.');
+            return;
+        }
+    }
+    
+    // 폼 데이터 생성 (실제 서버 전송용)
+    const formData = new FormData();
+    formData.append('takingSupplements', takingSupplements.value);
+    
+    uploadedFiles.forEach((file, index) => {
+        formData.append(`supplementPhoto_${index}`, file);
+    });
+    
+    // 커스텀 영양제 추가
+    const customSupplements = Array.from(document.querySelectorAll('.custom-supplement-tag')).map(tag => 
+        tag.textContent.replace('×', '').trim()
+    );
+    formData.append('customSupplements', JSON.stringify(customSupplements));
+    
+    console.log('영양제 정보:', {
+        takingSupplements: takingSupplements.value,
+        fileCount: uploadedFiles.length,
+        files: uploadedFiles.map(f => f.name),
+        customSupplements: customSupplements
+    });
+    
+    showSignupCompletePage();
+});
 
         // 사용자 정보 요약 생성 함수
         function generateCompleteSummary() {
