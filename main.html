@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영양제 관리 앱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F2E9E0;
+            min-height: 100vh;
+            color: #5a4a3a;
+        }
+        
+        .container {
+            max-width: 390px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            padding: 15px 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .app-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-message {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .date-info {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .date-main {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .date-sub {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+        
+        /* 달성률 바 */
+        .progress-section {
+            margin-top: 12px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .progress-percentage {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #66BB6A);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        /* 복용 시간대 섹션 */
+        .schedule-section {
+            padding: 20px;
+        }
+        
+        .time-slots {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .time-slot {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(212, 165, 116, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .time-slot:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.25);
+            border-color: #e9bf94;
+        }
+        
+        .time-slot.active {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+            border-color: #d4a574;
+        }
+        
+        .time-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .time-period {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        /* 영양제 리스트 */
+        .supplements-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(212, 165, 116, 0.1);
+            min-height: 200px;
+        }
+        
+        .supplements-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .supplements-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b6f47;
+        }
+        
+        .add-supplement-btn {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-supplement-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+        }
+        
+        .supplement-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #faf8f6;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .supplement-item:hover {
+            background: #f0ede8;
+            transform: translateX(5px);
+        }
+        
+        .supplement-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .supplement-info {
+            flex: 1;
+        }
+        
+        .supplement-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .supplement-dose {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .supplement-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .supplement-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .supplement-status.taken {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .supplement-time-btn {
+            background: #e9bf94;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 15px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .supplement-time-btn:hover {
+            background: #d4a574;
+            transform: scale(1.05);
+        }
+        
+        .supplement-time-btn.has-alarm {
+            background: #ff6b6b;
+        }
+        
+        .supplement-time-btn.has-alarm:hover {
+            background: #ff5252;
+        }
+        
+        .delete-supplement-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+        }
+        
+        .supplement-item:hover .delete-supplement-btn {
+            opacity: 1;
+        }
+        
+        .delete-supplement-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+        
+        .nav-item:hover {
+            background: #faf8f6;
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav-icon svg {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover .nav-icon svg {
+            transform: scale(1.1);
+        }
+        
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 빈 상태 메시지 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .empty-subtext {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 350px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #8b6f47;
+            margin-bottom: 5px;
+        }
+        
+        .modal-subtitle {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .modal-body {
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #8b6f47;
+        }
+        
+        .time-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .time-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9bf94;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .time-input:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+        }
+        
+        .meal-timing {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .meal-timing-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9bf94;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .meal-timing-btn.active {
+            background: #e9bf94;
+            color: white;
+        }
+        
+        .alarm-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #faf8f6;
+            border-radius: 10px;
+        }
+        
+        .alarm-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #8b6f47;
+        }
+        
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .switch.active {
+            background: #4CAF50;
+        }
+        
+        .switch-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .switch.active .switch-thumb {
+            transform: translateX(26px);
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .btn-cancel:hover {
+            background: #eee;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+        }
+        
+        /* 영양제 추가 모달 */
+        .add-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9bf94;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="app-title">💊 영양제 관리</div>
+            <div class="welcome-message">안녕하세요. '건강한 하루'님</div>
+            
+            <div class="date-info">
+                <div class="date-main">오늘의 복용 일정</div>
+                <div class="date-sub">2025년 7월 8일 (화)</div>
+                
+                <div class="progress-section">
+                    <div class="progress-label">
+                        <span>복용 달성률</span>
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span id="progressStats">복용완료: 0개</span>
+                        <span id="totalStats">전체: 0개</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- 복용 시간대 섹션 -->
+        <section class="schedule-section">
+            <div class="time-slots">
+                <div class="time-slot active" onclick="selectTimeSlot(this, 'morning')">
+                    <div class="time-label">아침</div>
+                    <div class="time-period">08:00</div>
+                </div>
+                
+                <div class="time-slot" onclick="selectTimeSlot(this, 'lunch')">
+                    <div class="time-label">점심</div>
+                    <div class="time-period">12:00</div>
+                </div>
+                
+                <div class="time-slot" onclick="selectTimeSlot(this, 'dinner')">
+                    <div class="time-label">저녁</div>
+                    <div class="time-period">18:00</div>
+                </div>
+            </div>
+            
+            <!-- 영양제 리스트 컨테이너 -->
+            <div class="supplements-container">
+                <div class="supplements-header">
+                    <div class="supplements-title" id="supplementsTitle">아침 복용 영양제</div>
+                    <button class="add-supplement-btn" onclick="openAddModal()">
+                        ➕ 추가
+                    </button>
+                </div>
+                <div id="supplementsList"></div>
+            </div>
+        </section>
+        
+        <!-- 하단 패딩 (네비게이션 공간 확보) -->
+        <div style="height: 90px;"></div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <div class="nav-item" onclick="navigateTo('community')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <circle cx="18.5" cy="10" r="2.5"/>
+                        <circle cx="5.5" cy="10" r="2.5"/>
+                        <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                        <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">커뮤니티</div>
+            </div>
+            
+            <div class="nav-item active" onclick="navigateTo('home')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">홈</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('chatbot')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
+                        <!-- 메인 얼굴 -->
+                        <rect x="130" y="180" width="252" height="200" rx="60" fill="currentColor"/>
+                        <!-- 왼쪽 귀 -->
+                        <ellipse cx="160" cy="160" rx="35" ry="45" fill="currentColor"/>
+                        <!-- 오른쪽 귀 -->
+                        <ellipse cx="350" cy="160" rx="35" ry="45" fill="currentColor"/>
+                        <!-- 작은 하트 -->
+                        <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
+                        <!-- 왼쪽 눈 -->
+                        <circle cx="190" cy="240" r="18" fill="white"/>
+                        <circle cx="190" cy="235" r="7" fill="currentColor"/>
+                        <!-- 오른쪽 눈 -->
+                        <circle cx="320" cy="240" r="18" fill="white"/>
+                        <circle cx="320" cy="235" r="7" fill="currentColor"/>
+                        <!-- 입 (두 개의 둥근 사각형) -->
+                        <rect x="200" y="310" width="45" height="30" rx="15" fill="white"/>
+                        <rect x="265" y="310" width="45" height="30" rx="15" fill="white"/>
+                        <line x1="255" y1="310" x2="255" y2="340" stroke="currentColor" stroke-width="5"/>
+                    </svg>
+                </div>
+                <div class="nav-label">챗봇</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('more')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="2"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <circle cx="19" cy="12" r="2"/>
+                    </svg>
+                </div>
+                <div class="nav-label">더보기</div>
+            </div>
+        </nav>
+        
+        <!-- 시간 설정 모달 -->
+        <div id="timeModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">⏰ 복용 시간 설정</div>
+                    <div class="modal-subtitle" id="modalSupplementName">비타민 D</div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">복용 시간</label>
+                        <div class="time-input-group">
+                            <input type="number" class="time-input" id="timeHour" placeholder="시" min="0" max="23">
+                            <span>:</span>
+                            <input type="number" class="time-input" id="timeMinute" placeholder="분" min="0" max="59">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">식사 타이밍</label>
+                        <div class="meal-timing">
+                            <button class="meal-timing-btn active" data-timing="before" onclick="selectMealTiming(this, 'before')">식전</button>
+                            <button class="meal-timing-btn" data-timing="after" onclick="selectMealTiming(this, 'after')">식후</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="alarm-toggle">
+                            <div class="alarm-text">
+                                🔔 알림 설정
+                            </div>
+                            <div class="switch" id="alarmSwitch" onclick="toggleAlarm()">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-cancel" onclick="closeTimeModal()">취소</button>
+                    <button class="btn btn-save" onclick="saveTimeSettings()">저장</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 영양제 추가 모달 -->
+        <div id="addModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">➕ 영양제 추가</div>
+                    <div class="modal-subtitle">새로운 영양제를 추가하세요</div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="add-form-group">
+                        <label class="form-label">영양제 이름</label>
+                        <input type="text" class="text-input" id="addSupplementName" placeholder="예: 철분제">
+                    </div>
+                    
+                    <div class="add-form-group">
+                        <label class="form-label">복용량/복용법</label>
+                        <input type="text" class="text-input" id="addSupplementDose" placeholder="예: 1정, 식후 30분">
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn btn-cancel" onclick="closeAddModal()">취소</button>
+                    <button class="btn btn-save" onclick="addNewSupplement()">추가</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 영양제 데이터
+        const supplementsData = {
+            morning: [
+                { name: '종합비타민', dose: '1정, 식후 30분', icon: '💊', taken: false, time: '08:00', timing: 'after', alarm: true },
+                { name: '비타민 D', dose: '1000IU, 1정', icon: '💊', taken: false, time: '08:30', timing: 'after', alarm: false },
+                { name: '오메가3', dose: '1000mg, 1캡슐', icon: '💊', taken: true, time: '09:00', timing: 'after', alarm: true }
+            ],
+            lunch: [
+                { name: '비타민 C', dose: '500mg, 1정', icon: '💊', taken: false, time: null, timing: 'after', alarm: false },
+                { name: '마그네슘', dose: '200mg, 1정', icon: '💊', taken: true, time: '12:30', timing: 'after', alarm: true }
+            ],
+            dinner: [
+                { name: '칼슘', dose: '600mg, 1정', icon: '💊', taken: false, time: '18:00', timing: 'after', alarm: false },
+                { name: '프로바이오틱스', dose: '1캡슐', icon: '💊', taken: false, time: '19:00', timing: 'before', alarm: true },
+                { name: '멜라토닌', dose: '3mg, 1정', icon: '💊', taken: false, time: null, timing: 'before', alarm: false }
+            ]
+        };
+        
+        let currentTimeSlot = 'morning';
+        
+        // 시간대 선택
+        function selectTimeSlot(element, timeSlot) {
+            // 기존 활성화 제거
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('active');
+            });
+            
+            // 새로운 활성화
+            element.classList.add('active');
+            currentTimeSlot = timeSlot;
+            
+            // 영양제 리스트 업데이트
+            updateSupplementsList(timeSlot);
+        }
+        
+        // 영양제 리스트 업데이트
+        function updateSupplementsList(timeSlot) {
+            const titleMap = {
+                morning: '아침 복용 영양제',
+                lunch: '점심 복용 영양제',
+                dinner: '저녁 복용 영양제'
+            };
+            
+            document.getElementById('supplementsTitle').textContent = titleMap[timeSlot];
+            
+            const supplements = supplementsData[timeSlot];
+            const listContainer = document.getElementById('supplementsList');
+            
+            if (supplements.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">💊</div>
+                        <div class="empty-text">복용할 영양제가 없습니다</div>
+                        <div class="empty-subtext">새로운 영양제를 추가해보세요</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            listContainer.innerHTML = supplements.map((supplement, index) => `
+                <div class="supplement-item">
+                    <div class="supplement-icon">${supplement.icon}</div>
+                    <div class="supplement-info">
+                        <div class="supplement-name">${supplement.name}</div>
+                        <div class="supplement-dose">${supplement.dose}</div>
+                    </div>
+                    <div class="supplement-actions">
+                        <button class="supplement-time-btn ${supplement.alarm ? 'has-alarm' : ''}" 
+                                onclick="openTimeModal('${timeSlot}', ${index})">
+                            ${supplement.time || '시간설정'}
+                        </button>
+                        <div class="supplement-status ${supplement.taken ? 'taken' : ''}" 
+                             onclick="toggleSupplement(this, '${timeSlot}', ${index})"></div>
+                        <button class="delete-supplement-btn" 
+                                onclick="deleteSupplement('${timeSlot}', ${index})" 
+                                title="삭제">✕</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 영양제 복용 상태 토글
+        function toggleSupplement(element, timeSlot, index) {
+            element.classList.toggle('taken');
+            supplementsData[timeSlot][index].taken = element.classList.contains('taken');
+            
+            // 복용 완료 시 애니메이션
+            if (element.classList.contains('taken')) {
+                element.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 300);
+            }
+            
+            // 달성률 업데이트
+            updateProgress();
+        }
+        
+        // 시간 설정 모달 열기
+        function openTimeModal(timeSlot, index) {
+            const supplement = supplementsData[timeSlot][index];
+            const modal = document.getElementById('timeModal');
+            
+            // 모달 정보 설정
+            document.getElementById('modalSupplementName').textContent = supplement.name;
+            
+            // 시간 설정
+            if (supplement.time) {
+                const [hours, minutes] = supplement.time.split(':');
+                document.getElementById('timeHour').value = hours;
+                document.getElementById('timeMinute').value = minutes;
+            } else {
+                document.getElementById('timeHour').value = '';
+                document.getElementById('timeMinute').value = '';
+            }
+            
+            // 식사 타이밍 설정
+            document.querySelectorAll('.meal-timing-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-timing="${supplement.timing}"]`).classList.add('active');
+            
+            // 알림 설정
+            const alarmSwitch = document.getElementById('alarmSwitch');
+            if (supplement.alarm) {
+                alarmSwitch.classList.add('active');
+            } else {
+                alarmSwitch.classList.remove('active');
+            }
+            
+            // 현재 편집 중인 영양제 정보 저장
+            modal.dataset.timeSlot = timeSlot;
+            modal.dataset.index = index;
+            
+            modal.classList.add('show');
+        }
+        
+        // 모달 닫기
+        function closeTimeModal() {
+            document.getElementById('timeModal').classList.remove('show');
+        }
+        
+        // 식사 타이밍 선택
+        function selectMealTiming(element, timing) {
+            document.querySelectorAll('.meal-timing-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+        
+        // 알림 토글
+        function toggleAlarm() {
+            const alarmSwitch = document.getElementById('alarmSwitch');
+            alarmSwitch.classList.toggle('active');
+        }
+        
+        // 시간 설정 저장
+        function saveTimeSettings() {
+            const modal = document.getElementById('timeModal');
+            const timeSlot = modal.dataset.timeSlot;
+            const index = parseInt(modal.dataset.index);
+            
+            const hours = document.getElementById('timeHour').value.padStart(2, '0');
+            const minutes = document.getElementById('timeMinute').value.padStart(2, '0');
+            const timing = document.querySelector('.meal-timing-btn.active').dataset.timing;
+            const alarm = document.getElementById('alarmSwitch').classList.contains('active');
+            
+            if (hours && minutes) {
+                const time = `${hours}:${minutes}`;
+                supplementsData[timeSlot][index].time = time;
+                supplementsData[timeSlot][index].timing = timing;
+                supplementsData[timeSlot][index].alarm = alarm;
+                
+                // 알림 설정 시 권한 요청
+                if (alarm && 'Notification' in window) {
+                    if (Notification.permission === 'default') {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                scheduleNotification(supplementsData[timeSlot][index]);
+                            }
+                        });
+                    } else if (Notification.permission === 'granted') {
+                        scheduleNotification(supplementsData[timeSlot][index]);
+                    }
+                }
+                
+                // 리스트 업데이트
+                updateSupplementsList(timeSlot);
+                
+                alert(`${supplementsData[timeSlot][index].name} 복용 시간이 ${time}${timing === 'before' ? ' 식전' : ' 식후'}으로 설정되었습니다.${alarm ? ' 알림이 활성화되었습니다.' : ''}`);
+            } else {
+                alert('시간을 입력해주세요.');
+                return;
+            }
+            
+            closeTimeModal();
+        }
+        
+        // 알림 스케줄링 (실제 앱에서는 서비스 워커나 백엔드에서 처리)
+        function scheduleNotification(supplement) {
+            console.log(`${supplement.name} 알림이 ${supplement.time}에 설정되었습니다.`);
+            // 실제 구현에서는 서비스 워커나 백엔드 API를 통해 알림을 스케줄링
+        }
+        
+        // 영양제 추가 모달 열기
+        function openAddModal() {
+            const modal = document.getElementById('addModal');
+            
+            // 입력 필드 초기화
+            document.getElementById('addSupplementName').value = '';
+            document.getElementById('addSupplementDose').value = '';
+            
+            // 현재 시간대 저장
+            modal.dataset.timeSlot = currentTimeSlot;
+            
+            modal.classList.add('show');
+        }
+        
+        // 영양제 추가 모달 닫기
+        function closeAddModal() {
+            document.getElementById('addModal').classList.remove('show');
+        }
+        
+        // 새 영양제 추가
+        function addNewSupplement() {
+            const modal = document.getElementById('addModal');
+            const timeSlot = modal.dataset.timeSlot;
+            
+            const name = document.getElementById('addSupplementName').value.trim();
+            const dose = document.getElementById('addSupplementDose').value.trim();
+            
+            if (!name || !dose) {
+                alert('영양제 이름과 복용량을 모두 입력해주세요.');
+                return;
+            }
+            
+            // 새 영양제 객체 생성
+            const newSupplement = {
+                name: name,
+                dose: dose,
+                icon: '💊',
+                taken: false,
+                time: null,
+                timing: 'after',
+                alarm: false
+            };
+            
+            // 데이터에 추가
+            supplementsData[timeSlot].push(newSupplement);
+            
+            // 리스트 업데이트
+            updateSupplementsList(timeSlot);
+            
+            // 달성률 업데이트
+            updateProgress();
+            
+            // 모달 닫기
+            closeAddModal();
+            
+            alert(`${name}이(가) ${getTimeSlotName(timeSlot)} 영양제로 추가되었습니다.`);
+        }
+        
+        // 영양제 삭제
+        function deleteSupplement(timeSlot, index) {
+            const supplement = supplementsData[timeSlot][index];
+            
+            if (confirm(`${supplement.name}을(를) 삭제하시겠습니까?`)) {
+                // 배열에서 제거
+                supplementsData[timeSlot].splice(index, 1);
+                
+                // 리스트 업데이트
+                updateSupplementsList(timeSlot);
+                
+                // 달성률 업데이트
+                updateProgress();
+                
+                alert(`${supplement.name}이(가) 삭제되었습니다.`);
+            }
+        }
+        
+        // 시간대 이름 반환
+        function getTimeSlotName(timeSlot) {
+            const names = {
+                morning: '아침',
+                lunch: '점심',
+                dinner: '저녁'
+            };
+            return names[timeSlot];
+        }
+        
+        // 달성률 업데이트
+        function updateProgress() {
+            let totalSupplements = 0;
+            let takenSupplements = 0;
+            
+            // 모든 시간대의 영양제 개수 계산
+            Object.keys(supplementsData).forEach(timeSlot => {
+                supplementsData[timeSlot].forEach(supplement => {
+                    totalSupplements++;
+                    if (supplement.taken) {
+                        takenSupplements++;
+                    }
+                });
+            });
+            
+            // 퍼센트 계산
+            const percentage = totalSupplements > 0 ? Math.round((takenSupplements / totalSupplements) * 100) : 0;
+            
+            // UI 업데이트
+            document.getElementById('progressPercentage').textContent = `${percentage}%`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressStats').textContent = `복용완료: ${takenSupplements}개`;
+            document.getElementById('totalStats').textContent = `전체: ${totalSupplements}개`;
+            
+            // 달성률에 따른 프로그레스 바 색상 변경
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.background = '#E79787';
+            
+            // 100% 달성 시 축하 메시지
+            if (percentage === 100 && totalSupplements > 0) {
+                setTimeout(() => {
+                    showCelebration();
+                }, 500);
+            }
+        }
+        
+        // 축하 메시지 표시
+        function showCelebration() {
+            // 간단한 축하 알림 (실제 앱에서는 더 예쁜 애니메이션 사용 가능)
+            const celebration = document.createElement('div');
+            celebration.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #4CAF50, #66BB6A);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 20px;
+                font-size: 18px;
+                font-weight: bold;
+                z-index: 2000;
+                animation: celebrationPop 2s ease;
+                text-align: center;
+                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+            `;
+            celebration.innerHTML = '🎉 축하합니다!<br>오늘 영양제를 모두 복용했습니다!';
+            
+            // CSS 애니메이션 추가
+            if (!document.querySelector('#celebrationStyle')) {
+                const style = document.createElement('style');
+                style.id = 'celebrationStyle';
+                style.textContent = `
+                    @keyframes celebrationPop {
+                        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                        50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+                        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(celebration);
+            
+            // 2초 후 제거
+            setTimeout(() => {
+                celebration.remove();
+            }, 2000);
+        }
+        
+        // 네비게이션
+        function navigateTo(page) {
+            // 기존 활성화 제거
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 클릭된 아이템 활성화
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // 페이지별 동작
+            switch(page) {
+                case 'community':
+                    alert('커뮤니티 페이지로 이동합니다');
+                    break;
+                case 'home':
+                    alert('홈 페이지입니다');
+                    break;
+                case 'chatbot':
+                    alert('챗봇 페이지로 이동합니다');
+                    break;
+                case 'more':
+                    alert('더보기 페이지로 이동합니다');
+                    break;
+            }
+        }
+        
+        // 초기 로드 시 아침 영양제 표시
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSupplementsList('morning');
+            updateProgress(); // 초기 달성률 계산
+        });
+    </script>
+</body>
+</html>
