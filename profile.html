@@ -1,0 +1,1144 @@
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 건강 관리</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #F2E9E0;
+    min-height: 100vh;
+    color: #5a4a3a;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 390px;
+    margin: 0 auto;
+    background: #F2E9E0;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 헤더 */
+.header {
+    background: transparent;
+    padding: 20px;
+    color: #5a4a3a;
+    position: relative;
+    text-align: center;
+}
+
+.back-btn {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #5a4a3a;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.header-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 메인 컨텐츠 */
+.content {
+    padding: 20px 0;
+    padding-bottom: 100px;
+}
+
+/* 섹션 스타일 */
+.section {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 20px;
+    margin: 0 20px 20px 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #5a4a3a;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 달성률 섹션 */
+.achievement-card {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.achievement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.achievement-label {
+    font-size: 14px;
+    color: #5a4a3a;
+}
+
+.achievement-percentage {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5a4a3a;
+}
+
+/* 새로운 진행 바 스타일 */
+.progress-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.5);
+    height: 12px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #EC9787;
+    border-radius: 20px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+    border-radius: 15px;
+}
+
+.progress-text {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* 마일스톤 마커 */
+.progress-milestones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+}
+
+.milestone {
+    flex: 1;
+    border-right: 1px dashed rgba(255,255,255,0.3);
+    position: relative;
+}
+
+.milestone:last-child {
+    border-right: none;
+}
+
+.milestone-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: #999;
+}
+
+.achievement-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(217, 188, 154, 0.3);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5a4a3a;
+    margin-bottom: 3px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #666;
+}
+
+/* 차트 컨테이너 */
+.chart-container {
+    margin: 20px 0;
+    height: 200px;
+    position: relative;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.weekly-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 150px;
+    padding: 0 10px;
+}
+
+.day-bar {
+    flex: 1;
+    margin: 0 5px;
+    position: relative;
+    text-align: center;
+}
+
+.bar {
+    width: 100%;
+    background: linear-gradient(to top, #e9bf94, #d4a574);
+    border-radius: 10px 10px 0 0;
+    transition: height 0.5s ease;
+    position: relative;
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #666;
+}
+
+.bar-value {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: bold;
+    color: #d4a574;
+}
+
+/* 목표 섹션 */
+.goal-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(236, 151, 135, 0.05);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(236, 151, 135, 0.2);
+}
+
+.goal-info {
+    flex: 1;
+}
+
+.goal-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.goal-progress {
+    font-size: 12px;
+    color: #666;
+}
+
+.goal-status {
+    width: 60px;
+    text-align: center;
+}
+
+.progress-ring {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.progress-ring svg {
+    transform: rotate(-90deg);
+}
+
+.progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.add-goal-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(217, 188, 154, 0.5);
+    color: #5a4a3a;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.add-goal-btn:hover {
+    background: rgba(217, 188, 154, 0.7);
+    transform: translateY(-2px);
+}
+
+/* 식단 기록 섹션 */
+.meal-time-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.meal-tab {
+    flex: 1;
+    padding: 10px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.meal-tab.active {
+    background: #EC9787;
+    color: white;
+}
+
+.meal-record {
+    background: rgba(236, 151, 135, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(236, 151, 135, 0.2);
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.meal-title {
+    font-weight: bold;
+    color: #EC9787;
+}
+
+.meal-calories {
+    font-size: 14px;
+    color: #EC9787;
+    font-weight: bold;
+}
+
+.meal-items {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.meal-time {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.add-meal-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(217, 188, 154, 0.5);
+    border: none;
+    border-radius: 20px;
+    color: #5a4a3a;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-meal-btn:hover {
+    background: rgba(217, 188, 154, 0.7);
+}
+
+/* 영양 요약 카드 */
+.nutrition-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.nutrition-card {
+    background: rgba(236, 151, 135, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid rgba(236, 151, 135, 0.2);
+}
+
+.nutrition-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.nutrition-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #EC9787;
+}
+
+.nutrition-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 3px;
+}
+
+/* 하단 네비게이션 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 390px;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    padding: 15px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    margin: 0 5px;
+}
+
+.nav-item:hover {
+    background: #faf8f6;
+    transform: translateY(-2px);
+}
+
+.nav-item.active {
+    background: #EC9787;
+    color: white;
+}
+
+.nav-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #F2E9E0;
+    border-radius: 25px;
+    padding: 30px;
+    width: 90%;
+    max-width: 350px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #8b6f47;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #8b6f47;
+}
+
+.text-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e9bf94;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.text-input:focus {
+    outline: none;
+    border-color: #d4a574;
+    box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+}
+
+textarea.text-input {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.btn-save {
+    background: #EC9787;
+    color: white;
+}
+
+.btn-save:hover {
+    background: #E58775;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 151, 135, 0.4);
+}
+</style>
+</head>
+<body>
+<div class="container">
+<!-- 헤더 -->
+<header class="header">
+    <button class="back-btn" onclick="goBack()">◀</button>
+    <h1 class="header-title">내 건강 관리</h1>
+</header>
+
+<!-- 메인 컨텐츠 -->
+<div class="content">
+    <!-- 현재 복용 달성률 섹션 -->
+    <section class="section">
+        <h2 class="section-title">
+            복용 달성률
+        </h2>
+        
+        <div class="achievement-card">
+            <div class="achievement-header">
+                <div class="achievement-label">이번 주 평균 달성률</div>
+                <div class="achievement-percentage">87%</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-fill" style="width: 87%"></div>
+            </div>
+            <div class="progress-info">
+                <span>복용완료: 22개</span>
+                <span>전체: 25개</span>
+            </div>
+            
+            <div class="achievement-stats" style="margin-top: 20px;">
+                <div class="stat-item">
+                    <div class="stat-value">22일</div>
+                    <div class="stat-label">이번 달 복용</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">5일</div>
+                    <div class="stat-label">연속 일수</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">156개</div>
+                    <div class="stat-label">총 복용 개수</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 주간 차트 -->
+        <div class="chart-container">
+            <div class="weekly-chart">
+                <div class="day-bar">
+                    <div class="bar" style="height: 80%">
+                        <span class="bar-value">80%</span>
+                    </div>
+                    <span class="bar-label">월</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 100%">
+                        <span class="bar-value">100%</span>
+                    </div>
+                    <span class="bar-label">화</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 90%">
+                        <span class="bar-value">90%</span>
+                    </div>
+                    <span class="bar-label">수</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 70%">
+                        <span class="bar-value">70%</span>
+                    </div>
+                    <span class="bar-label">목</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 100%">
+                        <span class="bar-value">100%</span>
+                    </div>
+                    <span class="bar-label">금</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 85%">
+                        <span class="bar-value">85%</span>
+                    </div>
+                    <span class="bar-label">토</span>
+                </div>
+                <div class="day-bar">
+                    <div class="bar" style="height: 95%">
+                        <span class="bar-value">95%</span>
+                    </div>
+                    <span class="bar-label">일</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 내가 설정한 목표 섹션 -->
+    <section class="section">
+        <h2 class="section-title">
+            내가 설정한 목표
+        </h2>
+        
+        <div class="goal-item">
+            <div class="goal-info">
+                <div class="goal-title">매일 영양제 100% 복용하기</div>
+                <div class="goal-progress">이번 달: 22일 / 30일</div>
+            </div>
+            <div class="goal-status">
+                <div class="progress-ring">
+                    <svg width="50" height="50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#EC9787" stroke-width="5" 
+                                stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
+                    </svg>
+                    <div class="progress-text" style="color: #EC9787">73%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="goal-item">
+            <div class="goal-info">
+                <div class="goal-title">하루 2L 이상 물 마시기</div>
+                <div class="goal-progress">오늘: 1.5L / 2L</div>
+            </div>
+            <div class="goal-status">
+                <div class="progress-ring">
+                    <svg width="50" height="50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#2196F3" stroke-width="5" 
+                                stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
+                    </svg>
+                    <div class="progress-text" style="color: #2196F3">75%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="goal-item">
+            <div class="goal-info">
+                <div class="goal-title">주 3회 이상 운동하기</div>
+                <div class="goal-progress">이번 주: 2회 / 3회</div>
+            </div>
+            <div class="goal-status">
+                <div class="progress-ring">
+                    <svg width="50" height="50">
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                        <circle cx="25" cy="25" r="20" fill="none" stroke="#FF9800" stroke-width="5" 
+                                stroke-dasharray="125.6" stroke-dashoffset="42"/>
+                    </svg>
+                    <div class="progress-text" style="color: #FF9800">67%</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="add-goal-btn" onclick="openGoalModal()">
+            + 새로운 목표 추가
+        </button>
+    </section>
+    
+    <!-- 식단 기록 섹션 -->
+    <section class="section">
+        <h2 class="section-title">
+            오늘의 식단 기록
+        </h2>
+        
+        <div class="meal-time-tabs">
+            <button class="meal-tab active" onclick="selectMealTime('breakfast')">아침</button>
+            <button class="meal-tab" onclick="selectMealTime('lunch')">점심</button>
+            <button class="meal-tab" onclick="selectMealTime('dinner')">저녁</button>
+            <button class="meal-tab" onclick="selectMealTime('snack')">간식</button>
+        </div>
+        
+        <div id="meal-records">
+            <div class="meal-record">
+                <div class="meal-header">
+                    <span class="meal-title">아침 식사</span>
+                    <span class="meal-calories">380 kcal</span>
+                </div>
+                <div class="meal-items">
+                    현미밥 1공기, 된장찌개, 계란후라이 2개, 김치
+                </div>
+                <div class="meal-time">오전 8:30</div>
+            </div>
+            
+            <button class="add-meal-btn" onclick="openMealModal()">
+                + 식단 추가하기
+            </button>
+        </div>
+        
+        <!-- 영양 요약 -->
+        <div class="nutrition-summary">
+            <div class="nutrition-card">
+                <div class="nutrition-icon">🔥</div>
+                <div class="nutrition-value">1,520</div>
+                <div class="nutrition-label">칼로리</div>
+            </div>
+            <div class="nutrition-card">
+                <div class="nutrition-icon">🥩</div>
+                <div class="nutrition-value">68g</div>
+                <div class="nutrition-label">단백질</div>
+            </div>
+            <div class="nutrition-card">
+                <div class="nutrition-icon">🌾</div>
+                <div class="nutrition-value">186g</div>
+                <div class="nutrition-label">탄수화물</div>
+            </div>
+            <div class="nutrition-card">
+                <div class="nutrition-icon">🥑</div>
+                <div class="nutrition-value">52g</div>
+                <div class="nutrition-label">지방</div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- 하단 네비게이션 -->
+<nav class="bottom-nav">
+    <div class="nav-item" onclick="navigateTo('community')">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                <circle cx="18.5" cy="10" r="2.5"/>
+                <circle cx="5.5" cy="10" r="2.5"/>
+                <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+            </svg>
+        </div>
+        <div class="nav-label">커뮤니티</div>
+    </div>
+    
+    <div class="nav-item" onclick="navigateTo('home')">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </div>
+        <div class="nav-label">홈</div>
+    </div>
+    
+    <div class="nav-item active" onclick="navigateTo('health')">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </div>
+        <div class="nav-label">내 건강</div>
+    </div>
+    
+    <div class="nav-item" onclick="navigateTo('chatbot')">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
+                <!-- 메인 얼굴 -->
+                <rect x="130" y="180" width="252" height="200" rx="60" fill="currentColor"/>
+                <!-- 왼쪽 귀 -->
+                <ellipse cx="160" cy="160" rx="35" ry="45" fill="currentColor"/>
+                <!-- 오른쪽 귀 -->
+                <ellipse cx="350" cy="160" rx="35" ry="45" fill="currentColor"/>
+                <!-- 작은 하트 -->
+                <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
+                <!-- 왼쪽 눈 -->
+                <circle cx="190" cy="240" r="18" fill="white"/>
+                <circle cx="190" cy="235" r="7" fill="currentColor"/>
+                <!-- 오른쪽 눈 -->
+                <circle cx="320" cy="240" r="18" fill="white"/>
+                <circle cx="320" cy="235" r="7" fill="currentColor"/>
+                <!-- 입 (두 개의 둥근 사각형) -->
+                <rect x="200" y="310" width="45" height="30" rx="15" fill="white"/>
+                <rect x="265" y="310" width="45" height="30" rx="15" fill="white"/>
+                <line x1="255" y1="310" x2="255" y2="340" stroke="currentColor" stroke-width="5"/>
+            </svg>
+        </div>
+        <div class="nav-label">챗봇</div>
+    </div>
+    
+    <div class="nav-item" onclick="navigateTo('more')">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="5" cy="12" r="2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <circle cx="19" cy="12" r="2"/>
+            </svg>
+        </div>
+        <div class="nav-label">더보기</div>
+    </div>
+</nav>
+
+<!-- 목표 추가 모달 -->
+<div id="goalModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">새로운 목표 추가</h2>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">목표 이름</label>
+            <input type="text" class="text-input" id="goalName" placeholder="예: 매일 30분 운동하기">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">목표 유형</label>
+            <select class="text-input" id="goalType">
+                <option value="daily">매일</option>
+                <option value="weekly">주간</option>
+                <option value="monthly">월간</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">목표 수치</label>
+            <input type="number" class="text-input" id="goalTarget" placeholder="예: 30">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">단위</label>
+            <input type="text" class="text-input" id="goalUnit" placeholder="예: 분, 회, km">
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeGoalModal()">취소</button>
+            <button class="btn btn-save" onclick="saveGoal()">저장</button>
+        </div>
+    </div>
+</div>
+
+<!-- 식단 추가 모달 -->
+<div id="mealModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">식단 추가</h2>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">식사 시간</label>
+            <select class="text-input" id="mealTime">
+                <option value="breakfast">아침</option>
+                <option value="lunch">점심</option>
+                <option value="dinner">저녁</option>
+                <option value="snack">간식</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">메뉴</label>
+            <textarea class="text-input" id="mealMenu" placeholder="먹은 음식을 입력해주세요"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">예상 칼로리</label>
+            <input type="number" class="text-input" id="mealCalories" placeholder="예: 500">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">메모</label>
+            <input type="text" class="text-input" id="mealNote" placeholder="예: 포만감 좋음, 소화 잘됨">
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeMealModal()">취소</button>
+            <button class="btn btn-save" onclick="saveMeal()">저장</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+// 식사 시간 선택
+function selectMealTime(time) {
+    document.querySelectorAll('.meal-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // 선택된 시간대의 식단 표시
+    updateMealRecords(time);
+}
+
+// 식단 기록 업데이트
+function updateMealRecords(time) {
+    const mealData = {
+        breakfast: {
+            records: [
+                {
+                    title: '아침 식사',
+                    items: '현미밥 1공기, 된장찌개, 계란후라이 2개, 김치',
+                    calories: 380,
+                    time: '오전 8:30'
+                }
+            ]
+        },
+        lunch: {
+            records: [
+                {
+                    title: '점심 식사',
+                    items: '제육볶음 정식, 된장찌개, 상추쌈',
+                    calories: 650,
+                    time: '오후 12:30'
+                }
+            ]
+        },
+        dinner: {
+            records: []
+        },
+        snack: {
+            records: [
+                {
+                    title: '오후 간식',
+                    items: '아메리카노, 초코칩 쿠키 2개',
+                    calories: 180,
+                    time: '오후 3:00'
+                }
+            ]
+        }
+    };
+    
+    const records = mealData[time].records;
+    const recordsContainer = document.getElementById('meal-records');
+    
+    let html = '';
+    if (records.length > 0) {
+        records.forEach(record => {
+            html += `
+                <div class="meal-record">
+                    <div class="meal-header">
+                        <span class="meal-title">${record.title}</span>
+                        <span class="meal-calories">${record.calories} kcal</span>
+                    </div>
+                    <div class="meal-items">${record.items}</div>
+                    <div class="meal-time">${record.time}</div>
+                </div>
+            `;
+        });
+    }
+    
+    html += `<button class="add-meal-btn" onclick="openMealModal()">+ 식단 추가하기</button>`;
+    recordsContainer.innerHTML = html;
+}
+
+// 목표 모달 열기/닫기
+function openGoalModal() {
+    document.getElementById('goalModal').classList.add('show');
+}
+
+function closeGoalModal() {
+    document.getElementById('goalModal').classList.remove('show');
+}
+
+// 식단 모달 열기/닫기
+function openMealModal() {
+    document.getElementById('mealModal').classList.add('show');
+}
+
+function closeMealModal() {
+    document.getElementById('mealModal').classList.remove('show');
+}
+
+// 목표 저장
+function saveGoal() {
+    const name = document.getElementById('goalName').value;
+    const type = document.getElementById('goalType').value;
+    const target = document.getElementById('goalTarget').value;
+    const unit = document.getElementById('goalUnit').value;
+    
+    if (name && target && unit) {
+        alert(`새로운 목표 "${name}"가 추가되었습니다!`);
+        closeGoalModal();
+        // 실제 앱에서는 데이터 저장 및 UI 업데이트
+    } else {
+        alert('모든 필드를 입력해주세요.');
+    }
+}
+
+// 식단 저장
+function saveMeal() {
+    const time = document.getElementById('mealTime').value;
+    const menu = document.getElementById('mealMenu').value;
+    const calories = document.getElementById('mealCalories').value;
+    const note = document.getElementById('mealNote').value;
+    
+    if (menu && calories) {
+        alert('식단이 기록되었습니다!');
+        closeMealModal();
+        // 실제 앱에서는 데이터 저장 및 UI 업데이트
+    } else {
+        alert('메뉴와 칼로리를 입력해주세요.');
+    }
+}
+
+// 네비게이션
+function navigateTo(page) {
+    // 실제 앱에서는 페이지 라우팅 처리
+    switch(page) {
+        case 'home':
+            window.location.href = 'main.html';
+            break;
+        case 'health':
+            // 현재 페이지
+            break;
+        default:
+            alert(`${page} 페이지로 이동합니다`);
+    }
+}
+
+// 뒤로가기
+function goBack() {
+    window.history.back();
+}
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    // 프로그레스 바 애니메이션
+    setTimeout(() => {
+        const progressFill = document.querySelector('.progress-fill');
+        if (progressFill) {
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.width = '87%';
+            }, 100);
+        }
+    }, 100);
+    
+    // 차트 애니메이션
+    setTimeout(() => {
+        const bars = document.querySelectorAll('.bar');
+        bars.forEach(bar => {
+            const height = bar.style.height;
+            bar.style.height = '0';
+            setTimeout(() => {
+                bar.style.height = height;
+            }, 100);
+        });
+    }, 500);
+});
+</script>
+</body>
+</html>
