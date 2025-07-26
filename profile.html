@@ -76,10 +76,145 @@ body {
     margin-bottom: 15px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.calendar-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    color: #5a4a3a;
+}
+
+.calendar-toggle:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.calendar-toggle svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* 캘린더 스타일 */
+.calendar-container {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    animation: slideDown 0.3s ease;
+}
+
+.calendar-container.hidden {
+    display: none;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-date {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5a4a3a;
+}
+
+.calendar-subtitle {
+    font-size: 12px;
+    color: #EC9787;
+    margin-top: 2px;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    color: #5a4a3a;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
     gap: 8px;
 }
 
+.calendar-day-header {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    color: #5a4a3a;
+}
+
+.calendar-day:hover {
+    background: rgba(236, 151, 135, 0.2);
+}
+
+.calendar-day.today {
+    background: #EC9787;
+    color: white;
+    font-weight: bold;
+}
+
+.calendar-day.completed {
+    background: #4CAF50;
+    color: white;
+}
+
+.calendar-day.partial {
+    background: #FF9800;
+    color: white;
+}
+
+.calendar-day.missed {
+    background: #f44336;
+    color: white;
+}
+
+.calendar-day.other-month {
+    color: #ccc;
+}
+
 /* 달성률 섹션 */
+.achievement-container {
+    animation: slideDown 0.3s ease;
+}
+
+.achievement-container.hidden {
+    display: none;
+}
+
 .achievement-card {
     background: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
@@ -151,35 +286,6 @@ body {
     font-weight: bold;
     font-size: 16px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-/* 마일스톤 마커 */
-.progress-milestones {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    display: flex;
-}
-
-.milestone {
-    flex: 1;
-    border-right: 1px dashed rgba(255,255,255,0.3);
-    position: relative;
-}
-
-.milestone:last-child {
-    border-right: none;
-}
-
-.milestone-label {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    color: #999;
 }
 
 .achievement-stats {
@@ -534,6 +640,17 @@ body {
     }
 }
 
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .modal-header {
     text-align: center;
     margin-bottom: 25px;
@@ -619,86 +736,115 @@ textarea.text-input {
 
 <!-- 메인 컨텐츠 -->
 <div class="content">
-    <!-- 현재 복용 달성률 섹션 -->
+    <!-- 복용 달성률 섹션 -->
     <section class="section">
         <h2 class="section-title">
             복용 달성률
+            <button class="calendar-toggle" onclick="toggleCalendar()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                </svg>
+            </button>
         </h2>
         
-        <div class="achievement-card">
-            <div class="achievement-header">
-                <div class="achievement-label">이번 주 평균 달성률</div>
-                <div class="achievement-percentage">87%</div>
+        <!-- 캘린더 -->
+        <div id="calendarContainer" class="calendar-container hidden">
+            <div class="calendar-header">
+                <div>
+                    <div class="calendar-date">2025.07.14.월요일</div>
+                    <div class="calendar-subtitle">2일 연속 복용 성공중</div>
+                </div>
+                <div class="calendar-nav">
+                    <button class="nav-arrow" onclick="changeMonth(-1)">‹</button>
+                    <button class="nav-arrow" onclick="changeMonth(1)">›</button>
+                </div>
             </div>
             
-            <div class="progress-container">
-                <div class="progress-fill" style="width: 87%"></div>
-            </div>
-            <div class="progress-info">
-                <span>복용완료: 22개</span>
-                <span>전체: 25개</span>
-            </div>
-            
-            <div class="achievement-stats" style="margin-top: 20px;">
-                <div class="stat-item">
-                    <div class="stat-value">22일</div>
-                    <div class="stat-label">이번 달 복용</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">5일</div>
-                    <div class="stat-label">연속 일수</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">156개</div>
-                    <div class="stat-label">총 복용 개수</div>
-                </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-header">일</div>
+                <div class="calendar-day-header">월</div>
+                <div class="calendar-day-header">화</div>
+                <div class="calendar-day-header">수</div>
+                <div class="calendar-day-header">목</div>
+                <div class="calendar-day-header">금</div>
+                <div class="calendar-day-header">토</div>
+                
+                <!-- 이전 달 말일들 -->
+                <div class="calendar-day other-month">29</div>
+                <div class="calendar-day other-month">30</div>
+                
+                <!-- 7월 -->
+                <div class="calendar-day completed">1</div>
+                <div class="calendar-day completed">2</div>
+                <div class="calendar-day partial">3</div>
+                <div class="calendar-day completed">4</div>
+                <div class="calendar-day completed">5</div>
+                
+                <div class="calendar-day completed">6</div>
+                <div class="calendar-day missed">7</div>
+                <div class="calendar-day completed">8</div>
+                <div class="calendar-day partial">9</div>
+                <div class="calendar-day completed">10</div>
+                <div class="calendar-day completed">11</div>
+                <div class="calendar-day completed">12</div>
+                
+                <div class="calendar-day completed">13</div>
+                <div class="calendar-day today">14</div>
+                <div class="calendar-day">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+                <div class="calendar-day">19</div>
+                
+                <div class="calendar-day">20</div>
+                <div class="calendar-day">21</div>
+                <div class="calendar-day">22</div>
+                <div class="calendar-day">23</div>
+                <div class="calendar-day">24</div>
+                <div class="calendar-day">25</div>
+                <div class="calendar-day">26</div>
+                
+                <div class="calendar-day">27</div>
+                <div class="calendar-day">28</div>
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+                
+                <!-- 다음 달 첫날들 -->
+                <div class="calendar-day other-month">1</div>
+                <div class="calendar-day other-month">2</div>
             </div>
         </div>
         
-        <!-- 주간 차트 -->
-        <div class="chart-container">
-            <div class="weekly-chart">
-                <div class="day-bar">
-                    <div class="bar" style="height: 80%">
-                        <span class="bar-value">80%</span>
-                    </div>
-                    <span class="bar-label">월</span>
+        <!-- 달성률 상세 정보 -->
+        <div id="achievementContainer" class="achievement-container">
+            <div class="achievement-card">
+                <div class="achievement-header">
+                    <div class="achievement-label">이번 주 평균 달성률</div>
+                    <div class="achievement-percentage">87%</div>
                 </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 100%">
-                        <span class="bar-value">100%</span>
-                    </div>
-                    <span class="bar-label">화</span>
+                
+                <div class="progress-container">
+                    <div class="progress-fill" style="width: 87%"></div>
                 </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 90%">
-                        <span class="bar-value">90%</span>
-                    </div>
-                    <span class="bar-label">수</span>
+                <div class="progress-info">
+                    <span>복용완료: 22개</span>
+                    <span>전체: 25개</span>
                 </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 70%">
-                        <span class="bar-value">70%</span>
+                
+                <div class="achievement-stats" style="margin-top: 20px;">
+                    <div class="stat-item">
+                        <div class="stat-value">22일</div>
+                        <div class="stat-label">이번 달 복용</div>
                     </div>
-                    <span class="bar-label">목</span>
-                </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 100%">
-                        <span class="bar-value">100%</span>
+                    <div class="stat-item">
+                        <div class="stat-value">5일</div>
+                        <div class="stat-label">연속 일수</div>
                     </div>
-                    <span class="bar-label">금</span>
-                </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 85%">
-                        <span class="bar-value">85%</span>
+                    <div class="stat-item">
+                        <div class="stat-value">156개</div>
+                        <div class="stat-label">총 복용 개수</div>
                     </div>
-                    <span class="bar-label">토</span>
-                </div>
-                <div class="day-bar">
-                    <div class="bar" style="height: 95%">
-                        <span class="bar-value">95%</span>
-                    </div>
-                    <span class="bar-label">일</span>
                 </div>
             </div>
         </div>
@@ -972,6 +1118,69 @@ textarea.text-input {
 </div>
 
 <script>
+let calendarVisible = false;
+let currentMonth = 7; // 7월
+let currentYear = 2025;
+
+// 캘린더/달성률 토글 기능
+function toggleCalendar() {
+    const calendarContainer = document.getElementById('calendarContainer');
+    const achievementContainer = document.getElementById('achievementContainer');
+    
+    calendarVisible = !calendarVisible;
+    
+    if (calendarVisible) {
+        calendarContainer.classList.remove('hidden');
+        achievementContainer.classList.add('hidden');
+    } else {
+        calendarContainer.classList.add('hidden');
+        achievementContainer.classList.remove('hidden');
+        
+        // 프로그레스 바 애니메이션
+        setTimeout(() => {
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = '0%';
+                setTimeout(() => {
+                    progressFill.style.width = '87%';
+                }, 100);
+            }
+        }, 100);
+    }
+}
+
+// 월 변경 기능
+function changeMonth(direction) {
+    currentMonth += direction;
+    
+    if (currentMonth > 12) {
+        currentMonth = 1;
+        currentYear++;
+    } else if (currentMonth < 1) {
+        currentMonth = 12;
+        currentYear--;
+    }
+    
+    updateCalendar();
+}
+
+// 캘린더 업데이트
+function updateCalendar() {
+    const monthNames = ['', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    
+    // 날짜 헤더 업데이트
+    const today = new Date();
+    const currentDate = new Date(currentYear, currentMonth - 1, today.getDate());
+    const dayOfWeek = dayNames[currentDate.getDay()];
+    
+    document.querySelector('.calendar-date').textContent = 
+        `${currentYear}.${String(currentMonth).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}.${dayOfWeek}`;
+    
+    // 실제 앱에서는 여기서 캘린더 그리드를 동적으로 생성
+    console.log(`캘린더 업데이트: ${currentYear}년 ${monthNames[currentMonth]}`);
+}
+
 // 식사 시간 선택
 function selectMealTime(time) {
     document.querySelectorAll('.meal-tab').forEach(tab => {
@@ -1116,6 +1325,10 @@ function goBack() {
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
+    // 달성률이 기본으로 표시되도록 설정
+    document.getElementById('calendarContainer').classList.add('hidden');
+    document.getElementById('achievementContainer').classList.remove('hidden');
+    
     // 프로그레스 바 애니메이션
     setTimeout(() => {
         const progressFill = document.querySelector('.progress-fill');
@@ -1126,18 +1339,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         }
     }, 100);
-    
-    // 차트 애니메이션
-    setTimeout(() => {
-        const bars = document.querySelectorAll('.bar');
-        bars.forEach(bar => {
-            const height = bar.style.height;
-            bar.style.height = '0';
-            setTimeout(() => {
-                bar.style.height = height;
-            }, 100);
-        });
-    }, 500);
 });
 </script>
 </body>
