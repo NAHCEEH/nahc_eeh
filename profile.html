@@ -319,59 +319,23 @@ body {
     color: #666;
 }
 
-/* 차트 컨테이너 */
-.chart-container {
-    margin: 20px 0;
-    height: 200px;
-    position: relative;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    padding: 20px;
+/* 새로운 목표 추가 애니메이션 */
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-.weekly-chart {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    height: 150px;
-    padding: 0 10px;
-}
-
-.day-bar {
-    flex: 1;
-    margin: 0 5px;
-    position: relative;
-    text-align: center;
-}
-
-.bar {
-    width: 100%;
-    background: linear-gradient(to top, #e9bf94, #d4a574);
-    border-radius: 10px 10px 0 0;
-    transition: height 0.5s ease;
+/* 목표 섹션 개선 */
+#goals-container {
     position: relative;
 }
 
-.bar-label {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    color: #666;
-}
-
-.bar-value {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 11px;
-    font-weight: bold;
-    color: #d4a574;
-}
-
-/* 목표 섹션 */
 .goal-item {
     display: flex;
     align-items: center;
@@ -381,6 +345,12 @@ body {
     border-radius: 10px;
     margin-bottom: 10px;
     border: 1px solid rgba(236, 151, 135, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.goal-item:hover {
+    transform: translateX(5px);
 }
 
 .goal-info {
@@ -395,6 +365,12 @@ body {
 .goal-progress {
     font-size: 12px;
     color: #666;
+}
+
+.goal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .goal-status {
@@ -420,6 +396,29 @@ body {
     font-size: 12px;
     font-weight: bold;
     color: #4CAF50;
+}
+
+/* 삭제 버튼 스타일 */
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.delete-btn:hover {
+    background: rgba(255, 107, 107, 0.1);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.delete-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 .add-goal-btn {
@@ -470,6 +469,12 @@ body {
     padding: 15px;
     margin-bottom: 10px;
     border: 1px solid rgba(236, 151, 135, 0.2);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.meal-record:hover {
+    transform: translateX(5px);
 }
 
 .meal-header {
@@ -494,12 +499,42 @@ body {
     font-size: 14px;
     color: #666;
     line-height: 1.6;
+    margin-bottom: 8px;
 }
 
 .meal-time {
     font-size: 12px;
     color: #999;
     margin-top: 5px;
+}
+
+.meal-delete-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.meal-record:hover .meal-delete-btn {
+    opacity: 0.7;
+}
+
+.meal-delete-btn:hover {
+    background: rgba(255, 107, 107, 0.1);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.meal-delete-btn svg {
+    width: 16px;
+    height: 16px;
 }
 
 .add-meal-btn {
@@ -629,6 +664,32 @@ body {
     animation: modalSlideIn 0.3s ease;
 }
 
+/* 확인 모달 특별 스타일 */
+.confirm-modal-content {
+    text-align: center;
+    padding: 40px 30px;
+}
+
+.confirm-icon {
+    font-size: 48px;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+}
+
+.confirm-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5a4a3a;
+    margin-bottom: 15px;
+}
+
+.confirm-message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
 @keyframes modalSlideIn {
     from {
         transform: translateY(-50px);
@@ -687,6 +748,24 @@ body {
     box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
 }
 
+.input-hint {
+    font-size: 11px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.text-input.error {
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
 textarea.text-input {
     resize: vertical;
     min-height: 100px;
@@ -719,10 +798,37 @@ textarea.text-input {
     color: white;
 }
 
+.btn-delete {
+    background: #ff6b6b;
+    color: white;
+}
+
 .btn-save:hover {
     background: #E58775;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(236, 151, 135, 0.4);
+}
+
+.btn-delete:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* 삭제 애니메이션 */
+.deleting {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
 }
 </style>
 </head>
@@ -856,53 +962,76 @@ textarea.text-input {
             내가 설정한 목표
         </h2>
         
-        <div class="goal-item">
-            <div class="goal-info">
-                <div class="goal-title">매일 영양제 100% 복용하기</div>
-                <div class="goal-progress">이번 달: 22일 / 30일</div>
-            </div>
-            <div class="goal-status">
-                <div class="progress-ring">
-                    <svg width="50" height="50">
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#EC9787" stroke-width="5" 
-                                stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
-                    </svg>
-                    <div class="progress-text" style="color: #EC9787">73%</div>
+        <div id="goals-container">
+            <div class="goal-item" data-goal-id="1">
+                <div class="goal-info">
+                    <div class="goal-title">매일 영양제 100% 복용하기</div>
+                    <div class="goal-progress">이번 달: 22일 / 30일</div>
+                </div>
+                <div class="goal-actions">
+                    <div class="goal-status">
+                        <div class="progress-ring">
+                            <svg width="50" height="50">
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#EC9787" stroke-width="5" 
+                                        stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
+                            </svg>
+                            <div class="progress-text" style="color: #EC9787">73%</div>
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="confirmDeleteGoal(1, '매일 영양제 100% 복용하기')">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <div class="goal-item">
-            <div class="goal-info">
-                <div class="goal-title">하루 2L 이상 물 마시기</div>
-                <div class="goal-progress">오늘: 1.5L / 2L</div>
-            </div>
-            <div class="goal-status">
-                <div class="progress-ring">
-                    <svg width="50" height="50">
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#2196F3" stroke-width="5" 
-                                stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
-                    </svg>
-                    <div class="progress-text" style="color: #2196F3">75%</div>
+            
+            <div class="goal-item" data-goal-id="2">
+                <div class="goal-info">
+                    <div class="goal-title">하루 2L 이상 물 마시기</div>
+                    <div class="goal-progress">오늘: 1.5L / 2L</div>
+                </div>
+                <div class="goal-actions">
+                    <div class="goal-status">
+                        <div class="progress-ring">
+                            <svg width="50" height="50">
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#2196F3" stroke-width="5" 
+                                        stroke-dasharray="125.6" stroke-dashoffset="31.4"/>
+                            </svg>
+                            <div class="progress-text" style="color: #2196F3">75%</div>
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="confirmDeleteGoal(2, '하루 2L 이상 물 마시기')">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <div class="goal-item">
-            <div class="goal-info">
-                <div class="goal-title">주 3회 이상 운동하기</div>
-                <div class="goal-progress">이번 주: 2회 / 3회</div>
-            </div>
-            <div class="goal-status">
-                <div class="progress-ring">
-                    <svg width="50" height="50">
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
-                        <circle cx="25" cy="25" r="20" fill="none" stroke="#FF9800" stroke-width="5" 
-                                stroke-dasharray="125.6" stroke-dashoffset="42"/>
-                    </svg>
-                    <div class="progress-text" style="color: #FF9800">67%</div>
+            
+            <div class="goal-item" data-goal-id="3">
+                <div class="goal-info">
+                    <div class="goal-title">주 3회 이상 운동하기</div>
+                    <div class="goal-progress">이번 주: 2회 / 3회</div>
+                </div>
+                <div class="goal-actions">
+                    <div class="goal-status">
+                        <div class="progress-ring">
+                            <svg width="50" height="50">
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                                <circle cx="25" cy="25" r="20" fill="none" stroke="#FF9800" stroke-width="5" 
+                                        stroke-dasharray="125.6" stroke-dashoffset="42"/>
+                            </svg>
+                            <div class="progress-text" style="color: #FF9800">67%</div>
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="confirmDeleteGoal(3, '주 3회 이상 운동하기')">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -926,7 +1055,12 @@ textarea.text-input {
         </div>
         
         <div id="meal-records">
-            <div class="meal-record">
+            <div class="meal-record" data-meal-id="1">
+                <button class="meal-delete-btn" onclick="confirmDeleteMeal(1, '아침 식사')">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                </button>
                 <div class="meal-header">
                     <span class="meal-title">아침 식사</span>
                     <span class="meal-calories">380 kcal</span>
@@ -1047,12 +1181,13 @@ textarea.text-input {
         </div>
         
         <div class="form-group">
-            <label class="form-label">목표 이름</label>
-            <input type="text" class="text-input" id="goalName" placeholder="예: 매일 30분 운동하기">
+            <label class="form-label">목표 이름 *</label>
+            <input type="text" class="text-input" id="goalName" placeholder="예: 매일 30분 운동하기" maxlength="50">
+            <div class="input-hint">최대 50자까지 입력 가능합니다</div>
         </div>
         
         <div class="form-group">
-            <label class="form-label">목표 유형</label>
+            <label class="form-label">목표 유형 *</label>
             <select class="text-input" id="goalType">
                 <option value="daily">매일</option>
                 <option value="weekly">주간</option>
@@ -1061,13 +1196,15 @@ textarea.text-input {
         </div>
         
         <div class="form-group">
-            <label class="form-label">목표 수치</label>
-            <input type="number" class="text-input" id="goalTarget" placeholder="예: 30">
+            <label class="form-label">목표 수치 *</label>
+            <input type="number" class="text-input" id="goalTarget" placeholder="예: 30" min="1" max="9999">
+            <div class="input-hint">1~9999 사이의 숫자를 입력해주세요</div>
         </div>
         
         <div class="form-group">
-            <label class="form-label">단위</label>
-            <input type="text" class="text-input" id="goalUnit" placeholder="예: 분, 회, km">
+            <label class="form-label">단위 *</label>
+            <input type="text" class="text-input" id="goalUnit" placeholder="예: 분, 회, km, 잔" maxlength="10">
+            <div class="input-hint">최대 10자까지 입력 가능합니다</div>
         </div>
         
         <div class="modal-footer">
@@ -1115,12 +1252,28 @@ textarea.text-input {
         </div>
     </div>
 </div>
+
+<!-- 삭제 확인 모달 -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content confirm-modal-content">
+        <div class="confirm-icon">🗑️</div>
+        <div class="confirm-title" id="confirmTitle">정말 삭제하시겠어요?</div>
+        <div class="confirm-message" id="confirmMessage">삭제된 항목은 복구할 수 없습니다.</div>
+        
+        <div class="modal-footer">
+            <button class="btn btn-cancel" onclick="closeConfirmModal()">취소</button>
+            <button class="btn btn-delete" id="confirmDeleteBtn">삭제</button>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>
 let calendarVisible = false;
 let currentMonth = 7; // 7월
 let currentYear = 2025;
+let goalIdCounter = 4; // 다음 목표 ID
+let mealIdCounter = 2; // 다음 식단 ID
 
 // 캘린더/달성률 토글 기능
 function toggleCalendar() {
@@ -1177,7 +1330,6 @@ function updateCalendar() {
     document.querySelector('.calendar-date').textContent = 
         `${currentYear}.${String(currentMonth).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}.${dayOfWeek}`;
     
-    // 실제 앱에서는 여기서 캘린더 그리드를 동적으로 생성
     console.log(`캘린더 업데이트: ${currentYear}년 ${monthNames[currentMonth]}`);
 }
 
@@ -1198,6 +1350,7 @@ function updateMealRecords(time) {
         breakfast: {
             records: [
                 {
+                    id: 1,
                     title: '아침 식사',
                     items: '현미밥 1공기, 된장찌개, 계란후라이 2개, 김치',
                     calories: 380,
@@ -1208,6 +1361,7 @@ function updateMealRecords(time) {
         lunch: {
             records: [
                 {
+                    id: 2,
                     title: '점심 식사',
                     items: '제육볶음 정식, 된장찌개, 상추쌈',
                     calories: 650,
@@ -1221,6 +1375,7 @@ function updateMealRecords(time) {
         snack: {
             records: [
                 {
+                    id: 3,
                     title: '오후 간식',
                     items: '아메리카노, 초코칩 쿠키 2개',
                     calories: 180,
@@ -1237,7 +1392,12 @@ function updateMealRecords(time) {
     if (records.length > 0) {
         records.forEach(record => {
             html += `
-                <div class="meal-record">
+                <div class="meal-record" data-meal-id="${record.id}">
+                    <button class="meal-delete-btn" onclick="confirmDeleteMeal(${record.id}, '${record.title}')">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
                     <div class="meal-header">
                         <span class="meal-title">${record.title}</span>
                         <span class="meal-calories">${record.calories} kcal</span>
@@ -1253,13 +1413,166 @@ function updateMealRecords(time) {
     recordsContainer.innerHTML = html;
 }
 
+// 목표 삭제 확인
+function confirmDeleteGoal(goalId, goalName) {
+    const modal = document.getElementById('confirmModal');
+    const title = document.getElementById('confirmTitle');
+    const message = document.getElementById('confirmMessage');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    
+    title.textContent = '목표를 삭제하시겠어요?';
+    message.innerHTML = `<strong>"${goalName}"</strong><br>삭제된 목표는 복구할 수 없습니다.`;
+    
+    confirmBtn.onclick = () => deleteGoal(goalId);
+    modal.classList.add('show');
+}
+
+// 목표 삭제 실행
+function deleteGoal(goalId) {
+    const goalElement = document.querySelector(`[data-goal-id="${goalId}"]`);
+    
+    if (goalElement) {
+        // 삭제 애니메이션 적용
+        goalElement.classList.add('deleting');
+        
+        // 애니메이션 완료 후 요소 제거
+        setTimeout(() => {
+            goalElement.remove();
+            showSuccessMessage('목표가 삭제되었습니다');
+        }, 300);
+    }
+    
+    closeConfirmModal();
+}
+
+// 식단 삭제 확인
+function confirmDeleteMeal(mealId, mealTitle) {
+    const modal = document.getElementById('confirmModal');
+    const title = document.getElementById('confirmTitle');
+    const message = document.getElementById('confirmMessage');
+    const confirmBtn = document.getElementById('confirmDeleteBtn');
+    
+    title.textContent = '식단을 삭제하시겠어요?';
+    message.innerHTML = `<strong>"${mealTitle}"</strong><br>삭제된 기록은 복구할 수 없습니다.`;
+    
+    confirmBtn.onclick = () => deleteMeal(mealId);
+    modal.classList.add('show');
+}
+
+// 식단 삭제 실행
+function deleteMeal(mealId) {
+    const mealElement = document.querySelector(`[data-meal-id="${mealId}"]`);
+    
+    if (mealElement) {
+        // 삭제 애니메이션 적용
+        mealElement.classList.add('deleting');
+        
+        // 애니메이션 완료 후 요소 제거
+        setTimeout(() => {
+            mealElement.remove();
+            showSuccessMessage('식단 기록이 삭제되었습니다');
+            
+            // 영양 정보 업데이트 (실제 앱에서는 계산 로직 필요)
+            updateNutritionSummary();
+        }, 300);
+    }
+    
+    closeConfirmModal();
+}
+
+// 영양 정보 업데이트 (예시)
+function updateNutritionSummary() {
+    // 실제 앱에서는 남은 식단들의 칼로리를 계산해서 업데이트
+    const nutritionCards = document.querySelectorAll('.nutrition-value');
+    
+    // 예시: 칼로리 감소
+    if (nutritionCards[0]) {
+        nutritionCards[0].textContent = '1,140'; // 380 칼로리 감소
+    }
+}
+
+// 성공 메시지 표시
+function showSuccessMessage(message) {
+    // 간단한 토스트 메시지 (실제 앱에서는 더 예쁜 디자인 적용)
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 25px;
+        z-index: 10000;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideDown 0.3s ease;
+    `;
+    toast.textContent = message;
+    
+    document.body.appendChild(toast);
+    
+    // 3초 후 제거
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-20px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// 확인 모달 닫기
+function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('show');
+}
+
 // 목표 모달 열기/닫기
 function openGoalModal() {
-    document.getElementById('goalModal').classList.add('show');
+    const modal = document.getElementById('goalModal');
+    if (modal) {
+        modal.classList.add('show');
+        // 폼 초기화
+        clearGoalForm();
+        // 첫 번째 입력 필드에 포커스
+        setTimeout(() => {
+            const nameInput = document.getElementById('goalName');
+            if (nameInput) nameInput.focus();
+        }, 100);
+    } else {
+        console.error('목표 모달을 찾을 수 없습니다.');
+    }
 }
 
 function closeGoalModal() {
-    document.getElementById('goalModal').classList.remove('show');
+    const modal = document.getElementById('goalModal');
+    if (modal) {
+        modal.classList.remove('show');
+        clearGoalForm();
+    }
+}
+
+// 목표 폼 초기화
+function clearGoalForm() {
+    const elements = {
+        goalName: document.getElementById('goalName'),
+        goalType: document.getElementById('goalType'),
+        goalTarget: document.getElementById('goalTarget'),
+        goalUnit: document.getElementById('goalUnit')
+    };
+    
+    // 각 요소가 존재하는지 확인 후 초기화
+    if (elements.goalName) elements.goalName.value = '';
+    if (elements.goalType) elements.goalType.value = 'daily';
+    if (elements.goalTarget) elements.goalTarget.value = '';
+    if (elements.goalUnit) elements.goalUnit.value = '';
+    
+    // 에러 스타일 제거 (있는 경우)
+    Object.values(elements).forEach(element => {
+        if (element) {
+            element.classList.remove('error');
+            element.style.borderColor = '';
+        }
+    });
 }
 
 // 식단 모달 열기/닫기
@@ -1269,37 +1582,160 @@ function openMealModal() {
 
 function closeMealModal() {
     document.getElementById('mealModal').classList.remove('show');
+    clearMealForm();
+}
+
+// 식단 폼 초기화
+function clearMealForm() {
+    document.getElementById('mealTime').value = 'breakfast';
+    document.getElementById('mealMenu').value = '';
+    document.getElementById('mealCalories').value = '';
+    document.getElementById('mealNote').value = '';
 }
 
 // 목표 저장
 function saveGoal() {
-    const name = document.getElementById('goalName').value;
+    const name = document.getElementById('goalName').value.trim();
     const type = document.getElementById('goalType').value;
-    const target = document.getElementById('goalTarget').value;
-    const unit = document.getElementById('goalUnit').value;
+    const target = document.getElementById('goalTarget').value.trim();
+    const unit = document.getElementById('goalUnit').value.trim();
     
-    if (name && target && unit) {
-        alert(`새로운 목표 "${name}"가 추가되었습니다!`);
-        closeGoalModal();
-        // 실제 앱에서는 데이터 저장 및 UI 업데이트
-    } else {
+    if (!name || !target || !unit) {
         alert('모든 필드를 입력해주세요.');
+        return;
     }
+    
+    // 목표 유형에 따른 진행률 텍스트 생성
+    const typeLabels = {
+        'daily': '오늘',
+        'weekly': '이번 주',
+        'monthly': '이번 달'
+    };
+    
+    // 랜덤 색상 선택 (다양성을 위해)
+    const colors = ['#EC9787', '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#FF5722'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    // 새 목표 HTML 생성
+    const newGoalHtml = `
+        <div class="goal-item" data-goal-id="${goalIdCounter}" style="animation: slideInFromRight 0.3s ease;">
+            <div class="goal-info">
+                <div class="goal-title">${name}</div>
+                <div class="goal-progress">${typeLabels[type]}: 0 / ${target}${unit}</div>
+            </div>
+            <div class="goal-actions">
+                <div class="goal-status">
+                    <div class="progress-ring">
+                        <svg width="50" height="50">
+                            <circle cx="25" cy="25" r="20" fill="none" stroke="#e0e0e0" stroke-width="5"/>
+                            <circle cx="25" cy="25" r="20" fill="none" stroke="${randomColor}" stroke-width="5" 
+                                    stroke-dasharray="125.6" stroke-dashoffset="125.6"/>
+                        </svg>
+                        <div class="progress-text" style="color: ${randomColor}">0%</div>
+                    </div>
+                </div>
+                <button class="delete-btn" onclick="confirmDeleteGoal(${goalIdCounter}, '${name}')">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // 목표 컨테이너 찾기
+    const goalsContainer = document.getElementById('goals-container');
+    const addButton = document.querySelector('.add-goal-btn');
+    
+    // 새 목표를 추가 버튼 바로 앞에 삽입
+    if (addButton) {
+        addButton.insertAdjacentHTML('beforebegin', newGoalHtml);
+    } else {
+        // 추가 버튼이 없는 경우 컨테이너 끝에 추가
+        goalsContainer.insertAdjacentHTML('beforeend', newGoalHtml);
+    }
+    
+    // 애니메이션 클래스 제거 (한 번만 실행되도록)
+    setTimeout(() => {
+        const newGoal = document.querySelector(`[data-goal-id="${goalIdCounter}"]`);
+        if (newGoal) {
+            newGoal.style.animation = '';
+        }
+    }, 300);
+    
+    goalIdCounter++;
+    
+    showSuccessMessage(`새로운 목표 "${name}"가 추가되었습니다!`);
+    closeGoalModal();
+    
+    // 목표 개수 업데이트 (디버깅용)
+    console.log(`현재 목표 개수: ${document.querySelectorAll('.goal-item').length}`);
 }
 
 // 식단 저장
 function saveMeal() {
     const time = document.getElementById('mealTime').value;
-    const menu = document.getElementById('mealMenu').value;
-    const calories = document.getElementById('mealCalories').value;
-    const note = document.getElementById('mealNote').value;
+    const menu = document.getElementById('mealMenu').value.trim();
+    const calories = document.getElementById('mealCalories').value.trim();
+    const note = document.getElementById('mealNote').value.trim();
     
-    if (menu && calories) {
-        alert('식단이 기록되었습니다!');
-        closeMealModal();
-        // 실제 앱에서는 데이터 저장 및 UI 업데이트
-    } else {
+    if (!menu || !calories) {
         alert('메뉴와 칼로리를 입력해주세요.');
+        return;
+    }
+    
+    const timeLabels = {
+        'breakfast': '아침 식사',
+        'lunch': '점심 식사',
+        'dinner': '저녁 식사',
+        'snack': '간식'
+    };
+    
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('ko-KR', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+    });
+    
+    // 새 식단 HTML 생성
+    const newMealHtml = `
+        <div class="meal-record" data-meal-id="${mealIdCounter}">
+            <button class="meal-delete-btn" onclick="confirmDeleteMeal(${mealIdCounter}, '${timeLabels[time]}')">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+            </button>
+            <div class="meal-header">
+                <span class="meal-title">${timeLabels[time]}</span>
+                <span class="meal-calories">${calories} kcal</span>
+            </div>
+            <div class="meal-items">${menu}</div>
+            <div class="meal-time">${timeString}</div>
+        </div>
+    `;
+    
+    // 현재 선택된 식사 시간의 기록 컨테이너에 추가
+    const recordsContainer = document.getElementById('meal-records');
+    const addButton = recordsContainer.querySelector('.add-meal-btn');
+    addButton.insertAdjacentHTML('beforebegin', newMealHtml);
+    
+    mealIdCounter++;
+    
+    showSuccessMessage('식단이 기록되었습니다!');
+    closeMealModal();
+    
+    // 영양 정보 업데이트
+    updateNutritionAfterAdd(parseInt(calories));
+}
+
+// 식단 추가 후 영양 정보 업데이트
+function updateNutritionAfterAdd(addedCalories) {
+    const calorieElement = document.querySelector('.nutrition-value');
+    if (calorieElement) {
+        const currentCalories = parseInt(calorieElement.textContent.replace(',', ''));
+        const newCalories = currentCalories + addedCalories;
+        calorieElement.textContent = newCalories.toLocaleString();
     }
 }
 
@@ -1313,8 +1749,11 @@ function navigateTo(page) {
         case 'health':
             // 현재 페이지
             break;
+        case 'chatbot':
+            showSuccessMessage('챗봇 페이지로 이동합니다');
+            break;
         default:
-            alert(`${page} 페이지로 이동합니다`);
+            showSuccessMessage(`${page} 페이지로 이동합니다`);
     }
 }
 
@@ -1322,6 +1761,18 @@ function navigateTo(page) {
 function goBack() {
     window.history.back();
 }
+
+// 모달 외부 클릭시 닫기
+document.addEventListener('click', function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            modal.classList.remove('show');
+            if (modal.id === 'goalModal') clearGoalForm();
+            if (modal.id === 'mealModal') clearMealForm();
+        }
+    });
+});
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
