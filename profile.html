@@ -508,9 +508,10 @@ body {
     margin-top: 5px;
 }
 
+/* 수정된 식단 삭제 버튼 스타일 - 우측 하단으로 이동 */
 .meal-delete-btn {
     position: absolute;
-    top: 15px;
+    bottom: 15px;
     right: 15px;
     background: none;
     border: none;
@@ -520,6 +521,11 @@ body {
     border-radius: 50%;
     opacity: 0;
     transition: all 0.3s ease;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .meal-record:hover .meal-delete-btn {
@@ -1056,11 +1062,6 @@ textarea.text-input {
         
         <div id="meal-records">
             <div class="meal-record" data-meal-id="1">
-                <button class="meal-delete-btn" onclick="confirmDeleteMeal(1, '아침 식사')">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                    </svg>
-                </button>
                 <div class="meal-header">
                     <span class="meal-title">아침 식사</span>
                     <span class="meal-calories">380 kcal</span>
@@ -1069,6 +1070,11 @@ textarea.text-input {
                     현미밥 1공기, 된장찌개, 계란후라이 2개, 김치
                 </div>
                 <div class="meal-time">오전 8:30</div>
+                <button class="meal-delete-btn" onclick="confirmDeleteMeal(1, '아침 식사')">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                </button>
             </div>
             
             <button class="add-meal-btn" onclick="openMealModal()">
@@ -1393,17 +1399,17 @@ function updateMealRecords(time) {
         records.forEach(record => {
             html += `
                 <div class="meal-record" data-meal-id="${record.id}">
-                    <button class="meal-delete-btn" onclick="confirmDeleteMeal(${record.id}, '${record.title}')">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                        </svg>
-                    </button>
                     <div class="meal-header">
                         <span class="meal-title">${record.title}</span>
                         <span class="meal-calories">${record.calories} kcal</span>
                     </div>
                     <div class="meal-items">${record.items}</div>
                     <div class="meal-time">${record.time}</div>
+                    <button class="meal-delete-btn" onclick="confirmDeleteMeal(${record.id}, '${record.title}')">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
                 </div>
             `;
         });
@@ -1701,17 +1707,17 @@ function saveMeal() {
     // 새 식단 HTML 생성
     const newMealHtml = `
         <div class="meal-record" data-meal-id="${mealIdCounter}">
-            <button class="meal-delete-btn" onclick="confirmDeleteMeal(${mealIdCounter}, '${timeLabels[time]}')">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                </svg>
-            </button>
             <div class="meal-header">
                 <span class="meal-title">${timeLabels[time]}</span>
                 <span class="meal-calories">${calories} kcal</span>
             </div>
             <div class="meal-items">${menu}</div>
             <div class="meal-time">${timeString}</div>
+            <button class="meal-delete-btn" onclick="confirmDeleteMeal(${mealIdCounter}, '${timeLabels[time]}')">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+            </button>
         </div>
     `;
     
