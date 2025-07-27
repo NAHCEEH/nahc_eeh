@@ -79,32 +79,194 @@ body {
     justify-content: space-between;
 }
 
-.calendar-toggle {
+/* 오늘 날짜 및 상태 헤더 스타일 */
+.today-header {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.today-date-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.today-date-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #5a4a3a;
+    letter-spacing: -0.3px;
+}
+
+.achievement-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-text {
+    font-size: 11px;
+    color: #EC9787;
+    font-weight: 600;
+}
+
+.status-icon {
+    font-size: 14px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* 헤더 달력 토글 버튼 */
+.header-calendar-toggle {
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
     border-radius: 50%;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     color: #5a4a3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.calendar-toggle:hover {
-    background: rgba(255, 255, 255, 0.5);
+.header-calendar-toggle:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(1.1);
 }
 
-.calendar-toggle svg {
-    width: 24px;
-    height: 24px;
+.header-calendar-toggle svg {
+    width: 20px;
+    height: 20px;
 }
 
-/* 캘린더 스타일 */
+/* 건강 요약 카드들 스타일 */
+.health-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 15px;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #EC9787, #D4A574);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card:hover::before {
+    opacity: 1;
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.card-content {
+    width: 100%;
+}
+
+.card-label {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.card-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #5a4a3a;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.card-target {
+    font-size: 10px;
+    color: #999;
+    opacity: 0.8;
+}
+
+.card-status {
+    font-size: 10px;
+    color: #4CAF50;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* 월간 캘린더 토글 버튼 추가 */
+.calendar-toggle-btn {
+    background: rgba(217, 188, 154, 0.5);
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #5a4a3a;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.calendar-toggle-btn:hover {
+    background: rgba(217, 188, 154, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 188, 154, 0.4);
+}
+
+.calendar-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* 기존 월간 캘린더 스타일 */
 .calendar-container {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 20px;
-    padding: 20px;
+    padding: 25px;
     margin-bottom: 20px;
     animation: slideDown 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .calendar-container.hidden {
@@ -115,45 +277,47 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .calendar-date {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     color: #5a4a3a;
-}
-
-.calendar-subtitle {
-    font-size: 12px;
-    color: #EC9787;
-    margin-top: 2px;
+    text-align: center;
 }
 
 .calendar-nav {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
 .nav-arrow {
-    background: none;
+    background: rgba(255, 255, 255, 0.8);
     border: none;
     color: #5a4a3a;
     font-size: 18px;
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-arrow:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(236, 151, 135, 0.2);
+    transform: scale(1.1);
 }
 
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
+    margin-bottom: 20px;
 }
 
 .calendar-day-header {
@@ -161,7 +325,7 @@ body {
     font-size: 12px;
     color: #666;
     font-weight: bold;
-    padding: 8px 0;
+    padding: 10px 0;
 }
 
 .calendar-day {
@@ -170,40 +334,98 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    border-radius: 50%;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     color: #5a4a3a;
+    font-weight: 500;
 }
 
 .calendar-day:hover {
     background: rgba(236, 151, 135, 0.2);
+    transform: scale(1.05);
 }
 
 .calendar-day.today {
     background: #EC9787;
     color: white;
     font-weight: bold;
+    box-shadow: 0 4px 12px rgba(236, 151, 135, 0.4);
 }
 
 .calendar-day.completed {
     background: #4CAF50;
     color: white;
+    font-weight: bold;
 }
 
 .calendar-day.partial {
     background: #FF9800;
     color: white;
+    font-weight: bold;
 }
 
 .calendar-day.missed {
     background: #f44336;
     color: white;
+    font-weight: bold;
 }
 
 .calendar-day.other-month {
     color: #ccc;
+    font-weight: normal;
+}
+
+/* 캘린더 하단 범례 및 메모 */
+.calendar-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.legend-dot.completed {
+    background: #4CAF50;
+}
+
+.legend-dot.partial {
+    background: #FF9800;
+}
+
+.legend-dot.missed {
+    background: #f44336;
+}
+
+.legend-text {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.calendar-note {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    line-height: 1.4;
 }
 
 /* 달성률 섹션 */
@@ -593,6 +815,80 @@ body {
     margin-top: 3px;
 }
 
+/* 단식하러 가기 버튼 스타일 */
+.fasting-button {
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    border: none;
+    border-radius: 20px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+    position: relative;
+    overflow: hidden;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.fasting-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.fasting-button:hover::before {
+    left: 100%;
+}
+
+.fasting-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #ff5252, #ff7979);
+}
+
+.fasting-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.fasting-icon {
+    font-size: 18px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+.fasting-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    flex: 1;
+    text-align: center;
+    letter-spacing: -0.3px;
+}
+
+.fasting-arrow {
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.fasting-button:hover .fasting-arrow {
+    transform: translateX(3px);
+}
+
+/* 단식 버튼 컨테이너 제거 */
+
 /* 하단 네비게이션 */
 .bottom-nav {
     position: fixed;
@@ -848,23 +1144,63 @@ textarea.text-input {
 
 <!-- 메인 컨텐츠 -->
 <div class="content">
-    <!-- 복용 달성률 섹션 -->
+    <!-- 목표 달성률 섹션 -->
     <section class="section">
         <h2 class="section-title">
-            복용 달성률
-            <button class="calendar-toggle" onclick="toggleCalendar()">
+            목표 달성률
+        </h2>
+        
+        <!-- 오늘 날짜 및 상태 헤더 -->
+        <div class="today-header">
+            <div class="today-date-info">
+                <div class="today-date-text">2025.07.27.일요일</div>
+                <div class="achievement-status">
+                    <span class="status-text">2일 연속 목표 달성중</span>
+                    <div class="status-icon">🎯</div>
+                </div>
+            </div>
+            <button class="header-calendar-toggle" onclick="toggleCalendar()">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                 </svg>
             </button>
-        </h2>
+        </div>
         
-        <!-- 캘린더 -->
+        <!-- 오늘의 건강 요약 카드들 -->
+        <div class="health-summary-cards">
+            <div class="summary-card">
+                <div class="card-icon">🍽️</div>
+                <div class="card-content">
+                    <div class="card-label">총 섭취량</div>
+                    <div class="card-value">1,520kcal</div>
+                    <div class="card-target">/2000kcal</div>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="card-icon">🏃‍♂️</div>
+                <div class="card-content">
+                    <div class="card-label">총 운동량</div>
+                    <div class="card-value">45분</div>
+                    <div class="card-target">/60분</div>
+                </div>
+            </div>
+            
+            <div class="summary-card">
+                <div class="card-icon">🩸</div>
+                <div class="card-content">
+                    <div class="card-label">혈당 예측</div>
+                    <div class="card-value">95 mg/dl</div>
+                    <div class="card-status">정상 수치 👍</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 월간 캘린더 -->
         <div id="calendarContainer" class="calendar-container hidden">
             <div class="calendar-header">
                 <div>
-                    <div class="calendar-date">2025.07.14.월요일</div>
-                    <div class="calendar-subtitle">2일 연속 복용 성공중</div>
+                    <div class="calendar-date">2025년 7월</div>
                 </div>
                 <div class="calendar-nav">
                     <button class="nav-arrow" onclick="changeMonth(-1)">‹</button>
@@ -888,12 +1224,12 @@ textarea.text-input {
                 <!-- 7월 -->
                 <div class="calendar-day completed">1</div>
                 <div class="calendar-day completed">2</div>
-                <div class="calendar-day partial">3</div>
+                <div class="calendar-day completed">3</div>
                 <div class="calendar-day completed">4</div>
                 <div class="calendar-day completed">5</div>
                 
                 <div class="calendar-day completed">6</div>
-                <div class="calendar-day missed">7</div>
+                <div class="calendar-day completed">7</div>
                 <div class="calendar-day completed">8</div>
                 <div class="calendar-day partial">9</div>
                 <div class="calendar-day completed">10</div>
@@ -901,22 +1237,22 @@ textarea.text-input {
                 <div class="calendar-day completed">12</div>
                 
                 <div class="calendar-day completed">13</div>
-                <div class="calendar-day today">14</div>
-                <div class="calendar-day">15</div>
-                <div class="calendar-day">16</div>
-                <div class="calendar-day">17</div>
-                <div class="calendar-day">18</div>
-                <div class="calendar-day">19</div>
+                <div class="calendar-day partial">14</div>
+                <div class="calendar-day completed">15</div>
+                <div class="calendar-day completed">16</div>
+                <div class="calendar-day completed">17</div>
+                <div class="calendar-day completed">18</div>
+                <div class="calendar-day completed">19</div>
                 
-                <div class="calendar-day">20</div>
-                <div class="calendar-day">21</div>
-                <div class="calendar-day">22</div>
-                <div class="calendar-day">23</div>
-                <div class="calendar-day">24</div>
-                <div class="calendar-day">25</div>
-                <div class="calendar-day">26</div>
+                <div class="calendar-day completed">20</div>
+                <div class="calendar-day missed">21</div>
+                <div class="calendar-day completed">22</div>
+                <div class="calendar-day completed">23</div>
+                <div class="calendar-day partial">24</div>
+                <div class="calendar-day completed">25</div>
+                <div class="calendar-day completed">26</div>
                 
-                <div class="calendar-day">27</div>
+                <div class="calendar-day today">27</div>
                 <div class="calendar-day">28</div>
                 <div class="calendar-day">29</div>
                 <div class="calendar-day">30</div>
@@ -925,6 +1261,26 @@ textarea.text-input {
                 <!-- 다음 달 첫날들 -->
                 <div class="calendar-day other-month">1</div>
                 <div class="calendar-day other-month">2</div>
+            </div>
+            
+            <div class="calendar-footer">
+                <div class="calendar-legend">
+                    <span class="legend-item">
+                        <span class="legend-dot completed"></span>
+                        <span class="legend-text">완료</span>
+                    </span>
+                    <span class="legend-item">
+                        <span class="legend-dot partial"></span>
+                        <span class="legend-text">부분완료</span>
+                    </span>
+                    <span class="legend-item">
+                        <span class="legend-dot missed"></span>
+                        <span class="legend-text">미완료</span>
+                    </span>
+                </div>
+                <div class="calendar-note">
+                    원하는 날짜를 선택하면 할 일을 볼 수 있어요
+                </div>
             </div>
         </div>
         
@@ -1105,6 +1461,13 @@ textarea.text-input {
                 <div class="nutrition-label">지방</div>
             </div>
         </div>
+        
+        <!-- 단식하러 가기 버튼 -->
+        <button class="fasting-button" onclick="goToFasting()">
+            <div class="fasting-icon">🚫</div>
+            <span class="fasting-text">단식하러 가기</span>
+            <div class="fasting-arrow">→</div>
+        </button>
     </section>
 </div>
 
@@ -1308,6 +1671,74 @@ function toggleCalendar() {
     }
 }
 
+// 일주일 캘린더 날짜 클릭 핸들러
+function initWeeklyCalendar() {
+    const weeklyDays = document.querySelectorAll('.weekly-day');
+    weeklyDays.forEach(day => {
+        day.addEventListener('click', function() {
+            const date = this.dataset.date;
+            console.log(`선택된 날짜: ${date}`);
+            
+            // 기존 선택 제거
+            weeklyDays.forEach(d => d.classList.remove('selected'));
+            
+            // 오늘이 아닌 날짜를 클릭했을 때 선택 표시
+            if (!this.classList.contains('today')) {
+                this.classList.add('selected');
+                // 선택된 날짜의 데이터를 불러오는 로직
+                loadDataForDate(date);
+            }
+        });
+    });
+}
+
+// 특정 날짜의 데이터 로드 (예시)
+function loadDataForDate(date) {
+    // 실제 앱에서는 API 호출로 해당 날짜의 데이터를 가져옴
+    showSuccessMessage(`${date} 데이터를 불러왔습니다`);
+    
+    // 달성률 정보 업데이트 예시
+    updateAchievementForDate(date);
+}
+
+// 특정 날짜의 달성률 업데이트 (예시)
+function updateAchievementForDate(date) {
+    const dateObj = new Date(date);
+    const day = dateObj.getDate();
+    
+    // 예시: 날짜에 따라 다른 달성률 표시
+    const sampleAchievements = {
+        21: { rate: 45, completed: 18, total: 40 }, // 월요일 - 놓친 날
+        22: { rate: 95, completed: 38, total: 40 }, // 화요일 - 완료
+        23: { rate: 100, completed: 40, total: 40 }, // 수요일 - 완료
+        24: { rate: 75, completed: 30, total: 40 }, // 목요일 - 부분완료
+        25: { rate: 100, completed: 40, total: 40 }, // 금요일 - 완료
+        26: { rate: 90, completed: 36, total: 40 }, // 토요일 - 완료
+        27: { rate: 87, completed: 35, total: 40 }  // 일요일 - 오늘
+    };
+    
+    const achievement = sampleAchievements[day] || { rate: 87, completed: 35, total: 40 };
+    
+    // UI 업데이트
+    const percentageElement = document.querySelector('.achievement-percentage');
+    const progressFill = document.querySelector('.progress-fill');
+    const progressInfo = document.querySelector('.progress-info');
+    
+    if (percentageElement) percentageElement.textContent = `${achievement.rate}%`;
+    if (progressFill) {
+        progressFill.style.width = '0%';
+        setTimeout(() => {
+            progressFill.style.width = `${achievement.rate}%`;
+        }, 100);
+    }
+    if (progressInfo) {
+        progressInfo.innerHTML = `
+            <span>복용완료: ${achievement.completed}개</span>
+            <span>전체: ${achievement.total}개</span>
+        `;
+    }
+}
+
 // 월 변경 기능
 function changeMonth(direction) {
     currentMonth += direction;
@@ -1321,6 +1752,7 @@ function changeMonth(direction) {
     }
     
     updateCalendar();
+    updateWeeklyCalendar();
 }
 
 // 캘린더 업데이트
@@ -1337,6 +1769,13 @@ function updateCalendar() {
         `${currentYear}.${String(currentMonth).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}.${dayOfWeek}`;
     
     console.log(`캘린더 업데이트: ${currentYear}년 ${monthNames[currentMonth]}`);
+}
+
+// 일주일 캘린더 업데이트
+function updateWeeklyCalendar() {
+    // 월이 변경되었을 때 일주일 캘린더도 업데이트
+    // 실제 구현에서는 해당 월의 현재 주를 계산해서 표시
+    console.log(`일주일 캘린더 업데이트: ${currentYear}년 ${currentMonth}월`);
 }
 
 // 식사 시간 선택
@@ -1745,6 +2184,22 @@ function updateNutritionAfterAdd(addedCalories) {
     }
 }
 
+// 단식하러 가기 기능
+function goToFasting() {
+    // 시각적 피드백
+    const button = document.querySelector('.fasting-button');
+    button.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        button.style.transform = '';
+        // 실제 앱에서는 단식 페이지로 이동
+        showSuccessMessage('단식 모드로 이동합니다 🚫');
+        
+        // 예시: 단식 페이지로 라우팅
+        // window.location.href = 'fasting.html';
+    }, 150);
+}
+
 // 네비게이션
 function navigateTo(page) {
     // 실제 앱에서는 페이지 라우팅 처리
@@ -1785,6 +2240,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 달성률이 기본으로 표시되도록 설정
     document.getElementById('calendarContainer').classList.add('hidden');
     document.getElementById('achievementContainer').classList.remove('hidden');
+    
+    // 일주일 캘린더 초기화
+    initWeeklyCalendar();
     
     // 프로그레스 바 애니메이션
     setTimeout(() => {
