@@ -228,36 +228,6 @@ body {
     margin-top: 2px;
 }
 
-/* 월간 캘린더 토글 버튼 추가 */
-.calendar-toggle-btn {
-    background: rgba(217, 188, 154, 0.5);
-    border: none;
-    border-radius: 15px;
-    padding: 12px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #5a4a3a;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-}
-
-.calendar-toggle-btn:hover {
-    background: rgba(217, 188, 154, 0.7);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(217, 188, 154, 0.4);
-}
-
-.calendar-toggle-btn svg {
-    width: 18px;
-    height: 18px;
-}
-
 /* 기존 월간 캘린더 스타일 */
 .calendar-container {
     background: rgba(255, 255, 255, 0.6);
@@ -462,7 +432,6 @@ body {
     color: #5a4a3a;
 }
 
-/* 새로운 진행 바 스타일 */
 .progress-container {
     position: relative;
     background: rgba(255, 255, 255, 0.5);
@@ -488,26 +457,6 @@ body {
     font-size: 12px;
     color: #666;
     margin-top: 8px;
-}
-
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%);
-    border-radius: 15px;
-}
-
-.progress-text {
-    position: relative;
-    z-index: 1;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .achievement-stats {
@@ -541,23 +490,7 @@ body {
     color: #666;
 }
 
-/* 새로운 목표 추가 애니메이션 */
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* 목표 섹션 개선 */
-#goals-container {
-    position: relative;
-}
-
+/* 목표 섹션 */
 .goal-item {
     display: flex;
     align-items: center;
@@ -617,10 +550,8 @@ body {
     transform: translate(-50%, -50%);
     font-size: 12px;
     font-weight: bold;
-    color: #4CAF50;
 }
 
-/* 삭제 버튼 스타일 */
 .delete-btn {
     background: none;
     border: none;
@@ -730,7 +661,6 @@ body {
     margin-top: 5px;
 }
 
-/* 수정된 식단 삭제 버튼 스타일 - 우측 하단으로 이동 */
 .meal-delete-btn {
     position: absolute;
     bottom: 15px;
@@ -796,6 +726,15 @@ body {
     padding: 15px;
     text-align: center;
     border: 1px solid rgba(236, 151, 135, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nutrition-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 151, 135, 0.2);
+    background: rgba(236, 151, 135, 0.1);
 }
 
 .nutrition-icon {
@@ -813,6 +752,101 @@ body {
     font-size: 12px;
     color: #666;
     margin-top: 3px;
+}
+
+.sync-status {
+    font-size: 9px;
+    color: #4CAF50;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+/* 인아웃 연동 버튼 스타일 */
+.inout-sync-btn {
+    width: 100%;
+    background: rgba(33, 150, 243, 0.1);
+    border: 2px dashed #2196F3;
+    border-radius: 15px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    color: #2196F3;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.inout-sync-btn:hover {
+    background: rgba(33, 150, 243, 0.15);
+    border-color: #1976D2;
+    transform: translateY(-1px);
+}
+
+.sync-icon {
+    font-size: 16px;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.sync-text {
+    letter-spacing: -0.2px;
+}
+
+/* 빈 식단 메시지 스타일 */
+.empty-meal-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(236, 151, 135, 0.03);
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 2px dashed rgba(236, 151, 135, 0.2);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.6;
+}
+
+.empty-text {
+    font-size: 16px;
+    color: #5a4a3a;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.empty-subtext {
+    font-size: 13px;
+    color: #999;
+    line-height: 1.4;
+}
+
+/* 인아웃 연동된 식단 스타일 */
+.meal-record.inout-synced {
+    border-left: 4px solid #2196F3;
+    background: rgba(33, 150, 243, 0.02);
+}
+
+.inout-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: #2196F3;
+    color: white;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+    z-index: 2;
 }
 
 /* 단식하러 가기 버튼 스타일 */
@@ -886,8 +920,6 @@ body {
 .fasting-button:hover .fasting-arrow {
     transform: translateX(3px);
 }
-
-/* 단식 버튼 컨테이너 제거 */
 
 /* 하단 네비게이션 */
 .bottom-nav {
@@ -966,7 +998,6 @@ body {
     animation: modalSlideIn 0.3s ease;
 }
 
-/* 확인 모달 특별 스타일 */
 .confirm-modal-content {
     text-align: center;
     padding: 40px 30px;
@@ -1056,18 +1087,6 @@ body {
     margin-top: 5px;
 }
 
-.text-input.error {
-    border-color: #ff6b6b;
-    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
-}
-
-.error-message {
-    color: #ff6b6b;
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
-}
-
 textarea.text-input {
     resize: vertical;
     min-height: 100px;
@@ -1144,10 +1163,10 @@ textarea.text-input {
 
 <!-- 메인 컨텐츠 -->
 <div class="content">
-    <!-- 목표 달성률 섹션 -->
+    <!-- 복용 달성률 섹션 -->
     <section class="section">
         <h2 class="section-title">
-            목표 달성률
+            복용 달성률
         </h2>
         
         <!-- 오늘 날짜 및 상태 헤더 -->
@@ -1300,7 +1319,7 @@ textarea.text-input {
                     <span>전체: 25개</span>
                 </div>
                 
-                <div class="achievement-stats" style="margin-top: 20px;">
+                <div class="achievement-stats">
                     <div class="stat-item">
                         <div class="stat-value">22일</div>
                         <div class="stat-label">이번 달 복용</div>
@@ -1410,54 +1429,37 @@ textarea.text-input {
         </h2>
         
         <div class="meal-time-tabs">
-            <button class="meal-tab active" onclick="selectMealTime('breakfast')">아침</button>
-            <button class="meal-tab" onclick="selectMealTime('lunch')">점심</button>
-            <button class="meal-tab" onclick="selectMealTime('dinner')">저녁</button>
-            <button class="meal-tab" onclick="selectMealTime('snack')">간식</button>
+            <button class="meal-tab active" data-meal-type="breakfast">아침</button>
+            <button class="meal-tab" data-meal-type="lunch">점심</button>
+            <button class="meal-tab" data-meal-type="dinner">저녁</button>
+            <button class="meal-tab" data-meal-type="snack">간식</button>
         </div>
         
         <div id="meal-records">
-            <div class="meal-record" data-meal-id="1">
-                <div class="meal-header">
-                    <span class="meal-title">아침 식사</span>
-                    <span class="meal-calories">380 kcal</span>
-                </div>
-                <div class="meal-items">
-                    현미밥 1공기, 된장찌개, 계란후라이 2개, 김치
-                </div>
-                <div class="meal-time">오전 8:30</div>
-                <button class="meal-delete-btn" onclick="confirmDeleteMeal(1, '아침 식사')">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                    </svg>
-                </button>
-            </div>
-            
-            <button class="add-meal-btn" onclick="openMealModal()">
-                + 식단 추가하기
-            </button>
+            <!-- 동적으로 생성됨 -->
         </div>
         
         <!-- 영양 요약 -->
         <div class="nutrition-summary">
-            <div class="nutrition-card">
+            <div class="nutrition-card" onclick="showNutritionDetail('calories')">
                 <div class="nutrition-icon">🔥</div>
-                <div class="nutrition-value">1,520</div>
+                <div class="nutrition-value" id="calories-value">1,520</div>
                 <div class="nutrition-label">칼로리</div>
+                <div class="sync-status">📱 인아웃 연동됨</div>
             </div>
-            <div class="nutrition-card">
+            <div class="nutrition-card" onclick="showNutritionDetail('protein')">
                 <div class="nutrition-icon">🥩</div>
-                <div class="nutrition-value">68g</div>
+                <div class="nutrition-value" id="protein-value">68g</div>
                 <div class="nutrition-label">단백질</div>
             </div>
-            <div class="nutrition-card">
+            <div class="nutrition-card" onclick="showNutritionDetail('carbs')">
                 <div class="nutrition-icon">🌾</div>
-                <div class="nutrition-value">186g</div>
+                <div class="nutrition-value" id="carbs-value">186g</div>
                 <div class="nutrition-label">탄수화물</div>
             </div>
-            <div class="nutrition-card">
+            <div class="nutrition-card" onclick="showNutritionDetail('fat')">
                 <div class="nutrition-icon">🥑</div>
-                <div class="nutrition-value">52g</div>
+                <div class="nutrition-value" id="fat-value">52g</div>
                 <div class="nutrition-label">지방</div>
             </div>
         </div>
@@ -1638,13 +1640,59 @@ textarea.text-input {
 </div>
 
 <script>
+// 전역 변수
 let calendarVisible = false;
-let currentMonth = 7; // 7월
+let currentMonth = 7;
 let currentYear = 2025;
-let goalIdCounter = 4; // 다음 목표 ID
-let mealIdCounter = 2; // 다음 식단 ID
+let goalIdCounter = 4;
+let mealIdCounter = 2;
+let currentMealType = 'breakfast';
 
-// 캘린더/달성률 토글 기능
+// 식단 데이터
+const mealData = {
+    breakfast: [
+        {
+            id: 'inout-0',
+            title: '아침: 오트밀 + 바나나',
+            items: '오트밀 1컵, 바나나 1개, 아몬드 우유',
+            calories: 380,
+            time: '08:30',
+            source: 'inout'
+        }
+    ],
+    lunch: [
+        {
+            id: 'inout-1',
+            title: '점심: 닭가슴살 샐러드',
+            items: '닭가슴살 150g, 혼합 채소, 올리브오일 드레싱',
+            calories: 450,
+            time: '12:30',
+            source: 'inout'
+        }
+    ],
+    dinner: [
+        {
+            id: 'inout-2',
+            title: '저녁: 연어구이 정식',
+            items: '연어 200g, 현미밥, 브로콜리, 당근',
+            calories: 620,
+            time: '19:00',
+            source: 'inout'
+        }
+    ],
+    snack: [
+        {
+            id: 'inout-3',
+            title: '간식: 견과류 + 요거트',
+            items: '혼합견과류 30g, 그릭 요거트 150g',
+            calories: 200,
+            time: '15:30',
+            source: 'inout'
+        }
+    ]
+};
+
+// 캘린더 토글
 function toggleCalendar() {
     const calendarContainer = document.getElementById('calendarContainer');
     const achievementContainer = document.getElementById('achievementContainer');
@@ -1658,7 +1706,6 @@ function toggleCalendar() {
         calendarContainer.classList.add('hidden');
         achievementContainer.classList.remove('hidden');
         
-        // 프로그레스 바 애니메이션
         setTimeout(() => {
             const progressFill = document.querySelector('.progress-fill');
             if (progressFill) {
@@ -1671,75 +1718,7 @@ function toggleCalendar() {
     }
 }
 
-// 일주일 캘린더 날짜 클릭 핸들러
-function initWeeklyCalendar() {
-    const weeklyDays = document.querySelectorAll('.weekly-day');
-    weeklyDays.forEach(day => {
-        day.addEventListener('click', function() {
-            const date = this.dataset.date;
-            console.log(`선택된 날짜: ${date}`);
-            
-            // 기존 선택 제거
-            weeklyDays.forEach(d => d.classList.remove('selected'));
-            
-            // 오늘이 아닌 날짜를 클릭했을 때 선택 표시
-            if (!this.classList.contains('today')) {
-                this.classList.add('selected');
-                // 선택된 날짜의 데이터를 불러오는 로직
-                loadDataForDate(date);
-            }
-        });
-    });
-}
-
-// 특정 날짜의 데이터 로드 (예시)
-function loadDataForDate(date) {
-    // 실제 앱에서는 API 호출로 해당 날짜의 데이터를 가져옴
-    showSuccessMessage(`${date} 데이터를 불러왔습니다`);
-    
-    // 달성률 정보 업데이트 예시
-    updateAchievementForDate(date);
-}
-
-// 특정 날짜의 달성률 업데이트 (예시)
-function updateAchievementForDate(date) {
-    const dateObj = new Date(date);
-    const day = dateObj.getDate();
-    
-    // 예시: 날짜에 따라 다른 달성률 표시
-    const sampleAchievements = {
-        21: { rate: 45, completed: 18, total: 40 }, // 월요일 - 놓친 날
-        22: { rate: 95, completed: 38, total: 40 }, // 화요일 - 완료
-        23: { rate: 100, completed: 40, total: 40 }, // 수요일 - 완료
-        24: { rate: 75, completed: 30, total: 40 }, // 목요일 - 부분완료
-        25: { rate: 100, completed: 40, total: 40 }, // 금요일 - 완료
-        26: { rate: 90, completed: 36, total: 40 }, // 토요일 - 완료
-        27: { rate: 87, completed: 35, total: 40 }  // 일요일 - 오늘
-    };
-    
-    const achievement = sampleAchievements[day] || { rate: 87, completed: 35, total: 40 };
-    
-    // UI 업데이트
-    const percentageElement = document.querySelector('.achievement-percentage');
-    const progressFill = document.querySelector('.progress-fill');
-    const progressInfo = document.querySelector('.progress-info');
-    
-    if (percentageElement) percentageElement.textContent = `${achievement.rate}%`;
-    if (progressFill) {
-        progressFill.style.width = '0%';
-        setTimeout(() => {
-            progressFill.style.width = `${achievement.rate}%`;
-        }, 100);
-    }
-    if (progressInfo) {
-        progressInfo.innerHTML = `
-            <span>복용완료: ${achievement.completed}개</span>
-            <span>전체: ${achievement.total}개</span>
-        `;
-    }
-}
-
-// 월 변경 기능
+// 월 변경
 function changeMonth(direction) {
     currentMonth += direction;
     
@@ -1751,100 +1730,62 @@ function changeMonth(direction) {
         currentYear--;
     }
     
-    updateCalendar();
-    updateWeeklyCalendar();
+    const calendarDateElement = document.querySelector('.calendar-date');
+    if (calendarDateElement) {
+        calendarDateElement.textContent = `${currentYear}년 ${currentMonth}월`;
+    }
 }
 
-// 캘린더 업데이트
-function updateCalendar() {
-    const monthNames = ['', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+// 식사 탭 선택
+function selectMealTab(mealType) {
+    currentMealType = mealType;
     
-    // 날짜 헤더 업데이트
-    const today = new Date();
-    const currentDate = new Date(currentYear, currentMonth - 1, today.getDate());
-    const dayOfWeek = dayNames[currentDate.getDay()];
-    
-    document.querySelector('.calendar-date').textContent = 
-        `${currentYear}.${String(currentMonth).padStart(2, '0')}.${String(today.getDate()).padStart(2, '0')}.${dayOfWeek}`;
-    
-    console.log(`캘린더 업데이트: ${currentYear}년 ${monthNames[currentMonth]}`);
-}
-
-// 일주일 캘린더 업데이트
-function updateWeeklyCalendar() {
-    // 월이 변경되었을 때 일주일 캘린더도 업데이트
-    // 실제 구현에서는 해당 월의 현재 주를 계산해서 표시
-    console.log(`일주일 캘린더 업데이트: ${currentYear}년 ${currentMonth}월`);
-}
-
-// 식사 시간 선택
-function selectMealTime(time) {
+    // 모든 탭에서 active 클래스 제거
     document.querySelectorAll('.meal-tab').forEach(tab => {
         tab.classList.remove('active');
     });
-    event.target.classList.add('active');
     
-    // 선택된 시간대의 식단 표시
-    updateMealRecords(time);
+    // 클릭된 탭에 active 클래스 추가
+    const clickedTab = document.querySelector(`[data-meal-type="${mealType}"]`);
+    if (clickedTab) {
+        clickedTab.classList.add('active');
+    }
+    
+    // 해당 식사 기록 표시
+    updateMealRecords(mealType);
 }
 
 // 식단 기록 업데이트
-function updateMealRecords(time) {
-    const mealData = {
-        breakfast: {
-            records: [
-                {
-                    id: 1,
-                    title: '아침 식사',
-                    items: '현미밥 1공기, 된장찌개, 계란후라이 2개, 김치',
-                    calories: 380,
-                    time: '오전 8:30'
-                }
-            ]
-        },
-        lunch: {
-            records: [
-                {
-                    id: 2,
-                    title: '점심 식사',
-                    items: '제육볶음 정식, 된장찌개, 상추쌈',
-                    calories: 650,
-                    time: '오후 12:30'
-                }
-            ]
-        },
-        dinner: {
-            records: []
-        },
-        snack: {
-            records: [
-                {
-                    id: 3,
-                    title: '오후 간식',
-                    items: '아메리카노, 초코칩 쿠키 2개',
-                    calories: 180,
-                    time: '오후 3:00'
-                }
-            ]
-        }
-    };
-    
-    const records = mealData[time].records;
+function updateMealRecords(mealType) {
+    const records = mealData[mealType] || [];
     const recordsContainer = document.getElementById('meal-records');
     
+    if (!recordsContainer) return;
+    
+    const timeLabels = {
+        'breakfast': '아침',
+        'lunch': '점심', 
+        'dinner': '저녁',
+        'snack': '간식'
+    };
+    
     let html = '';
+    
     if (records.length > 0) {
         records.forEach(record => {
+            const sourceClass = record.source === 'inout' ? 'inout-synced' : '';
+            const sourceBadge = record.source === 'inout' ? '<div class="inout-badge">인아웃</div>' : '';
+            
             html += `
-                <div class="meal-record" data-meal-id="${record.id}">
+                <div class="meal-record ${sourceClass}" data-meal-id="${record.id}">
                     <div class="meal-header">
                         <span class="meal-title">${record.title}</span>
                         <span class="meal-calories">${record.calories} kcal</span>
                     </div>
                     <div class="meal-items">${record.items}</div>
                     <div class="meal-time">${record.time}</div>
-                    <button class="meal-delete-btn" onclick="confirmDeleteMeal(${record.id}, '${record.title}')">
+                    ${sourceBadge}
+                    <button class="meal-delete-btn" onclick="confirmDeleteMeal('${record.id}', '${record.title}')">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
@@ -1852,9 +1793,27 @@ function updateMealRecords(time) {
                 </div>
             `;
         });
+    } else {
+        html += `
+            <div class="empty-meal-message">
+                <div class="empty-icon">🍽️</div>
+                <div class="empty-text">${timeLabels[mealType]} 식단이 아직 기록되지 않았어요</div>
+                <div class="empty-subtext">아래 버튼을 눌러 식단을 추가해보세요!</div>
+            </div>
+        `;
     }
     
-    html += `<button class="add-meal-btn" onclick="openMealModal()">+ 식단 추가하기</button>`;
+    html += `<button class="add-meal-btn" onclick="openMealModal('${mealType}')">+ 식단 추가하기</button>`;
+    
+    if (mealType === 'breakfast') {
+        html += `
+            <button class="inout-sync-btn" onclick="syncWithInOut()">
+                <div class="sync-icon">🔄</div>
+                <span class="sync-text">인아웃 앱에서 데이터 가져오기</span>
+            </button>
+        `;
+    }
+    
     recordsContainer.innerHTML = html;
 }
 
@@ -1872,15 +1831,12 @@ function confirmDeleteGoal(goalId, goalName) {
     modal.classList.add('show');
 }
 
-// 목표 삭제 실행
+// 목표 삭제
 function deleteGoal(goalId) {
     const goalElement = document.querySelector(`[data-goal-id="${goalId}"]`);
     
     if (goalElement) {
-        // 삭제 애니메이션 적용
         goalElement.classList.add('deleting');
-        
-        // 애니메이션 완료 후 요소 제거
         setTimeout(() => {
             goalElement.remove();
             showSuccessMessage('목표가 삭제되었습니다');
@@ -1904,41 +1860,25 @@ function confirmDeleteMeal(mealId, mealTitle) {
     modal.classList.add('show');
 }
 
-// 식단 삭제 실행
+// 식단 삭제
 function deleteMeal(mealId) {
-    const mealElement = document.querySelector(`[data-meal-id="${mealId}"]`);
-    
-    if (mealElement) {
-        // 삭제 애니메이션 적용
-        mealElement.classList.add('deleting');
-        
-        // 애니메이션 완료 후 요소 제거
-        setTimeout(() => {
-            mealElement.remove();
-            showSuccessMessage('식단 기록이 삭제되었습니다');
-            
-            // 영양 정보 업데이트 (실제 앱에서는 계산 로직 필요)
-            updateNutritionSummary();
-        }, 300);
+    // 모든 식사 타입에서 해당 ID의 식단 찾아서 삭제
+    for (let mealType in mealData) {
+        const index = mealData[mealType].findIndex(meal => meal.id === mealId);
+        if (index !== -1) {
+            mealData[mealType].splice(index, 1);
+            break;
+        }
     }
     
+    // 현재 탭 새로고침
+    updateMealRecords(currentMealType);
+    showSuccessMessage('식단 기록이 삭제되었습니다');
     closeConfirmModal();
-}
-
-// 영양 정보 업데이트 (예시)
-function updateNutritionSummary() {
-    // 실제 앱에서는 남은 식단들의 칼로리를 계산해서 업데이트
-    const nutritionCards = document.querySelectorAll('.nutrition-value');
-    
-    // 예시: 칼로리 감소
-    if (nutritionCards[0]) {
-        nutritionCards[0].textContent = '1,140'; // 380 칼로리 감소
-    }
 }
 
 // 성공 메시지 표시
 function showSuccessMessage(message) {
-    // 간단한 토스트 메시지 (실제 앱에서는 더 예쁜 디자인 적용)
     const toast = document.createElement('div');
     toast.style.cssText = `
         position: fixed;
@@ -1958,7 +1898,6 @@ function showSuccessMessage(message) {
     
     document.body.appendChild(toast);
     
-    // 3초 후 제거
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(-50%) translateY(-20px)';
@@ -1971,20 +1910,16 @@ function closeConfirmModal() {
     document.getElementById('confirmModal').classList.remove('show');
 }
 
-// 목표 모달 열기/닫기
+// 목표 모달 관련
 function openGoalModal() {
     const modal = document.getElementById('goalModal');
     if (modal) {
         modal.classList.add('show');
-        // 폼 초기화
         clearGoalForm();
-        // 첫 번째 입력 필드에 포커스
         setTimeout(() => {
             const nameInput = document.getElementById('goalName');
             if (nameInput) nameInput.focus();
         }, 100);
-    } else {
-        console.error('목표 모달을 찾을 수 없습니다.');
     }
 }
 
@@ -1996,7 +1931,6 @@ function closeGoalModal() {
     }
 }
 
-// 목표 폼 초기화
 function clearGoalForm() {
     const elements = {
         goalName: document.getElementById('goalName'),
@@ -2005,37 +1939,10 @@ function clearGoalForm() {
         goalUnit: document.getElementById('goalUnit')
     };
     
-    // 각 요소가 존재하는지 확인 후 초기화
     if (elements.goalName) elements.goalName.value = '';
     if (elements.goalType) elements.goalType.value = 'daily';
     if (elements.goalTarget) elements.goalTarget.value = '';
     if (elements.goalUnit) elements.goalUnit.value = '';
-    
-    // 에러 스타일 제거 (있는 경우)
-    Object.values(elements).forEach(element => {
-        if (element) {
-            element.classList.remove('error');
-            element.style.borderColor = '';
-        }
-    });
-}
-
-// 식단 모달 열기/닫기
-function openMealModal() {
-    document.getElementById('mealModal').classList.add('show');
-}
-
-function closeMealModal() {
-    document.getElementById('mealModal').classList.remove('show');
-    clearMealForm();
-}
-
-// 식단 폼 초기화
-function clearMealForm() {
-    document.getElementById('mealTime').value = 'breakfast';
-    document.getElementById('mealMenu').value = '';
-    document.getElementById('mealCalories').value = '';
-    document.getElementById('mealNote').value = '';
 }
 
 // 목표 저장
@@ -2050,18 +1957,15 @@ function saveGoal() {
         return;
     }
     
-    // 목표 유형에 따른 진행률 텍스트 생성
     const typeLabels = {
         'daily': '오늘',
         'weekly': '이번 주',
         'monthly': '이번 달'
     };
     
-    // 랜덤 색상 선택 (다양성을 위해)
     const colors = ['#EC9787', '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#FF5722'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     
-    // 새 목표 HTML 생성
     const newGoalHtml = `
         <div class="goal-item" data-goal-id="${goalIdCounter}" style="animation: slideInFromRight 0.3s ease;">
             <div class="goal-info">
@@ -2088,19 +1992,15 @@ function saveGoal() {
         </div>
     `;
     
-    // 목표 컨테이너 찾기
     const goalsContainer = document.getElementById('goals-container');
     const addButton = document.querySelector('.add-goal-btn');
     
-    // 새 목표를 추가 버튼 바로 앞에 삽입
     if (addButton) {
         addButton.insertAdjacentHTML('beforebegin', newGoalHtml);
     } else {
-        // 추가 버튼이 없는 경우 컨테이너 끝에 추가
         goalsContainer.insertAdjacentHTML('beforeend', newGoalHtml);
     }
     
-    // 애니메이션 클래스 제거 (한 번만 실행되도록)
     setTimeout(() => {
         const newGoal = document.querySelector(`[data-goal-id="${goalIdCounter}"]`);
         if (newGoal) {
@@ -2109,12 +2009,39 @@ function saveGoal() {
     }, 300);
     
     goalIdCounter++;
-    
     showSuccessMessage(`새로운 목표 "${name}"가 추가되었습니다!`);
     closeGoalModal();
+}
+
+// 식단 모달 관련
+function openMealModal(selectedMealType = null) {
+    const modal = document.getElementById('mealModal');
+    const mealTimeSelect = document.getElementById('mealTime');
     
-    // 목표 개수 업데이트 (디버깅용)
-    console.log(`현재 목표 개수: ${document.querySelectorAll('.goal-item').length}`);
+    if (selectedMealType) {
+        mealTimeSelect.value = selectedMealType;
+    } else {
+        mealTimeSelect.value = currentMealType;
+    }
+    
+    modal.classList.add('show');
+    
+    setTimeout(() => {
+        const menuInput = document.getElementById('mealMenu');
+        if (menuInput) menuInput.focus();
+    }, 100);
+}
+
+function closeMealModal() {
+    document.getElementById('mealModal').classList.remove('show');
+    clearMealForm();
+}
+
+function clearMealForm() {
+    document.getElementById('mealTime').value = 'breakfast';
+    document.getElementById('mealMenu').value = '';
+    document.getElementById('mealCalories').value = '';
+    document.getElementById('mealNote').value = '';
 }
 
 // 식단 저장
@@ -2130,9 +2057,9 @@ function saveMeal() {
     }
     
     const timeLabels = {
-        'breakfast': '아침 식사',
-        'lunch': '점심 식사',
-        'dinner': '저녁 식사',
+        'breakfast': '아침',
+        'lunch': '점심',
+        'dinner': '저녁',
         'snack': '간식'
     };
     
@@ -2140,32 +2067,27 @@ function saveMeal() {
     const timeString = now.toLocaleTimeString('ko-KR', { 
         hour: '2-digit', 
         minute: '2-digit',
-        hour12: true 
+        hour12: false
     });
     
-    // 새 식단 HTML 생성
-    const newMealHtml = `
-        <div class="meal-record" data-meal-id="${mealIdCounter}">
-            <div class="meal-header">
-                <span class="meal-title">${timeLabels[time]}</span>
-                <span class="meal-calories">${calories} kcal</span>
-            </div>
-            <div class="meal-items">${menu}</div>
-            <div class="meal-time">${timeString}</div>
-            <button class="meal-delete-btn" onclick="confirmDeleteMeal(${mealIdCounter}, '${timeLabels[time]}')">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                </svg>
-            </button>
-        </div>
-    `;
+    const newMeal = {
+        id: `meal-${mealIdCounter}`,
+        title: `${timeLabels[time]}: ${menu}`,
+        items: menu + (note ? ` (${note})` : ''),
+        calories: parseInt(calories),
+        time: timeString,
+        source: 'manual'
+    };
     
-    // 현재 선택된 식사 시간의 기록 컨테이너에 추가
-    const recordsContainer = document.getElementById('meal-records');
-    const addButton = recordsContainer.querySelector('.add-meal-btn');
-    addButton.insertAdjacentHTML('beforebegin', newMealHtml);
+    if (!mealData[time]) {
+        mealData[time] = [];
+    }
     
+    mealData[time].push(newMeal);
     mealIdCounter++;
+    
+    // 현재 탭을 추가된 식사 시간으로 변경
+    selectMealTab(time);
     
     showSuccessMessage('식단이 기록되었습니다!');
     closeMealModal();
@@ -2174,9 +2096,9 @@ function saveMeal() {
     updateNutritionAfterAdd(parseInt(calories));
 }
 
-// 식단 추가 후 영양 정보 업데이트
+// 영양 정보 업데이트
 function updateNutritionAfterAdd(addedCalories) {
-    const calorieElement = document.querySelector('.nutrition-value');
+    const calorieElement = document.getElementById('calories-value');
     if (calorieElement) {
         const currentCalories = parseInt(calorieElement.textContent.replace(',', ''));
         const newCalories = currentCalories + addedCalories;
@@ -2184,31 +2106,62 @@ function updateNutritionAfterAdd(addedCalories) {
     }
 }
 
-// 단식하러 가기 기능
+// 영양소 상세 정보
+function showNutritionDetail(nutrient) {
+    const labels = {
+        calories: '칼로리',
+        protein: '단백질', 
+        carbs: '탄수화물',
+        fat: '지방'
+    };
+    
+    showSuccessMessage(`${labels[nutrient]} 상세 정보를 확인합니다`);
+}
+
+// 인아웃 연동
+function syncWithInOut() {
+    const syncBtn = document.querySelector('.inout-sync-btn');
+    const syncText = syncBtn.querySelector('.sync-text');
+    
+    syncBtn.disabled = true;
+    syncText.textContent = '인아웃에서 데이터 가져오는 중...';
+    
+    setTimeout(() => {
+        // 샘플 데이터로 영양 정보 업데이트
+        document.getElementById('calories-value').textContent = '1,650';
+        document.getElementById('protein-value').textContent = '78g';
+        document.getElementById('carbs-value').textContent = '195g';
+        document.getElementById('fat-value').textContent = '58g';
+        
+        const syncStatus = document.querySelector('.sync-status');
+        if (syncStatus) {
+            syncStatus.textContent = `📱 ${new Date().toLocaleTimeString('ko-KR')} 업데이트`;
+        }
+        
+        showSuccessMessage('인아웃 데이터가 성공적으로 연동되었습니다! 📱');
+        syncText.textContent = '✅ 연동 완료 - 다시 동기화하기';
+        syncBtn.disabled = false;
+    }, 2000);
+}
+
+// 단식하러 가기
 function goToFasting() {
-    // 시각적 피드백
     const button = document.querySelector('.fasting-button');
     button.style.transform = 'scale(0.95)';
     
     setTimeout(() => {
         button.style.transform = '';
-        // 실제 앱에서는 단식 페이지로 이동
         showSuccessMessage('단식 모드로 이동합니다 🚫');
-        
-        // 예시: 단식 페이지로 라우팅
-        // window.location.href = 'fasting.html';
     }, 150);
 }
 
 // 네비게이션
 function navigateTo(page) {
-    // 실제 앱에서는 페이지 라우팅 처리
     switch(page) {
         case 'home':
-            window.location.href = 'main.html';
+            showSuccessMessage('홈 페이지로 이동합니다');
             break;
         case 'health':
-            // 현재 페이지
             break;
         case 'chatbot':
             showSuccessMessage('챗봇 페이지로 이동합니다');
@@ -2237,12 +2190,14 @@ document.addEventListener('click', function(event) {
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    // 달성률이 기본으로 표시되도록 설정
-    document.getElementById('calendarContainer').classList.add('hidden');
-    document.getElementById('achievementContainer').classList.remove('hidden');
+    console.log('페이지 로드 완료');
     
-    // 일주일 캘린더 초기화
-    initWeeklyCalendar();
+    // 달성률 기본 표시
+    const calendarContainer = document.getElementById('calendarContainer');
+    const achievementContainer = document.getElementById('achievementContainer');
+    
+    if (calendarContainer) calendarContainer.classList.add('hidden');
+    if (achievementContainer) achievementContainer.classList.remove('hidden');
     
     // 프로그레스 바 애니메이션
     setTimeout(() => {
@@ -2254,6 +2209,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         }
     }, 100);
+    
+    // 식사 탭 이벤트 리스너 추가
+    const mealTabs = document.querySelectorAll('.meal-tab');
+    mealTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            const mealType = this.getAttribute('data-meal-type');
+            selectMealTab(mealType);
+        });
+    });
+    
+    // 기본으로 아침 탭 선택
+    selectMealTab('breakfast');
 });
 </script>
 </body>
