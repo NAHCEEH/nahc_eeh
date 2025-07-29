@@ -29,7 +29,7 @@
         
         /* 헤더 */
         .header {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             padding: 15px 20px;
             color: white;
             position: relative;
@@ -94,7 +94,7 @@
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #66BB6A);
+            background: linear-gradient(90deg, #EC9787, #F5A596);
             border-radius: 4px;
             transition: width 0.5s ease;
             width: 0%;
@@ -125,7 +125,7 @@
             border-radius: 15px;
             padding: 20px 15px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(212, 165, 116, 0.15);
+            box-shadow: 0 3px 10px rgba(236, 151, 135, 0.15);
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid transparent;
@@ -133,14 +133,14 @@
         
         .time-slot:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.25);
-            border-color: #e9bf94;
+            box-shadow: 0 6px 20px rgba(236, 151, 135, 0.25);
+            border-color: #EC9787;
         }
         
         .time-slot.active {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             color: white;
-            border-color: #d4a574;
+            border-color: #E8897A;
         }
         
         .time-label {
@@ -159,7 +159,7 @@
             background: white;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 3px 15px rgba(212, 165, 116, 0.1);
+            box-shadow: 0 3px 15px rgba(236, 151, 135, 0.1);
             min-height: 200px;
         }
         
@@ -177,7 +177,7 @@
         }
         
         .add-supplement-btn {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             color: white;
             border: none;
             padding: 8px 12px;
@@ -192,28 +192,28 @@
         
         .add-supplement-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+            box-shadow: 0 4px 12px rgba(236, 151, 135, 0.4);
         }
         
         .supplement-item {
             display: flex;
             align-items: center;
             padding: 12px;
-            background: #faf8f6;
+            background: #F2E9E0;
             border-radius: 10px;
             margin-bottom: 8px;
             transition: all 0.3s ease;
         }
         
         .supplement-item:hover {
-            background: #f0ede8;
+            background: #EFE3D8;
             transform: translateX(5px);
         }
         
         .supplement-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -252,12 +252,12 @@
         }
         
         .supplement-status.taken {
-            background: #4CAF50;
-            border-color: #4CAF50;
+            background: #EC9787;
+            border-color: #EC9787;
         }
         
         .supplement-time-btn {
-            background: #e9bf94;
+            background: #EC9787;
             color: white;
             border: none;
             padding: 5px 8px;
@@ -269,20 +269,20 @@
         }
         
         .supplement-time-btn:hover {
-            background: #d4a574;
+            background: #E8897A;
             transform: scale(1.05);
         }
         
         .supplement-time-btn.has-alarm {
-            background: #ff6b6b;
+            background: #E87363;
         }
         
         .supplement-time-btn.has-alarm:hover {
-            background: #ff5252;
+            background: #E56B5A;
         }
         
         .delete-supplement-btn {
-            background: #ff6b6b;
+            background: #E87363;
             color: white;
             border: none;
             width: 20px;
@@ -302,8 +302,212 @@
         }
         
         .delete-supplement-btn:hover {
-            background: #ff5252;
+            background: #E56B5A;
             transform: scale(1.1);
+        }
+        
+        /* 리마인더 & 체크리스트 섹션 */
+        .reminder-section {
+            padding: 20px;
+            padding-bottom: 10px;
+        }
+        
+        /* 다음 복용 알림 */
+        .next-reminder {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 15px rgba(236, 151, 135, 0.1);
+            border-left: 4px solid #EC9787;
+        }
+        
+        .reminder-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .reminder-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .reminder-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b6f47;
+        }
+        
+        .reminder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: #F2E9E0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .reminder-item:hover {
+            background: #EFE3D8;
+            transform: translateX(3px);
+        }
+        
+        .reminder-time {
+            font-size: 18px;
+            font-weight: bold;
+            color: #EC9787;
+            margin-right: 12px;
+        }
+        
+        .reminder-content {
+            flex: 1;
+        }
+        
+        .reminder-supplement {
+            font-size: 14px;
+            font-weight: 600;
+            color: #5a4a3a;
+            margin-bottom: 2px;
+        }
+        
+        .reminder-timing {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .reminder-snooze {
+            background: #EC9787;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reminder-snooze:hover {
+            background: #E8897A;
+            transform: scale(1.05);
+        }
+        
+        .no-reminders {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        /* 오늘의 체크리스트 */
+        .today-checklist {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(236, 151, 135, 0.1);
+            border-left: 4px solid #EC9787;
+        }
+        
+        .checklist-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .checklist-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        
+        .checklist-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b6f47;
+            flex: 1;
+        }
+        
+        .checklist-progress {
+            font-size: 14px;
+            color: #EC9787;
+            font-weight: bold;
+            background: #F2E9E0;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #F2E9E0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .checklist-item:hover {
+            background: #EFE3D8;
+            transform: scale(1.02);
+        }
+        
+        .checklist-item.completed {
+            background: linear-gradient(135deg, #EC9787, #F5A596);
+            color: white;
+            border-color: #E8897A;
+        }
+        
+        .checklist-item.completed:hover {
+            background: linear-gradient(135deg, #E8897A, #F0A796);
+        }
+        
+        .checklist-checkbox {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #EC9787;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item.completed .checklist-checkbox {
+            background: white;
+            color: #EC9787;
+            border-color: white;
+        }
+        
+        .checklist-name {
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .checklist-time {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        
+        .checklist-item.completed .checklist-time {
+            opacity: 0.9;
         }
         
         /* 하단 네비게이션 */
@@ -332,12 +536,12 @@
         }
         
         .nav-item:hover {
-            background: #faf8f6;
+            background: #F2E9E0;
             transform: translateY(-2px);
         }
         
         .nav-item.active {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             color: white;
         }
         
@@ -468,7 +672,7 @@
         .time-input {
             flex: 1;
             padding: 12px;
-            border: 2px solid #e9bf94;
+            border: 2px solid #EC9787;
             border-radius: 10px;
             font-size: 16px;
             text-align: center;
@@ -476,8 +680,8 @@
         
         .time-input:focus {
             outline: none;
-            border-color: #d4a574;
-            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+            border-color: #E8897A;
+            box-shadow: 0 0 10px rgba(236, 151, 135, 0.3);
         }
         
         .meal-timing {
@@ -489,7 +693,7 @@
         .meal-timing-btn {
             flex: 1;
             padding: 12px;
-            border: 2px solid #e9bf94;
+            border: 2px solid #EC9787;
             background: white;
             border-radius: 10px;
             cursor: pointer;
@@ -498,7 +702,7 @@
         }
         
         .meal-timing-btn.active {
-            background: #e9bf94;
+            background: #EC9787;
             color: white;
         }
         
@@ -507,7 +711,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px;
-            background: #faf8f6;
+            background: #F2E9E0;
             border-radius: 10px;
         }
         
@@ -530,7 +734,7 @@
         }
         
         .switch.active {
-            background: #4CAF50;
+            background: #EC9787;
         }
         
         .switch-thumb {
@@ -574,13 +778,13 @@
         }
         
         .btn-save {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E8897A);
             color: white;
         }
         
         .btn-save:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.4);
+            box-shadow: 0 4px 12px rgba(236, 151, 135, 0.4);
         }
         
         /* 영양제 추가 모달 */
@@ -591,15 +795,15 @@
         .text-input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e9bf94;
+            border: 2px solid #EC9787;
             border-radius: 10px;
             font-size: 16px;
         }
         
         .text-input:focus {
             outline: none;
-            border-color: #d4a574;
-            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+            border-color: #E8897A;
+            box-shadow: 0 0 10px rgba(236, 151, 135, 0.3);
         }
         
         select.text-input {
@@ -670,6 +874,32 @@
             </div>
         </section>
         
+        <!-- 리마인더 & 체크리스트 섹션 -->
+        <section class="reminder-section">
+            <!-- 다음 복용 알림 -->
+            <div class="next-reminder">
+                <div class="reminder-header">
+                    <div class="reminder-icon">🔔</div>
+                    <div class="reminder-title">다음 복용 알림</div>
+                </div>
+                <div id="nextReminders" class="reminder-list">
+                    <!-- 동적으로 생성 -->
+                </div>
+            </div>
+            
+            <!-- 오늘의 체크리스트 -->
+            <div class="today-checklist">
+                <div class="checklist-header">
+                    <div class="checklist-icon">📋</div>
+                    <div class="checklist-title">오늘의 복용 현황</div>
+                    <div class="checklist-progress" id="checklistProgress">2/8 완료</div>
+                </div>
+                <div id="todayChecklist" class="checklist-grid">
+                    <!-- 동적으로 생성 -->
+                </div>
+            </div>
+        </section>
+        
         <!-- 하단 패딩 (네비게이션 공간 확보) -->
         <div style="height: 90px;"></div>
         
@@ -716,7 +946,7 @@
                         <!-- 오른쪽 귀 -->
                         <ellipse cx="350" cy="160" rx="35" ry="45" fill="currentColor"/>
                         <!-- 작은 하트 -->
-                        <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
+                        <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#EC9787"/>
                         <!-- 왼쪽 눈 -->
                         <circle cx="190" cy="240" r="18" fill="white"/>
                         <circle cx="190" cy="235" r="7" fill="currentColor"/>
@@ -799,7 +1029,7 @@
                 
                 <div class="modal-body">
                     <div class="add-form-group">
-                        <label class="form-label">제품 이름 <span style="color: #ff6b6b;">*</span></label>
+                        <label class="form-label">제품 이름 <span style="color: #E87363;">*</span></label>
                         <input type="text" class="text-input" id="addSupplementName" placeholder="예: 멀티비타민 골드">
                     </div>
                     
@@ -949,23 +1179,19 @@
         
         let currentTimeSlot = 'morning';
         
-        // 제형에 따른 아이콘 반환 (모든 영양제는 알약 아이콘으로 통일)
+        // 제형에 따른 아이콘 반환
         function getSupplementIcon(form) {
             return '💊';
         }
         
         // 시간대 선택
         function selectTimeSlot(element, timeSlot) {
-            // 기존 활성화 제거
             document.querySelectorAll('.time-slot').forEach(slot => {
                 slot.classList.remove('active');
             });
             
-            // 새로운 활성화
             element.classList.add('active');
             currentTimeSlot = timeSlot;
-            
-            // 영양제 리스트 업데이트
             updateSupplementsList(timeSlot);
         }
         
@@ -1020,7 +1246,6 @@
             element.classList.toggle('taken');
             supplementsData[timeSlot][index].taken = element.classList.contains('taken');
             
-            // 복용 완료 시 애니메이션
             if (element.classList.contains('taken')) {
                 element.style.transform = 'scale(1.3)';
                 setTimeout(() => {
@@ -1028,8 +1253,173 @@
                 }, 300);
             }
             
-            // 달성률 업데이트
+            updateAllSections();
+        }
+        
+        // 다음 복용 알림 업데이트
+        function updateNextReminders() {
+            const nextRemindersContainer = document.getElementById('nextReminders');
+            const currentTime = new Date();
+            const currentHours = currentTime.getHours();
+            const currentMinutes = currentTime.getMinutes();
+            const currentTimeInMinutes = currentHours * 60 + currentMinutes;
+            
+            const upcomingReminders = [];
+            
+            Object.keys(supplementsData).forEach(timeSlot => {
+                supplementsData[timeSlot].forEach(supplement => {
+                    if (supplement.time && supplement.alarm && !supplement.taken) {
+                        const [hours, minutes] = supplement.time.split(':').map(Number);
+                        const supplementTimeInMinutes = hours * 60 + minutes;
+                        
+                        if (supplementTimeInMinutes > currentTimeInMinutes) {
+                            upcomingReminders.push({
+                                time: supplement.time,
+                                name: supplement.name,
+                                timing: supplement.timing,
+                                timeSlot: timeSlot,
+                                timeInMinutes: supplementTimeInMinutes
+                            });
+                        }
+                    }
+                });
+            });
+            
+            upcomingReminders.sort((a, b) => a.timeInMinutes - b.timeInMinutes);
+            
+            if (upcomingReminders.length === 0) {
+                nextRemindersContainer.innerHTML = `
+                    <div class="no-reminders">
+                        🎉 오늘 예정된 알림이 모두 완료되었습니다!
+                    </div>
+                `;
+                return;
+            }
+            
+            const limitedReminders = upcomingReminders.slice(0, 3);
+            
+            nextRemindersContainer.innerHTML = limitedReminders.map(reminder => `
+                <div class="reminder-item">
+                    <div class="reminder-time">${reminder.time}</div>
+                    <div class="reminder-content">
+                        <div class="reminder-supplement">${reminder.name}</div>
+                        <div class="reminder-timing">${reminder.timing === 'before' ? '식전' : '식후'} 복용</div>
+                    </div>
+                    <button class="reminder-snooze" onclick="snoozeReminder('${reminder.time}')">10분 뒤</button>
+                </div>
+            `).join('');
+        }
+        
+        // 오늘의 체크리스트 업데이트
+        function updateTodayChecklist() {
+            const checklistContainer = document.getElementById('todayChecklist');
+            const progressContainer = document.getElementById('checklistProgress');
+            
+            const allSupplements = [];
+            let completedCount = 0;
+            
+            Object.keys(supplementsData).forEach(timeSlot => {
+                supplementsData[timeSlot].forEach((supplement, index) => {
+                    allSupplements.push({
+                        ...supplement,
+                        timeSlot,
+                        index
+                    });
+                    if (supplement.taken) {
+                        completedCount++;
+                    }
+                });
+            });
+            
+            progressContainer.textContent = `${completedCount}/${allSupplements.length} 완료`;
+            
+            if (allSupplements.length === 0) {
+                checklistContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #999;">
+                        아직 등록된 영양제가 없습니다
+                    </div>
+                `;
+                return;
+            }
+            
+            checklistContainer.innerHTML = allSupplements.map(supplement => `
+                <div class="checklist-item ${supplement.taken ? 'completed' : ''}" 
+                     onclick="toggleChecklistItem('${supplement.timeSlot}', ${supplement.index})">
+                    <div class="checklist-checkbox">
+                        ${supplement.taken ? '✓' : ''}
+                    </div>
+                    <div>
+                        <div class="checklist-name">${supplement.name}</div>
+                        <div class="checklist-time">${supplement.time || '시간 미설정'}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 달성률 업데이트
+        function updateProgress() {
+            let totalSupplements = 0;
+            let takenSupplements = 0;
+            
+            Object.keys(supplementsData).forEach(timeSlot => {
+                supplementsData[timeSlot].forEach(supplement => {
+                    totalSupplements++;
+                    if (supplement.taken) {
+                        takenSupplements++;
+                    }
+                });
+            });
+            
+            const percentage = totalSupplements > 0 ? Math.round((takenSupplements / totalSupplements) * 100) : 0;
+            
+            document.getElementById('progressPercentage').textContent = `${percentage}%`;
+            document.getElementById('progressBar').style.width = `${percentage}%`;
+            document.getElementById('progressStats').textContent = `복용완료: ${takenSupplements}개`;
+            document.getElementById('totalStats').textContent = `전체: ${totalSupplements}개`;
+            
+            const progressBar = document.getElementById('progressBar');
+            if (percentage === 100) {
+                progressBar.style.background = 'linear-gradient(90deg, #EC9787, #F5A596)';
+            } else if (percentage >= 70) {
+                progressBar.style.background = 'linear-gradient(90deg, #EC9787, #F0A796)';
+            } else {
+                progressBar.style.background = 'linear-gradient(90deg, #E87363, #ED9182)';
+            }
+            
+            if (percentage === 100 && totalSupplements > 0) {
+                setTimeout(() => {
+                    showCelebration();
+                }, 500);
+            }
+        }
+        
+        // 모든 섹션 업데이트 (중복 방지)
+        function updateAllSections() {
             updateProgress();
+            updateNextReminders();
+            updateTodayChecklist();
+        }
+        
+        // 체크리스트 아이템 토글
+        function toggleChecklistItem(timeSlot, index) {
+            const supplement = supplementsData[timeSlot][index];
+            supplement.taken = !supplement.taken;
+            
+            updateSupplementsList(currentTimeSlot);
+            updateAllSections();
+            
+            if (supplement.taken) {
+                const allItems = document.querySelectorAll('.checklist-item');
+                const targetItem = Array.from(allItems).find(item => 
+                    item.onclick.toString().includes(`'${timeSlot}', ${index}`)
+                );
+                if (targetItem) {
+                    targetItem.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        targetItem.style.transform = 'scale(1)';
+                    }, 300);
+                }
+            }
         }
         
         // 시간 설정 모달 열기
@@ -1037,10 +1427,8 @@
             const supplement = supplementsData[timeSlot][index];
             const modal = document.getElementById('timeModal');
             
-            // 모달 정보 설정
             document.getElementById('modalSupplementName').textContent = supplement.name;
             
-            // 시간 설정
             if (supplement.time) {
                 const [hours, minutes] = supplement.time.split(':');
                 document.getElementById('timeHour').value = hours;
@@ -1050,13 +1438,11 @@
                 document.getElementById('timeMinute').value = '';
             }
             
-            // 식사 타이밍 설정
             document.querySelectorAll('.meal-timing-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.querySelector(`[data-timing="${supplement.timing}"]`).classList.add('active');
             
-            // 알림 설정
             const alarmSwitch = document.getElementById('alarmSwitch');
             if (supplement.alarm) {
                 alarmSwitch.classList.add('active');
@@ -1064,10 +1450,8 @@
                 alarmSwitch.classList.remove('active');
             }
             
-            // 현재 편집 중인 영양제 정보 저장
             modal.dataset.timeSlot = timeSlot;
             modal.dataset.index = index;
-            
             modal.classList.add('show');
         }
         
@@ -1107,21 +1491,8 @@
                 supplementsData[timeSlot][index].timing = timing;
                 supplementsData[timeSlot][index].alarm = alarm;
                 
-                // 알림 설정 시 권한 요청
-                if (alarm && 'Notification' in window) {
-                    if (Notification.permission === 'default') {
-                        Notification.requestPermission().then(permission => {
-                            if (permission === 'granted') {
-                                scheduleNotification(supplementsData[timeSlot][index]);
-                            }
-                        });
-                    } else if (Notification.permission === 'granted') {
-                        scheduleNotification(supplementsData[timeSlot][index]);
-                    }
-                }
-                
-                // 리스트 업데이트
                 updateSupplementsList(timeSlot);
+                updateAllSections();
                 
                 alert(`${supplementsData[timeSlot][index].name} 복용 시간이 ${time}${timing === 'before' ? ' 식전' : ' 식후'}으로 설정되었습니다.${alarm ? ' 알림이 활성화되었습니다.' : ''}`);
             } else {
@@ -1132,26 +1503,17 @@
             closeTimeModal();
         }
         
-        // 알림 스케줄링 (실제 앱에서는 서비스 워커나 백엔드에서 처리)
-        function scheduleNotification(supplement) {
-            console.log(`${supplement.name} 알림이 ${supplement.time}에 설정되었습니다.`);
-            // 실제 구현에서는 서비스 워커나 백엔드 API를 통해 알림을 스케줄링
-        }
-        
         // 영양제 추가 모달 열기
         function openAddModal() {
             const modal = document.getElementById('addModal');
             
-            // 입력 필드 초기화
             document.getElementById('addSupplementName').value = '';
             document.getElementById('addSupplementBrand').value = '';
             document.getElementById('addSupplementDosage').value = '';
             document.getElementById('addSupplementForm').value = '';
             document.getElementById('addSupplementDose').value = '';
             
-            // 현재 시간대 저장
             modal.dataset.timeSlot = currentTimeSlot;
-            
             modal.classList.add('show');
         }
         
@@ -1176,7 +1538,6 @@
                 return;
             }
             
-            // 새 영양제 객체 생성
             const newSupplement = {
                 name: name,
                 brand: brand,
@@ -1190,16 +1551,9 @@
                 alarm: false
             };
             
-            // 데이터에 추가
             supplementsData[timeSlot].push(newSupplement);
-            
-            // 리스트 업데이트
             updateSupplementsList(timeSlot);
-            
-            // 달성률 업데이트
-            updateProgress();
-            
-            // 모달 닫기
+            updateAllSections();
             closeAddModal();
             
             alert(`${name}${brand ? ' (' + brand + ')' : ''}이(가) ${getTimeSlotName(timeSlot)} 영양제로 추가되었습니다.`);
@@ -1210,15 +1564,9 @@
             const supplement = supplementsData[timeSlot][index];
             
             if (confirm(`${supplement.name}을(를) 삭제하시겠습니까?`)) {
-                // 배열에서 제거
                 supplementsData[timeSlot].splice(index, 1);
-                
-                // 리스트 업데이트
                 updateSupplementsList(timeSlot);
-                
-                // 달성률 업데이트
-                updateProgress();
-                
+                updateAllSections();
                 alert(`${supplement.name}이(가) 삭제되었습니다.`);
             }
         }
@@ -1233,58 +1581,20 @@
             return names[timeSlot];
         }
         
-        // 달성률 업데이트
-        function updateProgress() {
-            let totalSupplements = 0;
-            let takenSupplements = 0;
-            
-            // 모든 시간대의 영양제 개수 계산
-            Object.keys(supplementsData).forEach(timeSlot => {
-                supplementsData[timeSlot].forEach(supplement => {
-                    totalSupplements++;
-                    if (supplement.taken) {
-                        takenSupplements++;
-                    }
-                });
-            });
-            
-            // 퍼센트 계산
-            const percentage = totalSupplements > 0 ? Math.round((takenSupplements / totalSupplements) * 100) : 0;
-            
-            // UI 업데이트
-            document.getElementById('progressPercentage').textContent = `${percentage}%`;
-            document.getElementById('progressBar').style.width = `${percentage}%`;
-            document.getElementById('progressStats').textContent = `복용완료: ${takenSupplements}개`;
-            document.getElementById('totalStats').textContent = `전체: ${totalSupplements}개`;
-            
-            // 달성률에 따른 프로그레스 바 색상 변경
-            const progressBar = document.getElementById('progressBar');
-            if (percentage === 100) {
-                progressBar.style.background = 'linear-gradient(90deg, #4CAF50, #66BB6A)';
-            } else if (percentage >= 70) {
-                progressBar.style.background = 'linear-gradient(90deg, #FFA726, #FFB74D)';
-            } else {
-                progressBar.style.background = 'linear-gradient(90deg, #E79787, #F09C92)';
-            }
-            
-            // 100% 달성 시 축하 메시지
-            if (percentage === 100 && totalSupplements > 0) {
-                setTimeout(() => {
-                    showCelebration();
-                }, 500);
-            }
+        // 알림 스누즈 기능
+        function snoozeReminder(time) {
+            alert(`${time} 알림을 10분 후로 연기했습니다.`);
         }
         
         // 축하 메시지 표시
         function showCelebration() {
-            // 간단한 축하 알림 (실제 앱에서는 더 예쁜 애니메이션 사용 가능)
             const celebration = document.createElement('div');
             celebration.style.cssText = `
                 position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background: linear-gradient(135deg, #4CAF50, #66BB6A);
+                background: linear-gradient(135deg, #EC9787, #F5A596);
                 color: white;
                 padding: 20px 30px;
                 border-radius: 20px;
@@ -1293,11 +1603,10 @@
                 z-index: 2000;
                 animation: celebrationPop 2s ease;
                 text-align: center;
-                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
+                box-shadow: 0 10px 30px rgba(236, 151, 135, 0.4);
             `;
             celebration.innerHTML = '🎉 축하합니다!<br>오늘 영양제를 모두 복용했습니다!';
             
-            // CSS 애니메이션 추가
             if (!document.querySelector('#celebrationStyle')) {
                 const style = document.createElement('style');
                 style.id = 'celebrationStyle';
@@ -1313,7 +1622,6 @@
             
             document.body.appendChild(celebration);
             
-            // 2초 후 제거
             setTimeout(() => {
                 celebration.remove();
             }, 2000);
@@ -1321,15 +1629,12 @@
         
         // 네비게이션
         function navigateTo(page) {
-            // 기존 활성화 제거
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // 클릭된 아이템 활성화
             event.target.closest('.nav-item').classList.add('active');
             
-            // 페이지별 동작
             switch(page) {
                 case 'community':
                     alert('커뮤니티 페이지로 이동합니다');
@@ -1338,8 +1643,7 @@
                     alert('홈 페이지입니다');
                     break;
                 case 'health':
-                    // 실제 앱에서는 페이지 이동
-                    window.location.href = 'health-management.html';
+                    alert('내 건강 페이지로 이동합니다');
                     break;
                 case 'chatbot':
                     alert('챗봇 페이지로 이동합니다');
@@ -1350,10 +1654,10 @@
             }
         }
         
-        // 초기 로드 시 아침 영양제 표시
+        // 초기 로드
         document.addEventListener('DOMContentLoaded', function() {
             updateSupplementsList('morning');
-            updateProgress(); // 초기 달성률 계산
+            updateAllSections();
         });
     </script>
 </body>
