@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 챗봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F2E9E0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chatbot-container {
+            width: 400px;
+            height: 700px;
+            background: #f5f5f5;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #f0e6d6;
+            padding: 12px 20px; /* 패딩 조정 */
+            text-align: center;
+            position: relative;
+            flex-shrink: 0; /* 고정 높이 유지 */
+            min-height: 120px; /* 높이 조정 */
+            border-radius: 25px 25px 0 0; /* 상단 모서리 둥글게 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 상단 곰 아이콘 스타일 */
+        .header-bear-icon {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-bear-icon svg {
+            filter: drop-shadow(0 2px 4px rgba(229, 141, 135, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .header-bear-icon svg:hover {
+            transform: scale(1.05);
+        }
+
+        .robot-icon {
+            width: 50px; /* 크기 줄임 */
+            height: 50px;
+            background: #ff9999;
+            border-radius: 15px;
+            margin: 0 auto 10px; /* 마진 줄임 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px; /* 폰트 크기 줄임 */
+            color: white;
+            position: relative;
+        }
+
+        .robot-icon::before {
+            content: '';
+        }
+        
+        .robot-icon::after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23E58D87'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23E58D87'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23E58D87'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23E58D87'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .title {
+            font-size: 20px; /* 폰트 크기 줄임 */
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px; /* 마진 조정 */
+            margin-top: 0;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px; /* 간격 줄임 */
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* 줄바꿈 허용 */
+        }
+
+        .control-btn {
+            padding: 8px 15px; /* 패딩 줄임 */
+            background: white;
+            border: none;
+            border-radius: 20px; /* 둥글기 줄임 */
+            font-size: 12px; /* 폰트 크기 줄임 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 줄임 */
+            white-space: nowrap;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px; /* 크기 줄임 */
+            height: 25px;
+            background: #4CAF50;
+            border-radius: 12px; /* 둥글기 줄임 */
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 21px; /* 크기 줄임 */
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 줄임 */
+        }
+
+        .toggle-switch.off {
+            background: #ccc;
+        }
+
+        .toggle-switch.off::before {
+            right: 27px; /* 위치 조정 */
+        }
+
+        .chat-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: white;
+            margin: 0;
+            border-radius: 0;
+            position: relative;
+        }
+
+        .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-size: 16px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.user .message-bubble {
+            background: #007AFF;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot .message-bubble {
+            background: #f0f0f0;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+
+        .bot-avatar {
+            width: 30px;
+            height: 30px;
+            background: #ff9999;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23ff9999'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23ff9999'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23ff9999'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23ff9999'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
+            background-size: 70%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .bot-avatar::after {
+            display: none;
+        }
+
+        .input-area {
+            padding: 20px;
+            background: #f0e6d6;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            background: white;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            background: #EC9787;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: #e8826f;
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px 16px;
+            background: #f0f0f0;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 70%;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        .footer {
+            display: none; /* 기존 푸터 숨기기 */
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000; /* 다른 요소 위에 표시 */
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0 3px;
+        }
+        
+        .nav-item:hover {
+            background: #faf8f6;
+            transform: translateY(-1px);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+        }
+        
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 24px;
+        }
+        
+        .nav-icon svg {
+            transition: all 0.3s ease;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .nav-item:hover .nav-icon svg {
+            transform: scale(1.05);
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 1;
+        }
+
+        /* 챗봇 컨테이너 하단 여백 조정 */
+        .chatbot-container {
+            margin-bottom: 150px; /* 기본 여백 */
+            transition: margin-bottom 0.3s ease;
+        }
+
+        .chatbot-container.suggestions-expanded {
+            margin-bottom: 280px; /* 확장 시 여백 */
+        }
+
+        /* 추천 질문 컨테이너 */
+        .suggestions-container {
+            position: fixed;
+            bottom: 135px; /* 입력창 위에 위치 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            height: 60px; /* 기본 축소 높이 */
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border: 1px solid #e5e0db;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -3px 15px rgba(0,0,0,0.1);
+            display: block;
+            z-index: 100;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .suggestions-container.expanded {
+            height: 200px; /* 확장 높이 */
+            cursor: default;
+        }
+
+        .suggestions-header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            z-index: 101;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .suggestions-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .expand-indicator {
+            font-size: 16px;
+            color: #999;
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+
+        .suggestions-container.expanded .expand-indicator {
+            transform: rotate(180deg);
+        }
+
+        .suggestions-preview {
+            padding: 8px 20px;
+            overflow: hidden;
+            height: calc(100% - 49px);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .suggestions-scroll {
+            height: calc(100% - 49px); /* 헤더 높이를 제외한 나머지 */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 8px 20px 12px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .suggestions-container.expanded .suggestions-scroll {
+            opacity: 1;
+        }
+
+        .suggestions-container.expanded .suggestions-preview {
+            display: none;
+        }
+
+        /* 미리보기용 아이템 */
+        .suggestion-preview-item {
+            background: linear-gradient(135deg, #f8f6f4, #f0ede8);
+            border: 1px solid #e5e0db;
+            border-radius: 15px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: #666;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* 커스텀 스크롤바 */
+        .suggestions-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .suggestions-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .suggestions-scroll::-webkit-scrollbar-thumb {
+            background: rgba(200, 200, 200, 0.6);
+            border-radius: 2px;
+        }
+
+        .suggestions-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(170, 170, 170, 0.8);
+        }
+
+        .suggestion-item {
+            background: linear-gradient(135deg, #f8f6f4, #f0ede8);
+            border: 1px solid #e5e0db;
+            border-radius: 20px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: block;
+            line-height: 1.3;
+        }
+
+        .suggestion-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .suggestion-item:hover {
+            background: linear-gradient(135deg, #EC9787, #e8826f);
+            color: white;
+            transform: translateX(4px);
+            box-shadow: 0 3px 12px rgba(236, 151, 135, 0.25);
+            border-color: #EC9787;
+        }
+
+        .suggestion-item:active {
+            transform: translateX(2px);
+        }
+
+        /* 입력 영역 위치 조정 */
+        .input-area {
+            position: fixed;
+            bottom: 60px; /* 네비게이션바 위에 위치 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            padding: 15px 20px;
+            background: #f0e6d6;
+            border-radius: 0;
+            z-index: 200;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 확장 시 배경 오버레이 */
+        .suggestions-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .suggestions-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 스크롤바 커스텀 */
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        /* 말투 설정 모달 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            max-width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .tone-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .tone-option {
+            padding: 15px 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .tone-option:hover {
+            border-color: #EC9787;
+            background: #fef8f7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(236, 151, 135, 0.2);
+        }
+
+        .tone-option.selected {
+            border-color: #EC9787;
+            background: #EC9787;
+            color: white;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .modal-btn.confirm {
+            background: #EC9787;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #e8826f;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="header">
+            <!-- 상단 곰 아이콘 -->
+            <div class="header-bear-icon">
+                <svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 메인 얼굴 -->
+                    <rect x="130" y="180" width="252" height="200" rx="60" fill="#E58D87"/>
+                    <!-- 왼쪽 귀 -->
+                    <ellipse cx="160" cy="160" rx="35" ry="45" fill="#E58D87"/>
+                    <!-- 오른쪽 귀 -->
+                    <ellipse cx="350" cy="160" rx="35" ry="45" fill="#E58D87"/>
+                    <!-- 작은 하트 -->
+                    <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
+                    <!-- 왼쪽 눈 -->
+                    <circle cx="190" cy="240" r="18" fill="white"/>
+                    <circle cx="190" cy="235" r="7" fill="#E58D87"/>
+                    <!-- 오른쪽 눈 -->
+                    <circle cx="320" cy="240" r="18" fill="white"/>
+                    <circle cx="320" cy="235" r="7" fill="#E58D87"/>
+                    <!-- 입 (두 개의 둥근 사각형) -->
+                    <rect x="200" y="310" width="45" height="30" rx="15" fill="white"/>
+                    <rect x="265" y="310" width="45" height="30" rx="15" fill="white"/>
+                    <line x1="255" y1="310" x2="255" y2="340" stroke="#E58D87" stroke-width="5"/>
+                </svg>
+            </div>
+            <div class="robot-icon"></div>
+            <h1 class="title">AI와 대화</h1>
+            <div class="controls">
+                <button class="control-btn" id="voiceBtn">말투 설정</button>
+                <button class="control-btn" id="memoryBtn">역할</button>
+                <div class="toggle-switch" id="toggleSwitch"></div>
+            </div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="placeholder" id="placeholder">프롬프트</div>
+            <div class="message bot" style="display: none;">
+                <div class="bot-avatar">🤖</div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 하단 통합 컨테이너 -->
+        <div class="bottom-container" id="bottomContainer">
+            <!-- 추천 질문 컨테이너 -->
+            <div class="suggestions-container" id="suggestionsContainer">
+                <div class="suggestions-header" id="suggestionsHeader">
+                    <div class="suggestions-title">💡 추천 질문</div>
+                    <div class="expand-indicator">▲</div>
+                </div>
+                <div class="suggestions-scroll" id="suggestionsScroll">
+                    <!-- 추천 질문들이 여기에 표시됩니다 -->
+                </div>
+            </div>
+
+            <!-- 입력 영역 -->
+            <div class="input-area">
+                <div class="input-container">
+                    <input type="text" class="input-field" id="messageInput" placeholder="메시지 입력">
+                    <button class="send-btn" id="sendBtn">
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <!-- 기존 푸터는 숨겨짐 -->
+        </div>
+    </div>
+
+    <!-- 추천 질문 배경 오버레이 제거됨 -->
+
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="navigateTo('community')">
+            <div class="nav-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    <circle cx="18.5" cy="10" r="2.5"/>
+                    <circle cx="5.5" cy="10" r="2.5"/>
+                    <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                    <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                </svg>
+            </div>
+            <div class="nav-label">커뮤니티</div>
+        </div>
+        
+        <div class="nav-item" onclick="navigateTo('home')">
+            <div class="nav-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+            </div>
+            <div class="nav-label">홈</div>
+        </div>
+        
+        <div class="nav-item active" onclick="navigateTo('chatbot')">
+            <div class="nav-icon">
+                <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor">
+                    <!-- 배경 사각형 (더 짧아짐) -->
+                    <rect x="120" y="130" width="272" height="252" rx="50" fill="currentColor"/>
+                    <!-- 귀 (더 작아짐) -->
+                    <circle cx="150" cy="130" r="35" fill="currentColor"/>
+                    <circle cx="360" cy="130" r="35" fill="currentColor"/>
+                    <!-- 눈 (약간 작아짐) -->
+                    <ellipse cx="200" cy="220" rx="18" ry="30" fill="white"/>
+                    <ellipse cx="310" cy="220" rx="18" ry="30" fill="white"/>
+                    <rect x="196" y="208" width="8" height="24" fill="currentColor"/>
+                    <rect x="306" y="208" width="8" height="24" fill="currentColor"/>
+                    <!-- 입 (더 작아짐) -->
+                    <rect x="210" y="320" width="45" height="30" rx="4" fill="white"/>
+                    <rect x="260" y="320" width="45" height="30" rx="4" fill="white"/>
+                    <line x1="255" y1="320" x2="255" y2="350" stroke="currentColor" stroke-width="8" />
+                </svg>
+            </div>
+            <div class="nav-label">챗봇</div>
+        </div>
+        
+        <div class="nav-item" onclick="navigateTo('more')">
+            <div class="nav-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="5" cy="12" r="2"/>
+                    <circle cx="12" cy="12" r="2"/>
+                    <circle cx="19" cy="12" r="2"/>
+                </svg>
+            </div>
+            <div class="nav-label">더보기</div>
+        </div>
+    </nav>
+
+    <!-- 말투 설정 모달 -->
+    <div class="modal-overlay" id="toneModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">말투 설정</div>
+                <div class="modal-subtitle">원하는 말투를 선택해주세요</div>
+            </div>
+            <div class="tone-options">
+                <div class="tone-option" data-tone="friendly">다정한 버전</div>
+                <div class="tone-option" data-tone="casual">친근한 버전</div>
+                <div class="tone-option" data-tone="professional">전문가 버전</div>
+                <div class="tone-option" data-tone="calm">차분한 버전</div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelTone">취소</button>
+                <button class="modal-btn confirm" id="confirmTone">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 역할 설정 모달 -->
+    <div class="modal-overlay" id="roleModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">역할 설정</div>
+                <div class="modal-subtitle">AI의 역할을 선택해주세요</div>
+            </div>
+            <div class="tone-options">
+                <div class="tone-option" data-role="general">💬 일반 대화</div>
+                <div class="tone-option" data-role="tutor">📚 학습 도우미</div>
+                <div class="tone-option" data-role="counselor">💝 상담사</div>
+                <div class="tone-option" data-role="career">💼 커리어 코치</div>
+                <div class="tone-option" data-role="creative">🎨 창작 파트너</div>
+                <div class="tone-option" data-role="health">🏥 건강 관리사</div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelRole">취소</button>
+                <button class="modal-btn confirm" id="confirmRole">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM 요소들
+        const chatArea = document.getElementById('chatArea');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const placeholder = document.getElementById('placeholder');
+        const toggleSwitch = document.getElementById('toggleSwitch');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const voiceBtn = document.getElementById('voiceBtn');
+        const memoryBtn = document.getElementById('memoryBtn');
+        const toneModal = document.getElementById('toneModal');
+        const toneOptions = document.querySelectorAll('.tone-option');
+        const cancelTone = document.getElementById('cancelTone');
+        const confirmTone = document.getElementById('confirmTone');
+        const roleModal = document.getElementById('roleModal');
+        const roleOptions = document.querySelectorAll('[data-role]');
+        const cancelRole = document.getElementById('cancelRole');
+        const confirmRole = document.getElementById('confirmRole');
+        const navItems = document.querySelectorAll('.nav-item');
+        const suggestionsContainer = document.getElementById('suggestionsContainer');
+        const suggestionsScroll = document.getElementById('suggestionsScroll');
+        const suggestionsHeader = document.getElementById('suggestionsHeader');
+        const bottomContainer = document.getElementById('bottomContainer');
+
+        // 메시지 배열
+        let messages = [];
+        let isTyping = false;
+        let selectedTone = 'friendly'; // 기본 말투
+        let currentTone = 'friendly';
+        let selectedRole = 'general'; // 기본 역할
+        let currentRole = 'general';
+        let suggestionsExpanded = false;
+
+        // 역할별 추천 질문 데이터
+        const suggestionsByRole = {
+            general: [
+                "안녕하세요! 어떻게 지내시나요?",
+                "오늘 날씨는 어때요?",
+                "재미있는 이야기 들려주세요",
+                "추천할 만한 영화가 있나요?",
+                "좋은 음악 추천해주세요",
+                "취미가 뭐예요?",
+                "맛있는 음식 추천해주세요"
+            ],
+            tutor: [
+                "수학 공부법 알려주세요",
+                "영어 단어 암기 방법은?",
+                "효과적인 노트 정리법이 있나요?",
+                "시험 준비는 어떻게 해야 하나요?",
+                "집중력을 높이는 방법은?",
+                "온라인 학습 도구 추천해주세요",
+                "기억력을 향상시키는 방법은?"
+            ],
+            counselor: [
+                "요즘 스트레스가 많아요",
+                "불안한 마음을 달래는 방법은?",
+                "기분이 우울할 때는 어떻게 하나요?",
+                "인간관계가 힘들어요",
+                "자신감을 기르는 방법은?",
+                "감정 조절하는 법 알려주세요",
+                "마음의 평화를 찾고 싶어요"
+            ],
+            career: [
+                "이력서 작성법 알려주세요",
+                "면접 준비는 어떻게 하나요?",
+                "커리어 전환을 고민하고 있어요",
+                "직장에서 성과를 내는 방법은?",
+                "네트워킹은 어떻게 해야 하나요?",
+                "승진을 위한 전략이 있나요?",
+                "업무 효율성을 높이는 방법은?"
+            ],
+            creative: [
+                "창의적인 아이디어는 어떻게 얻나요?",
+                "글쓰기 실력을 늘리고 싶어요",
+                "그림 그리기 팁 알려주세요",
+                "음악 작곡에 대해 알고 싶어요",
+                "디자인 영감을 찾는 방법은?",
+                "창작 활동을 시작하고 싶어요",
+                "예술적 감각을 기르는 방법은?"
+            ],
+            health: [
+                "건강한 식단 짜는 법 알려주세요",
+                "운동 루틴 추천해주세요",
+                "스트레스 해소법이 있나요?",
+                "수면의 질을 높이는 방법은?",
+                "다이어트 팁 알려주세요",
+                "면역력 높이는 방법은?",
+                "건강한 생활습관은 뭐가 있나요?"
+            ]
+        };
+
+        // 네비게이션 함수
+        function navigateTo(page) {
+            // 활성 상태 변경
+            navItems.forEach(nav => nav.classList.remove('active'));
+            
+            // 클릭된 아이템 찾아서 활성화
+            const clickedItem = event.target.closest('.nav-item');
+            if (clickedItem) {
+                clickedItem.classList.add('active');
+            }
+            
+            // 각 메뉴별 동작
+            switch(page) {
+                case 'community':
+                    addMessage('커뮤니티 기능은 개발 중입니다! 🏘️', 'bot');
+                    break;
+                case 'home':
+                    addMessage('홈 화면으로 이동합니다! 🏠', 'bot');
+                    break;
+                case 'chatbot':
+                    addMessage('챗봇 화면입니다! 편하게 대화해보세요! 🤖', 'bot');
+                    break;
+                case 'more':
+                    addMessage('더보기 메뉴를 준비 중입니다! ⚙️', 'bot');
+                    break;
+            }
+        }
+
+        // 추천 질문 표시 함수
+        function showSuggestions() {
+            const suggestions = suggestionsByRole[currentRole] || suggestionsByRole.general;
+            
+            // 전체 질문 리스트 생성
+            suggestionsScroll.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.textContent = suggestion;
+                item.addEventListener('click', () => {
+                    sendSuggestion(suggestion);
+                });
+                suggestionsScroll.appendChild(item);
+            });
+        }
+
+        // 추천 질문 확장/축소 함수
+        function toggleSuggestions() {
+            suggestionsExpanded = !suggestionsExpanded;
+            
+            if (suggestionsExpanded) {
+                suggestionsContainer.classList.add('expanded');
+                bottomContainer.classList.add('expanded');
+            } else {
+                suggestionsContainer.classList.remove('expanded');
+                bottomContainer.classList.remove('expanded');
+            }
+        }
+
+        // 추천 질문 전송 함수
+        function sendSuggestion(suggestion) {
+            // 입력창에 텍스트 설정
+            messageInput.value = suggestion;
+            
+            // 메시지 전송
+            sendMessage();
+            
+            // 확장 상태라면 축소
+            if (suggestionsExpanded) {
+                toggleSuggestions();
+            }
+        }
+
+        // 토글 스위치 이벤트
+        toggleSwitch.addEventListener('click', function() {
+            this.classList.toggle('off');
+        });
+
+        // 메시지 전송 함수
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message === '' || isTyping) return;
+
+            // 플레이스홀더 숨기기
+            placeholder.style.display = 'none';
+
+            // 사용자 메시지 추가
+            addMessage(message, 'user');
+            messageInput.value = '';
+
+            // 봇 응답 시뮬레이션
+            simulateBotResponse(message);
+        }
+
+        // 메시지 추가 함수
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="bot-avatar"></div>
+                    <div class="message-bubble">${text}</div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-bubble">${text}</div>
+                `;
+            }
+
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            messages.push({ text, sender });
+        }
+
+        // 봇 응답 시뮬레이션
+        function simulateBotResponse(userMessage) {
+            isTyping = true;
+            sendBtn.disabled = true;
+
+            // 타이핑 인디케이터 표시
+            const typingMessage = document.createElement('div');
+            typingMessage.className = 'message bot typing-message';
+            typingMessage.innerHTML = `
+                <div class="bot-avatar"></div>
+                <div class="typing-indicator">
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            chatArea.appendChild(typingMessage);
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // 2초 후 응답 생성
+            setTimeout(() => {
+                // 타이핑 인디케이터 제거
+                chatArea.removeChild(typingMessage);
+
+                // 말투별 응답 생성
+                const responses = getRoleBasedResponses(userMessage, currentRole, currentTone);
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addMessage(randomResponse, 'bot');
+
+                isTyping = false;
+                sendBtn.disabled = false;
+            }, 2000);
+        }
+
+        // 역할과 말투를 조합한 응답 생성 함수
+        function getRoleBasedResponses(userMessage, role, tone) {
+            const roleResponses = {
+                general: {
+                    friendly: [
+                        "안녕하세요! 😊 무엇을 도와드릴까요?",
+                        "와, 정말 흥미로운 질문이네요! 더 자세히 알려주세요~",
+                        "그렇게 생각하시는군요! 다른 관점에서 보면 어떨까요? 😄",
+                        "좋은 아이디어에요! 구체적으로 어떤 부분이 궁금하신가요?",
+                        `"${userMessage}"에 대해 생각해보니 정말 좋은 포인트네요! 💭`
+                    ],
+                    casual: [
+                        "안녕! 뭐 도와줄까?",
+                        "오 재밌는 얘기네! 좀 더 얘기해봐",
+                        "그런 생각이구나? 다른 방식으로 보면 어때?",
+                        "좋은데? 구체적으로 뭐가 궁금해?",
+                        `"${userMessage}" 이거 진짜 좋은 얘기야!`
+                    ],
+                    professional: [
+                        "안녕하십니까. 어떤 사항에 대해 도움을 드릴까요?",
+                        "매우 흥미로운 주제입니다. 보다 구체적인 정보를 제공해 주시겠습니까?",
+                        "해당 관점에 대해 말씀드리자면, 다각도로 검토해 볼 필요가 있습니다.",
+                        `"${userMessage}"에 관한 분석이 매우 적절하다고 판단됩니다.`
+                    ],
+                    calm: [
+                        "안녕하세요. 차근차근 도와드리겠습니다.",
+                        "흥미로운 질문이군요. 천천히 생각해보시면 좋을 것 같습니다.",
+                        "그런 관점도 있네요. 조금 더 깊이 생각해보면 어떨까요?",
+                        `"${userMessage}"에 대해 신중하게 생각해보신 것 같네요.`
+                    ]
+                },
+                tutor: {
+                    friendly: [
+                        "공부에 관한 질문이군요! 😊 함께 해결해봐요!",
+                        "좋은 질문이에요! 이런 방식으로 접근해보면 어떨까요?",
+                        "이해가 안 되는 부분이 있나요? 차근차근 설명해드릴게요! 📚",
+                        "와! 정말 좋은 학습 태도네요! 더 궁금한 건 없나요?",
+                        "이 개념을 다른 예시로 설명해드릴까요? 🤔"
+                    ],
+                    casual: [
+                        "공부 질문이구나! 같이 풀어보자",
+                        "이거 좋은 질문이야! 이렇게 생각해봐",
+                        "잘 모르겠어? 괜찮아, 천천히 해보자!",
+                        "오 정말 열심히 하는구나! 더 궁금한 거 있어?",
+                        "다른 방법으로도 설명해줄까?"
+                    ],
+                    professional: [
+                        "학습과 관련된 질문입니다. 체계적으로 접근해보겠습니다.",
+                        "해당 개념에 대해 단계별로 설명드리겠습니다.",
+                        "학습 효과를 높이기 위해 다음과 같은 방법을 권장합니다.",
+                        "추가적인 학습 자료가 필요하시면 말씀해 주십시오."
+                    ],
+                    calm: [
+                        "학습에 대한 질문이군요. 차분히 설명해드릴게요.",
+                        "천천히 하나씩 이해해나가면 됩니다.",
+                        "어려운 부분이 있어도 괜찮아요. 함께 해결해봅시다.",
+                        "학습은 급하게 하는 것보다 꾸준히 하는 게 중요해요."
+                    ]
+                },
+                counselor: {
+                    friendly: [
+                        "마음이 힘드시군요. 😌 제가 옆에서 들어드릴게요.",
+                        "그런 기분이 드는 게 당연해요. 충분히 이해해요 💙",
+                        "혼자 끙끙 앓지 마시고 편하게 이야기해주세요~",
+                        "정말 힘드셨을 텐데 용기 내어 말씀해주셔서 고마워요 🤗",
+                        "지금 이 순간의 감정도 소중해요. 무엇이든 들어드릴게요."
+                    ],
+                    casual: [
+                        "힘든 일 있었구나. 나한테 털어놔봐",
+                        "그런 기분 드는 거 정말 이해해",
+                        "혼자 끙끙 앓지 말고 편하게 얘기해",
+                        "진짜 힘들었겠다. 괜찮아, 같이 얘기해보자",
+                        "무슨 일인지 천천히 말해줘"
+                    ],
+                    professional: [
+                        "현재 상황에 대해 자세히 말씀해 주시겠습니까?",
+                        "감정을 표현하는 것은 매우 건강한 행동입니다.",
+                        "이러한 감정을 느끼시는 것은 자연스러운 반응입니다.",
+                        "상황을 객관적으로 분석해보는 시간을 가져보시겠습니까?"
+                    ],
+                    calm: [
+                        "마음이 많이 힘드시군요. 천천히 말씀해주세요.",
+                        "지금 느끼는 감정들을 있는 그대로 받아들여보세요.",
+                        "혼자가 아니에요. 함께 이 시간을 견뎌내봐요.",
+                        "깊게 숨을 한 번 쉬고, 편안한 마음으로 이야기해주세요."
+                    ]
+                },
+                career: {
+                    friendly: [
+                        "커리어 고민이 있으시군요! 😊 함께 해결책을 찾아봐요!",
+                        "직장 생활이나 진로에 대해 고민이 많으시겠어요. 도와드릴게요! 💼",
+                        "성장하고 싶은 마음이 보여서 정말 좋네요! 어떤 부분이 궁금하세요?",
+                        "커리어는 단거리가 아니라 마라톤이에요. 차근차근 계획해봐요! 🎯",
+                        "좋은 기회를 만들어가는 과정이네요! 함께 전략을 세워봐요!"
+                    ],
+                    casual: [
+                        "일 얘기구나! 뭐가 고민이야?",
+                        "커리어 고민? 나도 같이 생각해볼게",
+                        "직장 생활 힘들지? 어떤 게 문제야?",
+                        "진로 고민하는 거야? 좋은 생각이야!",
+                        "성장하고 싶어하는구나! 어떤 쪽으로?"
+                    ],
+                    professional: [
+                        "커리어 발전에 대한 구체적인 계획을 수립해보겠습니다.",
+                        "현재 직무 경험과 목표를 분석하여 최적의 방향을 제시하겠습니다.",
+                        "시장 동향과 요구 역량을 고려한 전략적 접근이 필요합니다.",
+                        "장기적인 커리어 로드맵을 함께 설계해보시겠습니까?"
+                    ],
+                    calm: [
+                        "커리어 고민은 누구에게나 있는 자연스러운 과정이에요.",
+                        "천천히 자신의 강점과 관심사를 파악해보는 것부터 시작해봐요.",
+                        "급하게 결정하지 마시고 충분히 고민하고 계획하세요.",
+                        "지금까지의 경험들도 모두 소중한 자산이라는 걸 잊지 마세요."
+                    ]
+                },
+                creative: {
+                    friendly: [
+                        "창작 활동에 관심이 있으시군요! 🎨 정말 멋져요!",
+                        "상상력을 발휘할 시간이네요! ✨ 어떤 걸 만들어볼까요?",
+                        "창의적인 아이디어가 떠오르는 것 같아요! 함께 발전시켜봐요! 💡",
+                        "예술은 마음을 표현하는 거예요! 자유롭게 생각해봐요! 🌈",
+                        "창작의 즐거움을 함께 나눠요! 어떤 영감이 필요하세요?"
+                    ],
+                    casual: [
+                        "창작 얘기구나! 뭔가 재밌는 걸 만들어보자!",
+                        "아이디어 브레인스토밍해볼까?",
+                        "창의적인 생각하는구나! 멋져!",
+                        "뭔가 만들고 싶어? 같이 아이디어 내보자!",
+                        "상상력 발휘할 시간이야! 어떤 게 좋을까?"
+                    ],
+                    professional: [
+                        "창작 프로젝트의 구체적인 방향성을 설정해보겠습니다.",
+                        "창의적 과정에서 체계적인 접근 방법을 제안드리겠습니다.",
+                        "시장 분석과 타겟 설정을 통한 전략적 창작을 고려해보시겠습니까?",
+                        "창작물의 완성도를 높이기 위한 단계별 계획을 수립해보겠습니다."
+                    ],
+                    calm: [
+                        "창작은 내면의 목소리를 듣는 과정이에요. 천천히 해보세요.",
+                        "완벽하지 않아도 괜찮아요. 과정 자체를 즐겨보세요.",
+                        "영감은 예상치 못한 순간에 찾아와요. 마음을 열어두세요.",
+                        "창작 활동을 통해 자신을 더 깊이 알아가는 시간이 되길 바라요."
+                    ]
+                },
+                health: {
+                    friendly: [
+                        "건강 관리에 관심을 가지시는군요! 😊 정말 좋은 습관이에요!",
+                        "몸과 마음의 건강이 가장 중요하죠! 🏃‍♀️ 어떤 부분이 궁금하세요?",
+                        "건강한 생활습관을 만들어가는 과정이네요! 함께 계획해봐요! 💪",
+                        "작은 변화부터 시작하는 게 좋아요! 꾸준히 할 수 있는 것부터 해봐요! ✨",
+                        "건강은 하루아침에 만들어지지 않아요. 차근차근 해나가요! 🌱"
+                    ],
+                    casual: [
+                        "건강 얘기구나! 몸 관리 어떻게 하고 있어?",
+                        "운동이나 식단 같은 거 궁금해?",
+                        "건강 관리 시작하려는구나! 좋은 생각이야!",
+                        "몸이 좀 안 좋아? 어떤 게 문제야?",
+                        "건강한 습관 만들고 싶어? 같이 계획해보자!"
+                    ],
+                    professional: [
+                        "건강 관리에 대한 과학적이고 체계적인 접근을 제안드리겠습니다.",
+                        "개인의 생활 패턴을 분석하여 맞춤형 건강 계획을 수립해보겠습니다.",
+                        "의학적 근거에 기반한 건강 정보를 제공해드리겠습니다.",
+                        "전문의 상담이 필요한 경우 적절한 시기를 안내해드리겠습니다."
+                    ],
+                    calm: [
+                        "건강 관리는 마음의 평화에서 시작돼요. 스트레스부터 관리해보세요.",
+                        "몸의 신호를 주의 깊게 들어보는 시간을 가져보세요.",
+                        "급한 변화보다는 지속 가능한 습관을 만드는 것이 중요해요.",
+                        "건강은 신체뿐만 아니라 정신적, 사회적 웰빙을 모두 포함해요."
+                    ]
+                }
+            };
+
+            return roleResponses[role]?.[tone] || roleResponses.general[tone];
+        }
+
+        // 이벤트 리스너
+        sendBtn.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // 컨트롤 버튼 이벤트
+        voiceBtn.addEventListener('click', function() {
+            toneModal.style.display = 'flex';
+            // 현재 선택된 말투 표시
+            toneOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.tone === currentTone) {
+                    option.classList.add('selected');
+                }
+            });
+        });
+
+        memoryBtn.addEventListener('click', function() {
+            roleModal.style.display = 'flex';
+            // 현재 선택된 역할 표시
+            roleOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.role === currentRole) {
+                    option.classList.add('selected');
+                }
+            });
+        });
+
+        // 역할 선택 이벤트
+        roleOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                roleOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedRole = this.dataset.role;
+            });
+        });
+
+        // 역할 모달 닫기 이벤트
+        cancelRole.addEventListener('click', function() {
+            roleModal.style.display = 'none';
+        });
+
+        confirmRole.addEventListener('click', function() {
+            currentRole = selectedRole;
+            roleModal.style.display = 'none';
+            
+            // 역할 변경 알림 메시지
+            const roleNames = {
+                general: '일반 대화',
+                tutor: '학습 도우미',
+                counselor: '상담사',
+                career: '커리어 코치',
+                creative: '창작 파트너',
+                health: '건강 관리사'
+            };
+            
+            addMessage(`역할을 ${roleNames[currentRole]}로 변경했습니다! 이제 ${roleNames[currentRole]} 모드로 대화해요! 😊`, 'bot');
+            
+            // 추천 질문 업데이트
+            showSuggestions();
+        });
+
+        // 역할 모달 오버레이 클릭시 닫기
+        roleModal.addEventListener('click', function(e) {
+            if (e.target === roleModal) {
+                roleModal.style.display = 'none';
+            }
+        });
+
+        // 추천 질문 헤더 클릭 이벤트
+        suggestionsHeader.addEventListener('click', function() {
+            toggleSuggestions();
+        });
+
+        // 기존 네비게이션 이벤트 (사용하지 않음)
+        // navItems.forEach(item => {
+        //     item.addEventListener('click', function() {
+        //         navItems.forEach(nav => nav.classList.remove('active'));
+        //         this.classList.add('active');
+        //     });
+        // });
+
+        // 말투 선택 이벤트
+        toneOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                toneOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedTone = this.dataset.tone;
+            });
+        });
+
+        // 모달 닫기 이벤트
+        cancelTone.addEventListener('click', function() {
+            toneModal.style.display = 'none';
+        });
+
+        confirmTone.addEventListener('click', function() {
+            currentTone = selectedTone;
+            toneModal.style.display = 'none';
+            
+            // 말투 변경 알림 메시지
+            const toneNames = {
+                friendly: '다정한',
+                casual: '친근한', 
+                professional: '전문가',
+                calm: '차분한'
+            };
+            
+            addMessage(`말투를 ${toneNames[currentTone]} 버전으로 변경했습니다! 😊`, 'bot');
+        });
+
+        // 모달 오버레이 클릭시 닫기
+        toneModal.addEventListener('click', function(e) {
+            if (e.target === toneModal) {
+                toneModal.style.display = 'none';
+            }
+        });
+
+        // 초기 환영 메시지
+        setTimeout(() => {
+            placeholder.style.display = 'none';
+            addMessage('안녕하세요! 😊 AI 챗봇입니다. 무엇을 도와드릴까요?', 'bot');
+            
+            // 초기 추천 질문 표시
+            showSuggestions();
+        }, 1000);
+    </script>
+</body>
+</html>

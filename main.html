@@ -29,9 +29,9 @@
         
         /* 헤더 */
         .header {
-            background: linear-gradient(135deg, #EC9787, #E8897A);
+            background: linear-gradient(135deg, #F2E9E0, #E8DDD0);
             padding: 15px 20px;
-            color: white;
+            color: #5a4a3a;
             position: relative;
         }
         
@@ -48,10 +48,12 @@
         }
         
         .date-info {
-            background: rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #EC9787, #E8B3A6);
             padding: 15px;
             border-radius: 15px;
             margin-bottom: 10px;
+            color: white;
+            box-shadow: 0 2px 10px rgba(236, 151, 135, 0.2);
         }
         
         .date-main {
@@ -87,14 +89,14 @@
         .progress-bar-container {
             width: 100%;
             height: 8px;
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
             overflow: hidden;
         }
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #EC9787, #F5A596);
+            background: linear-gradient(90deg, #ffffff, #f8f8f8);
             border-radius: 4px;
             transition: width 0.5s ease;
             width: 0%;
@@ -523,8 +525,9 @@
             display: flex;
             padding: 15px 0;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
-        
+
         .nav-item {
             flex: 1;
             text-align: center;
@@ -533,35 +536,30 @@
             transition: all 0.3s ease;
             border-radius: 10px;
             margin: 0 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
         }
-        
+
         .nav-item:hover {
-            background: #F2E9E0;
+            background: #faf8f6;
             transform: translateY(-2px);
         }
-        
+
         .nav-item.active {
-            background: linear-gradient(135deg, #EC9787, #E8897A);
+            background: #EC9787;
             color: white;
         }
-        
+
         .nav-icon {
             font-size: 24px;
             margin-bottom: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
-        
-        .nav-icon svg {
-            transition: all 0.3s ease;
-        }
-        
-        .nav-item:hover .nav-icon svg {
-            transform: scale(1.1);
-        }
-        
+
         .nav-label {
             font-size: 12px;
             font-weight: 500;
@@ -905,7 +903,7 @@
         
         <!-- 하단 네비게이션 -->
         <nav class="bottom-nav">
-            <div class="nav-item" onclick="navigateTo('community')">
+            <div class="nav-item" onclick="navigateTo('community', this)">
                 <div class="nav-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -918,26 +916,8 @@
                 <div class="nav-label">커뮤니티</div>
             </div>
             
-            <div class="nav-item active" onclick="navigateTo('home')">
-                <div class="nav-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                </div>
-                <div class="nav-label">홈</div>
-            </div>
-            
-            <div class="nav-item" onclick="navigateTo('health')">
-                <div class="nav-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                </div>
-                <div class="nav-label">내 건강</div>
-            </div>
-            
-            <div class="nav-item" onclick="navigateTo('chatbot')">
-                <div class="nav-icon">
+            <div class="nav-item" onclick="navigateTo('chatbot', this)" ondblclick="uploadChatbotIcon()">
+                <div class="nav-icon" id="chatbotIcon">
                     <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
                         <!-- 메인 얼굴 -->
                         <rect x="130" y="180" width="252" height="200" rx="60" fill="currentColor"/>
@@ -946,7 +926,7 @@
                         <!-- 오른쪽 귀 -->
                         <ellipse cx="350" cy="160" rx="35" ry="45" fill="currentColor"/>
                         <!-- 작은 하트 -->
-                        <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#EC9787"/>
+                        <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
                         <!-- 왼쪽 눈 -->
                         <circle cx="190" cy="240" r="18" fill="white"/>
                         <circle cx="190" cy="235" r="7" fill="currentColor"/>
@@ -961,8 +941,26 @@
                 </div>
                 <div class="nav-label">챗봇</div>
             </div>
+
+            <div class="nav-item active" onclick="navigateTo('home', this)">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">홈</div>
+            </div>
             
-            <div class="nav-item" onclick="navigateTo('more')">
+            <div class="nav-item" onclick="navigateTo('health', this)">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">내 건강</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('more', this)">
                 <div class="nav-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="5" cy="12" r="2"/>

@@ -151,28 +151,29 @@
         }
 
         .menu-grid {
-            padding: 0 24px 120px;
+            padding: 0 24px 8px; /* 120px에서 8px로 대폭 줄임 */
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
+        /* 메뉴 아이템 크기를 프로필 섹션과 동일하게 조정 */
         .menu-item {
             background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(236, 151, 135, 0.1);
+            padding: 16px; /* 20px에서 16px로 줄임 */
+            border-radius: 16px; /* 20px에서 16px로 줄임 */
+            box-shadow: 0 2px 15px rgba(236, 151, 135, 0.08); /* 프로필과 동일한 그림자 */
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid transparent;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px; /* 16px에서 12px로 줄임 */
         }
 
         .menu-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(236, 151, 135, 0.2);
+            transform: translateY(-1px); /* -4px에서 -1px로 줄임 */
+            box-shadow: 0 4px 20px rgba(236, 151, 135, 0.15); /* 프로필과 동일 */
             border-color: #EC9787;
         }
 
@@ -180,15 +181,16 @@
             position: relative;
         }
 
+        /* 메뉴 아이콘 크기를 프로필 아바타와 동일하게 조정 */
         .menu-icon {
-            width: 64px;
-            height: 64px;
+            width: 48px; /* 64px에서 48px로 줄임 */
+            height: 48px; /* 64px에서 48px로 줄임 */
             background: linear-gradient(135deg, #EC9787, #f0a392);
-            border-radius: 16px;
+            border-radius: 12px; /* 16px에서 12px로 줄임 */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px; /* 24px에서 18px로 줄임 */
             color: white;
             flex-shrink: 0;
         }
@@ -198,23 +200,23 @@
         }
 
         .menu-title {
-            font-size: 18px;
+            font-size: 16px; /* 18px에서 16px로 줄임 */
             font-weight: 600;
             color: #333;
-            margin-bottom: 4px;
+            margin-bottom: 2px; /* 4px에서 2px로 줄임 */
         }
 
         .menu-subtitle {
-            font-size: 14px;
+            font-size: 12px; /* 14px에서 12px로 줄임 */
             color: #666;
-            line-height: 1.4;
+            line-height: 1.3; /* 1.4에서 1.3으로 줄임 */
         }
 
         .stats-bar {
             background: #EC9787;
             height: 4px;
             border-radius: 2px;
-            margin-top: 8px;
+            margin-top: 6px; /* 8px에서 6px로 줄임 */
             position: relative;
             overflow: hidden;
         }
@@ -242,40 +244,93 @@
             border: 2px solid white;
         }
 
-        /* 트렌딩 영양제 섹션 */
+        /* 트렌딩 영양제 섹션 - 크기 조정 */
         .trending-section {
-            margin: 24px;
+            margin: 8px 24px 100px; /* 하단 마진을 80px에서 100px로 늘림 */
             background: white;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(236, 151, 135, 0.1);
+            border-radius: 16px; /* 20px에서 16px로 줄임 */
+            padding: 16px; /* 24px에서 16px로 줄임 */
+            box-shadow: 0 2px 15px rgba(236, 151, 135, 0.08); /* 다른 박스들과 동일 */
         }
 
         .trending-title {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 16px; /* 20px에서 16px로 줄임 */
+            font-weight: 600; /* 700에서 600으로 줄임 */
             color: #333;
-            margin-bottom: 16px;
+            margin-bottom: 12px; /* 16px에서 12px로 줄임 */
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between; /* 제목과 화살표 버튼 사이 공간 */
+            gap: 6px; /* 8px에서 6px로 줄임 */
         }
 
-        .trending-title::before {
+        .trending-title-text {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .trending-title-text::before {
             content: '🔥';
-            font-size: 24px;
+            font-size: 18px; /* 24px에서 18px로 줄임 */
+        }
+
+        .trending-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .trending-nav-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .trending-nav-btn:hover {
+            background: #EC9787;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .trending-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .trending-nav-btn:disabled:hover {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .trending-container {
+            overflow: hidden;
+            position: relative;
         }
 
         .trending-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr); /* 2x2 그리드를 1x4 그리드로 변경 */
+            gap: 8px; /* 12px에서 8px로 줄임 */
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            width: 200%; /* 전체 8개 아이템을 위한 너비 */
         }
 
         .trending-item {
             background: linear-gradient(135deg, #f8f6f3, #f2e9e0);
-            padding: 16px;
-            border-radius: 16px;
+            padding: 12px; /* 16px에서 12px로 줄임 */
+            border-radius: 12px; /* 16px에서 12px로 줄임 */
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -283,21 +338,27 @@
         }
 
         .trending-item:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px); /* -2px에서 -1px로 줄임 */
             border-color: #EC9787;
             background: linear-gradient(135deg, #f2e9e0, #ede4d7);
         }
 
         .trending-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 20px; /* 28px에서 20px로 줄임 */
+            margin-bottom: 6px; /* 8px에서 6px로 줄임 */
         }
 
         .trending-name {
-            font-size: 14px;
+            font-size: 12px; /* 14px에서 12px로 줄임 */
             font-weight: 600;
             color: #333;
-            margin-bottom: 4px;
+            margin-bottom: 2px; /* 4px에서 2px로 줄임 */
+        }
+
+        .trending-desc {
+            font-size: 10px;
+            color: #666;
+            line-height: 1.2;
         }
 
         @keyframes pulse {
@@ -356,6 +417,29 @@
         .nav-label {
             font-size: 12px;
             font-weight: 500;
+        }
+        
+        /* 빈 상태 메시지 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .empty-subtext {
+            font-size: 14px;
+            opacity: 0.7;
         }
 
         /* 모달 스타일 */
@@ -534,7 +618,7 @@
 
         @media (max-width: 375px) {
             .menu-grid {
-                padding: 0 16px 100px;
+                padding: 0 16px 8px; /* 100px에서 8px로 줄임 */
                 gap: 12px;
             }
             
@@ -544,6 +628,10 @@
             
             .profile-section {
                 margin: 16px;
+            }
+            
+            .trending-section {
+                margin: 8px 16px 100px; /* 하단 마진을 80px에서 100px로 늘림 */
             }
         }
     </style>
@@ -617,49 +705,73 @@
 
         <!-- 요즘 뜨는 영양제 섹션 -->
         <div class="trending-section">
-            <div class="trending-title">요즘 뜨는 영양제</div>
-            <div class="trending-grid">
-                <div class="trending-item" onclick="showNutrientInfo('magnesium')">
-                    <div class="trending-icon">🧘‍♀️</div>
-                    <div class="trending-name">마그네슘</div>
-                    <div class="trending-desc">수면개선<br>스트레스 완화</div>
+            <div class="trending-title">
+                <div class="trending-title-text">요즘 뜨는 영양제</div>
+                <div class="trending-nav">
+                    <button class="trending-nav-btn" id="prevBtn" onclick="slideTrending(-1)">‹</button>
+                    <button class="trending-nav-btn" id="nextBtn" onclick="slideTrending(1)">›</button>
                 </div>
-                
-                <div class="trending-item" onclick="showNutrientInfo('vitamin-d')">
-                    <div class="trending-icon">☀️</div>
-                    <div class="trending-name">비타민D</div>
-                    <div class="trending-desc">면역력 강화<br>우울감 개선</div>
-                </div>
-                
-                <div class="trending-item" onclick="showNutrientInfo('omega3')">
-                    <div class="trending-icon">🧠</div>
-                    <div class="trending-name">오메가3</div>
-                    <div class="trending-desc">뇌건강<br>혈관건강</div>
-                </div>
-                
-                <div class="trending-item" onclick="showNutrientInfo('probiotics')">
-                    <div class="trending-icon">🦠</div>
-                    <div class="trending-name">프로바이오틱스</div>
-                    <div class="trending-desc">장건강<br>면역력 향상</div>
-                </div>
-                
-                <div class="trending-item" onclick="showNutrientInfo('ashwagandha')">
-                    <div class="trending-icon">🌿</div>
-                    <div class="trending-name">아슈와간다</div>
-                    <div class="trending-desc">스트레스 관리<br>수면 품질</div>
-                </div>
-                
-                <div class="trending-item" onclick="showNutrientInfo('collagen')">
-                    <div class="trending-icon">✨</div>
-                    <div class="trending-name">콜라겐</div>
-                    <div class="trending-desc">피부탄력<br>관절건강</div>
+            </div>
+            <div class="trending-container">
+                <div class="trending-grid" id="trendingGrid">
+                    <div class="trending-item" onclick="showNutrientInfo('magnesium')">
+                        <div class="trending-icon">🧘‍♀️</div>
+                        <div class="trending-name">마그네슘</div>
+                        <div class="trending-desc">수면개선<br>스트레스 완화</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('vitamin-d')">
+                        <div class="trending-icon">☀️</div>
+                        <div class="trending-name">비타민D</div>
+                        <div class="trending-desc">면역력 강화<br>우울감 개선</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('omega3')">
+                        <div class="trending-icon">🧠</div>
+                        <div class="trending-name">오메가3</div>
+                        <div class="trending-desc">뇌건강<br>혈관건강</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('probiotics')">
+                        <div class="trending-icon">🦠</div>
+                        <div class="trending-name">프로바이오틱스</div>
+                        <div class="trending-desc">장건강<br>면역력 향상</div>
+                    </div>
+                    
+                    <!-- 두 번째 페이지 아이템들 -->
+                    <div class="trending-item" onclick="showNutrientInfo('ashwagandha')">
+                        <div class="trending-icon">🌿</div>
+                        <div class="trending-name">아슈와간다</div>
+                        <div class="trending-desc">스트레스 관리<br>수면 품질</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('collagen')">
+                        <div class="trending-icon">✨</div>
+                        <div class="trending-name">콜라겐</div>
+                        <div class="trending-desc">피부탄력<br>관절건강</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('iron')">
+                        <div class="trending-icon">🩸</div>
+                        <div class="trending-name">철분</div>
+                        <div class="trending-desc">빈혈예방<br>에너지 증진</div>
+                    </div>
+                    
+                    <div class="trending-item" onclick="showNutrientInfo('zinc')">
+                        <div class="trending-icon">⚡</div>
+                        <div class="trending-name">아연</div>
+                        <div class="trending-desc">면역강화<br>상처치유</div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 하단 패딩 (네비게이션 공간 확보) -->
+        <div style="height: 90px;"></div>
+        
         <!-- 하단 네비게이션 -->
         <nav class="bottom-nav">
-            <div class="nav-item" onclick="navigateTo('community')">
+            <div class="nav-item" onclick="navigateTo('community', this)">
                 <div class="nav-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -672,25 +784,7 @@
                 <div class="nav-label">커뮤니티</div>
             </div>
             
-            <div class="nav-item" onclick="navigateTo('home')">
-                <div class="nav-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                </div>
-                <div class="nav-label">홈</div>
-            </div>
-            
-            <div class="nav-item" onclick="navigateTo('health')">
-                <div class="nav-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                </div>
-                <div class="nav-label">내 건강</div>
-            </div>
-            
-            <div class="nav-item" onclick="navigateTo('chatbot')" ondblclick="uploadChatbotIcon()">
+            <div class="nav-item" onclick="navigateTo('chatbot', this)" ondblclick="uploadChatbotIcon()">
                 <div class="nav-icon" id="chatbotIcon">
                     <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
                         <!-- 메인 얼굴 -->
@@ -715,8 +809,26 @@
                 </div>
                 <div class="nav-label">챗봇</div>
             </div>
+
+            <div class="nav-item active" onclick="navigateTo('home', this)">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">홈</div>
+            </div>
             
-            <div class="nav-item active" onclick="navigateTo('more')">
+            <div class="nav-item" onclick="navigateTo('health', this)">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">내 건강</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('more', this)">
                 <div class="nav-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="5" cy="12" r="2"/>
@@ -775,6 +887,18 @@
                     benefits: '피부 탄력, 관절 건강, 뼈 강화',
                     dosage: '일일 5-10g',
                     timing: '공복 섭취 권장'
+                },
+                'iron': {
+                    name: '철분',
+                    benefits: '빈혈 예방, 산소 운반, 에너지 증진',
+                    dosage: '일일 10-18mg',
+                    timing: '공복 또는 비타민C와 함께'
+                },
+                'zinc': {
+                    name: '아연',
+                    benefits: '면역력 강화, 상처 치유, 단백질 합성',
+                    dosage: '일일 8-11mg',
+                    timing: '공복 섭취'
                 }
             };
 
@@ -789,6 +913,48 @@
             }
         }
 
+        // 트렌딩 영양제 슬라이드 기능
+        let currentSlide = 0;
+        const maxSlides = 1; // 2페이지 (0, 1)
+
+        function slideTrending(direction) {
+            const grid = document.getElementById('trendingGrid');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            currentSlide += direction;
+            
+            // 슬라이드 범위 제한
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide > maxSlides) currentSlide = maxSlides;
+            
+            // 그리드 이동
+            const translateX = -currentSlide * 50; // 50%씩 이동
+            grid.style.transform = `translateX(${translateX}%)`;
+            
+            // 버튼 상태 업데이트
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === maxSlides;
+            
+            // 버튼 클릭 피드백
+            const clickedBtn = direction > 0 ? nextBtn : prevBtn;
+            clickedBtn.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                if (!clickedBtn.disabled) {
+                    clickedBtn.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        clickedBtn.style.transform = '';
+                    }, 150);
+                } else {
+                    clickedBtn.style.transform = '';
+                }
+            }, 100);
+        }
+
+        // 초기 버튼 상태 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('prevBtn').disabled = true;
+            
         // 챗봇 아이콘 업로드 기능
         function uploadChatbotIcon() {
             document.getElementById('chatbotIconUpload').click();
@@ -864,10 +1030,6 @@
             console.log('Open chat');
             alert('챗봇과의 대화를 시작합니다');
         }
-
-        // 페이지 로드 시 애니메이션
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItems = document.querySelectorAll('.menu-item, .profile-section');
             menuItems.forEach((item, index) => {
                 item.style.opacity = '0';
                 item.style.transform = 'translateY(20px)';

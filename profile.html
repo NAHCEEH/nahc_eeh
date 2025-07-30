@@ -1,4 +1,4 @@
-    <html lang="ko">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1333,52 +1333,81 @@ body {
 
 /* 하단 네비게이션 */
 .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 390px;
-    background: white;
-    border-top: 1px solid #eee;
-    display: flex;
-    padding: 15px 0;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-}
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
 
-.nav-item {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 10px;
-    margin: 0 5px;
-}
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 0 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
+        }
 
-.nav-item:hover {
-    background: #faf8f6;
-    transform: translateY(-2px);
-}
+        .nav-item:hover {
+            background: #faf8f6;
+            transform: translateY(-2px);
+        }
 
-.nav-item.active {
-    background: #EC9787;
-    color: white;
-}
+        .nav-item.active {
+            background: #EC9787;
+            color: white;
+        }
 
-.nav-icon {
-    font-size: 24px;
-    margin-bottom: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.nav-label {
-    font-size: 12px;
-    font-weight: 500;
-}
-
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 빈 상태 메시지 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .empty-subtext {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        
 /* 모달 스타일 */
 .modal {
     display: none;
@@ -1546,478 +1575,7 @@ textarea.text-input {
     box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
 }
 
-/* 월별 레포트 모달 스타일 */
-.monthly-report-content {
-    max-width: 500px;
-    max-height: 90vh;
-}
-
-.ai-badge {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-weight: 600;
-}
-
-.report-loading {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #667eea;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.loading-text {
-    color: #666;
-    font-size: 14px;
-}
-
-.report-summary {
-    margin-bottom: 25px;
-}
-
-.summary-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.summary-card.excellent {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
-    border: 1px solid rgba(76, 175, 80, 0.2);
-}
-
-.summary-icon {
-    font-size: 32px;
-}
-
-.summary-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #4CAF50;
-    margin-bottom: 4px;
-}
-
-.summary-desc {
-    font-size: 13px;
-    color: #666;
-}
-
-.report-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.stat-card {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.stat-number {
-    font-size: 20px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin-bottom: 4px;
-}
-
-.stat-label {
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 4px;
-}
-
-.stat-trend {
-    font-size: 10px;
-    font-weight: 600;
-}
-
-.stat-trend.positive {
-    color: #4CAF50;
-}
-
-.ai-analysis-section, .recommendations-section {
-    margin: 25px 0;
-}
-
-.section-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.analysis-item {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.analysis-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.analysis-category {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 8px;
-}
-
-.analysis-category.excellent {
-    background: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
-}
-
-.analysis-category.good {
-    background: rgba(255, 152, 0, 0.1);
-    color: #FF9800;
-}
-
-.analysis-score {
-    font-size: 14px;
-    font-weight: bold;
-    color: #5a4a3a;
-}
-
-.analysis-content {
-    font-size: 13px;
-    line-height: 1.5;
-    color: #666;
-}
-
-.analysis-content p {
-    margin: 8px 0;
-}
-
-.recommendation-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.recommendation-item {
-    display: flex;
-    gap: 12px;
-    padding: 14px;
-    background: rgba(102, 126, 234, 0.05);
-    border-radius: 12px;
-    border: 1px solid rgba(102, 126, 234, 0.1);
-}
-
-.rec-number {
-    width: 24px;
-    height: 24px;
-    background: #667eea;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    flex-shrink: 0;
-}
-
-.rec-content {
-    flex: 1;
-}
-
-.rec-title {
-    font-size: 13px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin-bottom: 4px;
-}
-
-.rec-desc {
-    font-size: 12px;
-    color: #666;
-    line-height: 1.4;
-}
-
-/* 카테고리별 목표 추가 모달 스타일 */
-.goal-category-modal {
-    max-width: 480px;
-    max-height: 90vh;
-}
-
-/* 카테고리 선택 단계 */
-.category-selection {
-    padding: 10px 0;
-}
-
-.category-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.category-header h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin-bottom: 8px;
-}
-
-.category-subtitle {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.4;
-}
-
-.category-cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.category-option-card {
-    background: rgba(255, 255, 255, 0.8);
-    border: 2px solid rgba(236, 151, 135, 0.2);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.category-option-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(236, 151, 135, 0.1), transparent);
-    transition: left 0.6s ease;
-}
-
-.category-option-card:hover::before {
-    left: 100%;
-}
-
-.category-option-card:hover {
-    border-color: #EC9787;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(236, 151, 135, 0.2);
-}
-
-.category-option-icon {
-    font-size: 32px;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(236, 151, 135, 0.1);
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.category-option-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin-bottom: 4px;
-}
-
-.category-option-desc {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.3;
-}
-
-.category-option-arrow {
-    font-size: 20px;
-    color: #EC9787;
-    font-weight: bold;
-    margin-left: auto;
-    transition: transform 0.3s ease;
-}
-
-.category-option-card:hover .category-option-arrow {
-    transform: translateX(5px);
-}
-
-/* 상세 입력 폼 */
-.goal-detail-form {
-    animation: slideInFromRight 0.3s ease;
-}
-
-@keyframes slideInFromRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.form-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.back-btn {
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.back-btn:hover {
-    background: rgba(236, 151, 135, 0.1);
-    color: #EC9787;
-}
-
-.form-header h3 {
-    font-size: 16px;
-    font-weight: bold;
-    color: #5a4a3a;
-    margin: 0;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-/* 라디오 버튼 스타일 */
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.radio-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: background 0.3s ease;
-}
-
-.radio-option:hover {
-    background: rgba(236, 151, 135, 0.05);
-}
-
-.radio-option input[type="radio"] {
-    width: 16px;
-    height: 16px;
-    accent-color: #EC9787;
-}
-
-.radio-label {
-    font-size: 14px;
-    color: #5a4a3a;
-}
-
-/* 시간 입력 */
-.time-inputs {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.time-input {
-    width: 120px;
-}
-
-.notification-time-group {
-    margin-top: 12px;
-    padding: 12px;
-    background: rgba(236, 151, 135, 0.05);
-    border-radius: 8px;
-    border: 1px solid rgba(236, 151, 135, 0.1);
-}
-
-/* 운동 관련 입력 */
-.duration-inputs, .distance-inputs {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.duration-input, .distance-input {
-    width: 80px;
-}
-
-.distance-unit {
-    width: 80px;
-}
-
-.duration-inputs span, .distance-inputs span {
-    font-size: 14px;
-    color: #666;
-}
-
-/* 알림 설정이 비활성화된 상태 */
-.notification-time-group.disabled {
-    opacity: 0.5;
-    pointer-events: none;
-}
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: #EC9787;
-}
-
-.checkbox-group label {
-    font-size: 14px;
-    color: #5a4a3a;
-    cursor: pointer;
-}
+/* 건강 일기 모달 스타일 */
 .diary-modal-content {
     max-width: 400px;
     max-height: 90vh;
@@ -2169,7 +1727,6 @@ textarea.text-input {
 <div class="container">
 <!-- 헤더 -->
 <header class="header">
-    <button class="back-btn" onclick="goBack()">◀</button>
     <h1 class="header-title">내 건강 관리</h1>
 </header>
 
@@ -2553,7 +2110,7 @@ textarea.text-input {
 
 <!-- 하단 네비게이션 -->
 <nav class="bottom-nav">
-    <div class="nav-item" onclick="navigateTo('community')">
+    <div class="nav-item" onclick="navigateTo('community', this)">
         <div class="nav-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -2566,26 +2123,8 @@ textarea.text-input {
         <div class="nav-label">커뮤니티</div>
     </div>
     
-    <div class="nav-item" onclick="navigateTo('home')">
-        <div class="nav-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-            </svg>
-        </div>
-        <div class="nav-label">홈</div>
-    </div>
-    
-    <div class="nav-item active" onclick="navigateTo('health')">
-        <div class="nav-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-            </svg>
-        </div>
-        <div class="nav-label">내 건강</div>
-    </div>
-    
-    <div class="nav-item" onclick="navigateTo('chatbot')">
-        <div class="nav-icon">
+    <div class="nav-item" onclick="navigateTo('chatbot', this)" ondblclick="uploadChatbotIcon()">
+        <div class="nav-icon" id="chatbotIcon">
             <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
                 <!-- 메인 얼굴 -->
                 <rect x="130" y="180" width="252" height="200" rx="60" fill="currentColor"/>
@@ -2609,8 +2148,26 @@ textarea.text-input {
         </div>
         <div class="nav-label">챗봇</div>
     </div>
+
+    <div class="nav-item active" onclick="navigateTo('home', this)">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </div>
+        <div class="nav-label">홈</div>
+    </div>
     
-    <div class="nav-item" onclick="navigateTo('more')">
+    <div class="nav-item" onclick="navigateTo('health', this)">
+        <div class="nav-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </div>
+        <div class="nav-label">내 건강</div>
+    </div>
+    
+    <div class="nav-item" onclick="navigateTo('more', this)">
         <div class="nav-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="5" cy="12" r="2"/>
@@ -2622,255 +2179,43 @@ textarea.text-input {
     </div>
 </nav>
 
-<!-- 카테고리별 목표 추가 모달 -->
+<!-- 목표 추가 모달 -->
 <div id="goalModal" class="modal">
-    <div class="modal-content goal-category-modal">
+    <div class="modal-content">
         <div class="modal-header">
-            <h2 class="modal-title" id="goalModalTitle">새로운 목표 추가</h2>
+            <h2 class="modal-title">새로운 목표 추가</h2>
         </div>
         
-        <!-- 카테고리 선택 단계 -->
-        <div id="categorySelection" class="category-selection">
-            <div class="category-header">
-                <h3>어떤 종류의 목표를 추가하시겠어요?</h3>
-                <p class="category-subtitle">카테고리를 선택하면 맞춤형 입력 양식이 나타납니다</p>
-            </div>
-            
-            <div class="category-cards-grid">
-                <div class="category-option-card" onclick="selectGoalCategory('supplement')">
-                    <div class="category-option-icon">💊</div>
-                    <div class="category-option-title">영양제</div>
-                    <div class="category-option-desc">비타민, 미네랄, 건강기능식품</div>
-                    <div class="category-option-arrow">→</div>
-                </div>
-                
-                <div class="category-option-card" onclick="selectGoalCategory('exercise')">
-                    <div class="category-option-icon">🏃‍♂️</div>
-                    <div class="category-option-title">운동</div>
-                    <div class="category-option-desc">헬스, 러닝, 요가, 수영 등</div>
-                    <div class="category-option-arrow">→</div>
-                </div>
-                
-                <div class="category-option-card" onclick="selectGoalCategory('other')">
-                    <div class="category-option-icon">🎯</div>
-                    <div class="category-option-title">기타</div>
-                    <div class="category-option-desc">수면, 물 마시기, 금연 등</div>
-                    <div class="category-option-arrow">→</div>
-                </div>
-            </div>
+        <div class="form-group">
+            <label class="form-label">목표 이름 *</label>
+            <input type="text" class="text-input" id="goalName" placeholder="예: 매일 30분 운동하기" maxlength="50">
+            <div class="input-hint">최대 50자까지 입력 가능합니다</div>
         </div>
         
-        <!-- 영양제 상세 입력 폼 -->
-        <div id="supplementForm" class="goal-detail-form" style="display: none;">
-            <div class="form-header">
-                <button class="back-btn" onclick="goBackToCategory()">← 뒤로</button>
-                <h3>💊 영양제 목표 설정</h3>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">제품명 *</label>
-                <input type="text" class="text-input" id="supplementName" placeholder="예: 멀티비타민, 오메가3" maxlength="30">
-                <div class="input-hint">어떤 영양제인지 입력해주세요</div>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">브랜드명</label>
-                <input type="text" class="text-input" id="supplementBrand" placeholder="예: 센트룸, 뉴트리코어" maxlength="20">
-                <div class="input-hint">브랜드를 입력하면 관리가 더 쉬워져요</div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">함량</label>
-                    <input type="text" class="text-input" id="supplementDosage" placeholder="예: 500mg, 1000IU" maxlength="15">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">복용량 *</label>
-                    <select class="text-input" id="supplementDaily">
-                        <option value="1">1일 1회</option>
-                        <option value="2">1일 2회</option>
-                        <option value="3">1일 3회</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">전체 개수 *</label>
-                    <input type="number" class="text-input" id="supplementTotal" placeholder="60" min="1" max="999">
-                    <div class="input-hint">총 몇 정/캡슐인가요?</div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">남은 개수</label>
-                    <input type="number" class="text-input" id="supplementRemaining" placeholder="60" min="0" max="999">
-                    <div class="input-hint">현재 남은 수량</div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="supplementNotification" checked>
-                    <label for="supplementNotification">복용 시간 알림 받기</label>
-                </div>
-                <div class="notification-time-group" id="notificationTimeGroup">
-                    <label class="form-label">알림 시간</label>
-                    <div class="time-inputs">
-                        <input type="time" class="text-input time-input" id="supplementTime1" value="08:00">
-                        <input type="time" class="text-input time-input" id="supplementTime2" style="display: none;">
-                        <input type="time" class="text-input time-input" id="supplementTime3" style="display: none;">
-                    </div>
-                </div>
-            </div>
+        <div class="form-group">
+            <label class="form-label">목표 유형 *</label>
+            <select class="text-input" id="goalType">
+                <option value="daily">매일</option>
+                <option value="weekly">주간</option>
+                <option value="monthly">월간</option>
+            </select>
         </div>
         
-        <!-- 운동 상세 입력 폼 -->
-        <div id="exerciseForm" class="goal-detail-form" style="display: none;">
-            <div class="form-header">
-                <button class="back-btn" onclick="goBackToCategory()">← 뒤로</button>
-                <h3>🏃‍♂️ 운동 목표 설정</h3>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">운동 종류 *</label>
-                <select class="text-input" id="exerciseType">
-                    <option value="">운동 종류를 선택하세요</option>
-                    <option value="running">러닝/조깅</option>
-                    <option value="gym">헬스/웨이트</option>
-                    <option value="yoga">요가/필라테스</option>
-                    <option value="swimming">수영</option>
-                    <option value="cycling">자전거</option>
-                    <option value="walking">걷기</option>
-                    <option value="other">기타</option>
-                </select>
-            </div>
-            
-            <div class="form-group" id="customExerciseGroup" style="display: none;">
-                <label class="form-label">운동명</label>
-                <input type="text" class="text-input" id="customExerciseName" placeholder="운동명을 입력하세요" maxlength="20">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">목표 설정 방식 *</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="exerciseGoalType" value="frequency" checked>
-                        <span class="radio-label">주간 횟수</span>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="exerciseGoalType" value="duration">
-                        <span class="radio-label">일일 시간</span>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="exerciseGoalType" value="distance">
-                        <span class="radio-label">목표 거리</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="form-group" id="frequencyGoal">
-                <label class="form-label">주간 목표 횟수 *</label>
-                <select class="text-input" id="exerciseFrequency">
-                    <option value="1">주 1회</option>
-                    <option value="2">주 2회</option>
-                    <option value="3" selected>주 3회</option>
-                    <option value="4">주 4회</option>
-                    <option value="5">주 5회</option>
-                    <option value="6">주 6회</option>
-                    <option value="7">매일</option>
-                </select>
-            </div>
-            
-            <div class="form-group" id="durationGoal" style="display: none;">
-                <label class="form-label">일일 목표 시간 *</label>
-                <div class="duration-inputs">
-                    <input type="number" class="text-input duration-input" id="exerciseHours" placeholder="0" min="0" max="23">
-                    <span>시간</span>
-                    <input type="number" class="text-input duration-input" id="exerciseMinutes" placeholder="30" min="0" max="59" step="5">
-                    <span>분</span>
-                </div>
-            </div>
-            
-            <div class="form-group" id="distanceGoal" style="display: none;">
-                <label class="form-label">목표 거리 *</label>
-                <div class="distance-inputs">
-                    <input type="number" class="text-input distance-input" id="exerciseDistance" placeholder="5" min="0.1" step="0.1">
-                    <select class="text-input distance-unit" id="exerciseDistanceUnit">
-                        <option value="km">km</option>
-                        <option value="m">m</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="exerciseNotification">
-                    <label for="exerciseNotification">운동 시간 알림 받기</label>
-                </div>
-            </div>
+        <div class="form-group">
+            <label class="form-label">목표 수치 *</label>
+            <input type="number" class="text-input" id="goalTarget" placeholder="예: 30" min="1" max="9999">
+            <div class="input-hint">1~9999 사이의 숫자를 입력해주세요</div>
         </div>
         
-        <!-- 기타 목표 입력 폼 -->
-        <div id="otherForm" class="goal-detail-form" style="display: none;">
-            <div class="form-header">
-                <button class="back-btn" onclick="goBackToCategory()">← 뒤로</button>
-                <h3>🎯 기타 목표 설정</h3>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">목표 유형 *</label>
-                <select class="text-input" id="otherGoalType">
-                    <option value="">목표 유형을 선택하세요</option>
-                    <option value="water">물 마시기</option>
-                    <option value="sleep">수면 관리</option>
-                    <option value="meditation">명상/휴식</option>
-                    <option value="reading">독서</option>
-                    <option value="nosmoke">금연</option>
-                    <option value="noalcohol">금주</option>
-                    <option value="custom">직접 입력</option>
-                </select>
-            </div>
-            
-            <div class="form-group" id="customOtherGroup" style="display: none;">
-                <label class="form-label">목표명 *</label>
-                <input type="text" class="text-input" id="customOtherName" placeholder="목표명을 입력하세요" maxlength="30">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">목표 주기 *</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="otherGoalPeriod" value="daily" checked>
-                        <span class="radio-label">매일</span>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="otherGoalPeriod" value="weekly">
-                        <span class="radio-label">주간</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">목표 수치 *</label>
-                    <input type="number" class="text-input" id="otherGoalTarget" placeholder="8" min="1" max="999" step="0.1">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">단위 *</label>
-                    <input type="text" class="text-input" id="otherGoalUnit" placeholder="잔, 시간, 페이지" maxlength="10">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="otherNotification">
-                    <label for="otherNotification">목표 달성 알림 받기</label>
-                </div>
-            </div>
+        <div class="form-group">
+            <label class="form-label">단위 *</label>
+            <input type="text" class="text-input" id="goalUnit" placeholder="예: 분, 회, km, 잔" maxlength="10">
+            <div class="input-hint">최대 10자까지 입력 가능합니다</div>
         </div>
         
-        <div class="modal-footer" id="modalFooter">
+        <div class="modal-footer">
             <button class="btn btn-cancel" onclick="closeGoalModal()">취소</button>
-            <button class="btn btn-save" id="saveGoalBtn" onclick="saveGoal()" style="display: none;">저장</button>
+            <button class="btn btn-save" onclick="saveGoal()">저장</button>
         </div>
     </div>
 </div>
@@ -2914,177 +2259,7 @@ textarea.text-input {
     </div>
 </div>
 
-<!-- 월별 목표 달성 레포트 모달 -->
-<div id="monthlyReportModal" class="modal">
-    <div class="modal-content monthly-report-content">
-        <div class="modal-header">
-            <h2 class="modal-title">7월 목표 달성 레포트</h2>
-            <div class="ai-badge">✨ AI 분석</div>
-        </div>
-        
-        <div class="report-loading" id="reportLoading">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">AI가 당신의 건강 데이터를 분석하고 있어요...</div>
-        </div>
-        
-        <div class="report-content" id="reportContent" style="display: none;">
-            <div class="report-summary">
-                <div class="summary-card excellent">
-                    <div class="summary-icon">🎉</div>
-                    <div class="summary-text">
-                        <div class="summary-title">전반적으로 우수해요!</div>
-                        <div class="summary-desc">7월 목표 달성률 87%로 매우 양호합니다</div>
-                    </div>
-                </div>
-                
-                <div class="report-stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">22일</div>
-                        <div class="stat-label">목표 달성일</div>
-                        <div class="stat-trend positive">+3일 ↗</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5일</div>
-                        <div class="stat-label">최대 연속달성</div>
-                        <div class="stat-trend positive">신기록! 🏆</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">156개</div>
-                        <div class="stat-label">완료한 목표</div>
-                        <div class="stat-trend positive">+28개 ↗</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="ai-analysis-section">
-                <h3 class="section-title">🤖 AI 분석 결과</h3>
-                
-                <div class="analysis-item">
-                    <div class="analysis-header">
-                        <span class="analysis-category excellent">영양제 관리</span>
-                        <span class="analysis-score">80%</span>
-                    </div>
-                    <div class="analysis-content">
-                        <p><strong>잘하고 있는 점:</strong> 영양제 복용이 꾸준히 개선되고 있어요. 특히 주말에도 놓치지 않는 습관이 인상적입니다.</p>
-                        <p><strong>개선 포인트:</strong> 아침 시간대 복용률이 저녁보다 10% 낮아요. 아침 루틴과 함께 복용하시는 것을 추천해요.</p>
-                    </div>
-                </div>
-                
-                <div class="analysis-item">
-                    <div class="analysis-header">
-                        <span class="analysis-category good">운동 관리</span>
-                        <span class="analysis-score">71%</span>
-                    </div>
-                    <div class="analysis-content">
-                        <p><strong>잘하고 있는 점:</strong> 주중 운동 패턴이 일정하고, 강도도 점진적으로 증가하고 있어요.</p>
-                        <p><strong>개선 포인트:</strong> 비가 오는 날 운동 빈도가 현저히 떨어져요. 실내 운동 루틴을 준비해보세요.</p>
-                    </div>
-                </div>
-                
-                <div class="analysis-item">
-                    <div class="analysis-header">
-                        <span class="analysis-category excellent">기타 목표</span>
-                        <span class="analysis-score">100%</span>
-                    </div>
-                    <div class="analysis-content">
-                        <p><strong>완벽해요!</strong> 물 마시기, 수면 시간 관리 등 기타 목표를 100% 달성하셨어요. 이 습관을 계속 유지해보세요.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="recommendations-section">
-                <h3 class="section-title">💡 8월 개선 제안</h3>
-                <div class="recommendation-list">
-                    <div class="recommendation-item">
-                        <div class="rec-number">1</div>
-                        <div class="rec-content">
-                            <div class="rec-title">아침 영양제 복용 알림 설정</div>
-                            <div class="rec-desc">기상 후 30분 이내 복용하도록 스마트폰 알림을 설정해보세요.</div>
-                        </div>
-                    </div>
-                    <div class="recommendation-item">
-                        <div class="rec-number">2</div>
-                        <div class="rec-content">
-                            <div class="rec-title">실내 운동 루틴 추가</div>
-                            <div class="rec-desc">홈트레이닝 영상을 2-3개 저장해두어 날씨에 관계없이 운동하세요.</div>
-                        </div>
-                    </div>
-                    <div class="recommendation-item">
-                        <div class="rec-number">3</div>
-                        <div class="rec-content">
-                            <div class="rec-title">목표 달성 보상 시스템</div>
-                            <div class="rec-desc">연속 달성 7일마다 작은 보상을 주어 동기부여를 높여보세요.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="modal-footer">
-            <button class="btn btn-cancel" onclick="closeMonthlyReport()">닫기</button>
-            <button class="btn btn-save" onclick="shareReport()">레포트 공유</button>
-        </div>
-    </div>
-</div>
-
-<!-- 생리 주기 설정 모달 -->
-<div id="periodSettingsModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="modal-title">생리 주기 설정</h2>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">마지막 생리 시작일</label>
-            <input type="date" class="text-input" id="lastPeriodDate" value="2025-07-06">
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">평균 생리 주기</label>
-            <select class="text-input" id="cycleLength">
-                <option value="21">21일</option>
-                <option value="22">22일</option>
-                <option value="23">23일</option>
-                <option value="24">24일</option>
-                <option value="25">25일</option>
-                <option value="26">26일</option>
-                <option value="27">27일</option>
-                <option value="28" selected>28일</option>
-                <option value="29">29일</option>
-                <option value="30">30일</option>
-                <option value="31">31일</option>
-                <option value="32">32일</option>
-                <option value="33">33일</option>
-                <option value="34">34일</option>
-                <option value="35">35일</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label class="form-label">생리 기간</label>
-            <select class="text-input" id="periodDuration">
-                <option value="3">3일</option>
-                <option value="4">4일</option>
-                <option value="5" selected>5일</option>
-                <option value="6">6일</option>
-                <option value="7">7일</option>
-                <option value="8">8일</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <div class="checkbox-group">
-                <input type="checkbox" id="periodNotification" checked>
-                <label for="periodNotification">생리 예정일 3일 전 알림</label>
-            </div>
-        </div>
-        
-        <div class="modal-footer">
-            <button class="btn btn-cancel" onclick="closePeriodSettings()">취소</button>
-            <button class="btn btn-save" onclick="savePeriodSettings()">저장</button>
-        </div>
-    </div>
-</div>
+<!-- 건강 일기 작성 모달 -->
 <div id="diaryModal" class="modal">
     <div class="modal-content diary-modal-content">
         <div class="modal-header">
@@ -3163,126 +2338,6 @@ let currentMealType = 'breakfast';
 let categoryDetailsVisible = false; // 목표별 현황 토글 상태
 let selectedMood = null; // 선택된 기분
 let selectedDate = null; // 선택된 날짜
-let selectedGoalCategory = null; // 선택된 목표 카테고리
-
-// 목표 카테고리 선택
-function selectGoalCategory(category) {
-    selectedGoalCategory = category;
-    
-    // 카테고리 선택 화면 숨기기
-    document.getElementById('categorySelection').style.display = 'none';
-    
-    // 해당 카테고리 폼 보이기
-    const forms = ['supplementForm', 'exerciseForm', 'otherForm'];
-    forms.forEach(formId => {
-        document.getElementById(formId).style.display = 'none';
-    });
-    
-    document.getElementById(category + 'Form').style.display = 'block';
-    document.getElementById('saveGoalBtn').style.display = 'block';
-    
-    // 운동 목표 타입 변경 시 관련 필드 표시/숨김
-    if (category === 'exercise') {
-        setupExerciseFormHandlers();
-    }
-    
-    // 기타 목표 타입 변경 시 관련 필드 표시/숨김
-    if (category === 'other') {
-        setupOtherFormHandlers();
-    }
-    
-    // 영양제 복용량 변경 시 알림 시간 입력 필드 조정
-    if (category === 'supplement') {
-        setupSupplementFormHandlers();
-    }
-}
-
-// 카테고리 선택으로 돌아가기
-function goBackToCategory() {
-    document.getElementById('categorySelection').style.display = 'block';
-    document.getElementById('saveGoalBtn').style.display = 'none';
-    
-    const forms = ['supplementForm', 'exerciseForm', 'otherForm'];
-    forms.forEach(formId => {
-        document.getElementById(formId).style.display = 'none';
-    });
-    
-    selectedGoalCategory = null;
-}
-
-// 영양제 폼 핸들러 설정
-function setupSupplementFormHandlers() {
-    const dailySelect = document.getElementById('supplementDaily');
-    const notificationCheckbox = document.getElementById('supplementNotification');
-    const timeGroup = document.getElementById('notificationTimeGroup');
-    const timeInputs = [
-        document.getElementById('supplementTime1'),
-        document.getElementById('supplementTime2'),
-        document.getElementById('supplementTime3')
-    ];
-    
-    // 복용량에 따른 시간 입력 필드 조정
-    dailySelect.addEventListener('change', function() {
-        const dailyCount = parseInt(this.value);
-        timeInputs.forEach((input, index) => {
-            input.style.display = index < dailyCount ? 'block' : 'none';
-        });
-    });
-    
-    // 알림 체크박스 상태에 따른 시간 입력 활성화/비활성화
-    notificationCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            timeGroup.classList.remove('disabled');
-        } else {
-            timeGroup.classList.add('disabled');
-        }
-    });
-}
-
-// 운동 폼 핸들러 설정
-function setupExerciseFormHandlers() {
-    const exerciseTypeSelect = document.getElementById('exerciseType');
-    const customExerciseGroup = document.getElementById('customExerciseGroup');
-    const goalTypeRadios = document.querySelectorAll('input[name="exerciseGoalType"]');
-    const goalGroups = {
-        frequency: document.getElementById('frequencyGoal'),
-        duration: document.getElementById('durationGoal'),
-        distance: document.getElementById('distanceGoal')
-    };
-    
-    // 운동 종류가 '기타'일 때 커스텀 입력 필드 표시
-    exerciseTypeSelect.addEventListener('change', function() {
-        if (this.value === 'other') {
-            customExerciseGroup.style.display = 'block';
-        } else {
-            customExerciseGroup.style.display = 'none';
-        }
-    });
-    
-    // 목표 설정 방식에 따른 입력 필드 변경
-    goalTypeRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            Object.values(goalGroups).forEach(group => {
-                group.style.display = 'none';
-            });
-            goalGroups[this.value].style.display = 'block';
-        });
-    });
-}
-
-// 기타 목표 폼 핸들러 설정
-function setupOtherFormHandlers() {
-    const goalTypeSelect = document.getElementById('otherGoalType');
-    const customOtherGroup = document.getElementById('customOtherGroup');
-    
-    goalTypeSelect.addEventListener('change', function() {
-        if (this.value === 'custom') {
-            customOtherGroup.style.display = 'block';
-        } else {
-            customOtherGroup.style.display = 'none';
-        }
-    });
-}
 
 // 건강 일기 모달 관련 함수들
 function openDiaryModal(date) {
@@ -3969,7 +3024,7 @@ function navigateTo(page) {
             showSuccessMessage('챗봇 페이지로 이동합니다');
             break;
         default:
-            showSuccessMessage(`${page} 페이지로 이동합니다`);
+            showSuccessMessage(`커뮤니티 페이지로 이동합니다`);
     }
 }
 
@@ -3984,47 +3039,12 @@ document.addEventListener('click', function(event) {
     modals.forEach(modal => {
         if (event.target === modal) {
             modal.classList.remove('show');
-            if (modal.id === 'goalModal') resetGoalModal();
+            if (modal.id === 'goalModal') clearGoalForm();
             if (modal.id === 'mealModal') clearMealForm();
             if (modal.id === 'diaryModal') clearDiaryForm();
         }
     });
 });
-
-// 식단 모달 관련 (기존 함수 복원)
-function clearMealForm() {
-    const mealTime = document.getElementById('mealTime');
-    const mealMenu = document.getElementById('mealMenu');
-    const mealCalories = document.getElementById('mealCalories');
-    const mealNote = document.getElementById('mealNote');
-    
-    if (mealTime) mealTime.value = 'breakfast';
-    if (mealMenu) mealMenu.value = '';
-    if (mealCalories) mealCalories.value = '';
-    if (mealNote) mealNote.value = '';
-}
-
-// 전역 함수들을 window 객체에 명시적으로 할당 (디버깅용)
-window.openMonthlyReport = openMonthlyReport;
-window.closeMonthlyReport = closeMonthlyReport;
-window.shareReport = shareReport;
-window.openPeriodSettings = openPeriodSettings;
-window.closePeriodSettings = closePeriodSettings;
-window.savePeriodSettings = savePeriodSettings;
-window.openDiaryModal = openDiaryModal;
-window.closeDiaryModal = closeDiaryModal;
-window.selectMood = selectMood;
-window.handlePhotoUpload = handlePhotoUpload;
-window.removePhoto = removePhoto;
-window.saveDiary = saveDiary;
-window.selectGoalCategory = selectGoalCategory;
-window.goBackToCategory = goBackToCategory;
-window.openMealModal = openMealModal;
-window.closeMealModal = closeMealModal;
-window.saveMeal = saveMeal;
-window.syncWithInOut = syncWithInOut;
-window.showNutritionDetail = showNutritionDetail;
-window.goToFasting = goToFasting;
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
