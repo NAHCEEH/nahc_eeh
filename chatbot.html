@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+    
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #F2E9E0;
@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
         }
-
+    
         .chatbot-container {
             width: 400px;
             height: 700px;
@@ -30,21 +30,21 @@
             display: flex;
             flex-direction: column;
         }
-
+    
         .header {
-            background: #f0e6d6;
-            padding: 12px 20px; /* 패딩 조정 */
+            background: linear-gradient(135deg, #F2E9E0, #EDE4DB);
+            padding: 12px 20px;
             text-align: center;
             position: relative;
-            flex-shrink: 0; /* 고정 높이 유지 */
-            min-height: 120px; /* 높이 조정 */
-            border-radius: 25px 25px 0 0; /* 상단 모서리 둥글게 */
+            flex-shrink: 0;
+            min-height: 120px;
+            border-radius: 25px 25px 0 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
-
+    
         /* 상단 곰 아이콘 스타일 */
         .header-bear-icon {
             margin-bottom: 8px;
@@ -52,30 +52,30 @@
             align-items: center;
             justify-content: center;
         }
-
+    
         .header-bear-icon svg {
-            filter: drop-shadow(0 2px 4px rgba(229, 141, 135, 0.3));
+            filter: drop-shadow(0 2px 4px rgba(236, 151, 135, 0.3));
             transition: transform 0.3s ease;
         }
-
+    
         .header-bear-icon svg:hover {
             transform: scale(1.05);
         }
-
+    
         .robot-icon {
-            width: 50px; /* 크기 줄임 */
+            width: 50px;
             height: 50px;
-            background: #ff9999;
+            background: #EC9787;
             border-radius: 15px;
-            margin: 0 auto 10px; /* 마진 줄임 */
+            margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px; /* 폰트 크기 줄임 */
+            font-size: 24px;
             color: white;
             position: relative;
         }
-
+    
         .robot-icon::before {
             content: '';
         }
@@ -87,76 +87,78 @@
             position: absolute;
             top: 0;
             left: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23E58D87'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23E58D87'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23E58D87'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23E58D87'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23EC9787'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23EC9787'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23EC9787'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23EC9787'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
         }
-
+    
         .title {
-            font-size: 20px; /* 폰트 크기 줄임 */
+            font-size: 20px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 10px; /* 마진 조정 */
+            margin-bottom: 10px;
             margin-top: 0;
         }
-
+    
         .controls {
             display: flex;
-            gap: 10px; /* 간격 줄임 */
+            gap: 10px;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap; /* 줄바꿈 허용 */
+            flex-wrap: wrap;
         }
-
+    
         .control-btn {
-            padding: 8px 15px; /* 패딩 줄임 */
+            padding: 8px 15px;
             background: white;
             border: none;
-            border-radius: 20px; /* 둥글기 줄임 */
-            font-size: 12px; /* 폰트 크기 줄임 */
+            border-radius: 20px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 줄임 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             white-space: nowrap;
         }
-
+    
         .control-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #EC9787, #E28877);
+            color: white;
         }
-
+    
         .toggle-switch {
             position: relative;
-            width: 50px; /* 크기 줄임 */
+            width: 50px;
             height: 25px;
-            background: #4CAF50;
-            border-radius: 12px; /* 둥글기 줄임 */
+            background: #EC9787;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
+    
         .toggle-switch::before {
             content: '';
             position: absolute;
-            width: 21px; /* 크기 줄임 */
+            width: 21px;
             height: 21px;
             background: white;
             border-radius: 50%;
             top: 2px;
             right: 2px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 줄임 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
+    
         .toggle-switch.off {
             background: #ccc;
         }
-
+    
         .toggle-switch.off::before {
-            right: 27px; /* 위치 조정 */
+            right: 27px;
         }
-
+    
         .chat-area {
             flex: 1;
             padding: 20px;
@@ -166,7 +168,7 @@
             border-radius: 0;
             position: relative;
         }
-
+    
         .placeholder {
             position: absolute;
             top: 50%;
@@ -175,22 +177,22 @@
             color: #999;
             font-size: 16px;
         }
-
+    
         .message {
             margin-bottom: 15px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
         }
-
+    
         .message.user {
             justify-content: flex-end;
         }
-
+    
         .message.bot {
             justify-content: flex-start;
         }
-
+    
         .message-bubble {
             max-width: 70%;
             padding: 12px 16px;
@@ -198,23 +200,23 @@
             font-size: 14px;
             line-height: 1.4;
         }
-
+    
         .message.user .message-bubble {
-            background: #007AFF;
+            background: #EC9787;
             color: white;
             border-bottom-right-radius: 4px;
         }
-
+    
         .message.bot .message-bubble {
             background: #f0f0f0;
             color: #333;
             border-bottom-left-radius: 4px;
         }
-
+    
         .bot-avatar {
             width: 30px;
             height: 30px;
-            background: #ff9999;
+            background: #EC9787;
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -223,7 +225,7 @@
             color: white;
             flex-shrink: 0;
             position: relative;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23ff9999'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23ff9999'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23ff9999'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23ff9999'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!-- 메인 얼굴 --%3E%3Crect x='130' y='150' width='252' height='212' rx='60' fill='white'/%3E%3C!-- 왼쪽 귀 --%3E%3Cellipse cx='160' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 오른쪽 귀 --%3E%3Cellipse cx='350' cy='130' rx='35' ry='45' fill='white'/%3E%3C!-- 작은 하트 --%3E%3Cpath d='M256 110 C250 100, 240 100, 240 110 C240 100, 230 100, 230 110 C230 120, 240 130, 256 140 C270 130, 280 120, 280 110 C280 100, 270 100, 270 110 C270 100, 260 100, 256 110 Z' fill='%23ffb3ba'/%3E%3C!-- 왼쪽 눈 --%3E%3Ccircle cx='190' cy='220' r='20' fill='%23EC9787'/%3E%3Ccircle cx='190' cy='210' r='8' fill='white'/%3E%3C!-- 오른쪽 눈 --%3E%3Ccircle cx='320' cy='220' r='20' fill='%23EC9787'/%3E%3Ccircle cx='320' cy='210' r='8' fill='white'/%3E%3C!-- 입 (두 개의 둥근 사각형) --%3E%3Crect x='190' y='300' width='50' height='35' rx='17' fill='%23EC9787'/%3E%3Crect x='270' y='300' width='50' height='35' rx='17' fill='%23EC9787'/%3E%3Cline x1='255' y1='300' x2='255' y2='335' stroke='white' stroke-width='6'/%3E%3C/svg%3E");
             background-size: 70%;
             background-repeat: no-repeat;
             background-position: center;
@@ -232,19 +234,19 @@
         .bot-avatar::after {
             display: none;
         }
-
+    
         .input-area {
             padding: 20px;
-            background: #f0e6d6;
+            background: linear-gradient(135deg, #F2E9E0, #EDE4DB);
             border-radius: 0 0 25px 25px;
         }
-
+    
         .input-container {
             display: flex;
             gap: 10px;
             align-items: center;
         }
-
+    
         .input-field {
             flex: 1;
             padding: 15px 20px;
@@ -255,7 +257,7 @@
             outline: none;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
+    
         .send-btn {
             width: 50px;
             height: 50px;
@@ -270,18 +272,18 @@
             align-items: center;
             justify-content: center;
         }
-
+    
         .send-btn:hover {
-            background: #e8826f;
+            background: #E28877;
             transform: scale(1.05);
         }
-
+    
         .send-btn:disabled {
             background: #ccc;
             cursor: not-allowed;
             transform: none;
         }
-
+    
         .typing-indicator {
             display: none;
             padding: 10px 16px;
@@ -290,12 +292,12 @@
             border-bottom-left-radius: 4px;
             max-width: 70%;
         }
-
+    
         .typing-dots {
             display: flex;
             gap: 4px;
         }
-
+    
         .typing-dot {
             width: 8px;
             height: 8px;
@@ -303,19 +305,19 @@
             border-radius: 50%;
             animation: typing 1.4s infinite ease-in-out;
         }
-
+    
         .typing-dot:nth-child(1) { animation-delay: -0.32s; }
         .typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
+    
         @keyframes typing {
             0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
             40% { transform: scale(1); opacity: 1; }
         }
-
+    
         .footer {
-            display: none; /* 기존 푸터 숨기기 */
+            display: none;
         }
-
+    
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -328,7 +330,7 @@
             display: flex;
             padding: 8px 0;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000; /* 다른 요소 위에 표시 */
+            z-index: 1000;
         }
         
         .nav-item {
@@ -347,7 +349,7 @@
         }
         
         .nav-item.active {
-            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            background: linear-gradient(135deg, #EC9787, #E28877);
             color: white;
         }
         
@@ -376,26 +378,26 @@
             font-weight: 500;
             line-height: 1;
         }
-
+    
         /* 챗봇 컨테이너 하단 여백 조정 */
         .chatbot-container {
-            margin-bottom: 150px; /* 기본 여백 */
+            margin-bottom: 150px;
             transition: margin-bottom 0.3s ease;
         }
-
+    
         .chatbot-container.suggestions-expanded {
-            margin-bottom: 280px; /* 확장 시 여백 */
+            margin-bottom: 280px;
         }
-
+    
         /* 추천 질문 컨테이너 */
         .suggestions-container {
             position: fixed;
-            bottom: 135px; /* 입력창 위에 위치 */
+            bottom: 135px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             max-width: 390px;
-            height: 60px; /* 기본 축소 높이 */
+            height: 60px;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
             border: 1px solid #e5e0db;
@@ -407,12 +409,12 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+    
         .suggestions-container.expanded {
-            height: 200px; /* 확장 높이 */
+            height: 200px;
             cursor: default;
         }
-
+    
         .suggestions-header {
             position: sticky;
             top: 0;
@@ -425,7 +427,7 @@
             align-items: center;
             justify-content: space-between;
         }
-
+    
         .suggestions-title {
             font-size: 13px;
             font-weight: 600;
@@ -434,18 +436,18 @@
             align-items: center;
             gap: 6px;
         }
-
+    
         .expand-indicator {
             font-size: 16px;
             color: #999;
             transition: transform 0.3s ease;
             user-select: none;
         }
-
+    
         .suggestions-container.expanded .expand-indicator {
             transform: rotate(180deg);
         }
-
+    
         .suggestions-preview {
             padding: 8px 20px;
             overflow: hidden;
@@ -454,9 +456,9 @@
             flex-direction: column;
             gap: 6px;
         }
-
+    
         .suggestions-scroll {
-            height: calc(100% - 49px); /* 헤더 높이를 제외한 나머지 */
+            height: calc(100% - 49px);
             overflow-y: auto;
             overflow-x: hidden;
             padding: 8px 20px 12px;
@@ -465,15 +467,15 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
+    
         .suggestions-container.expanded .suggestions-scroll {
             opacity: 1;
         }
-
+    
         .suggestions-container.expanded .suggestions-preview {
             display: none;
         }
-
+    
         /* 미리보기용 아이템 */
         .suggestion-preview-item {
             background: linear-gradient(135deg, #f8f6f4, #f0ede8);
@@ -488,25 +490,25 @@
             pointer-events: none;
             opacity: 0.8;
         }
-
+    
         /* 커스텀 스크롤바 */
         .suggestions-scroll::-webkit-scrollbar {
             width: 4px;
         }
-
+    
         .suggestions-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
-
+    
         .suggestions-scroll::-webkit-scrollbar-thumb {
             background: rgba(200, 200, 200, 0.6);
             border-radius: 2px;
         }
-
+    
         .suggestions-scroll::-webkit-scrollbar-thumb:hover {
             background: rgba(170, 170, 170, 0.8);
         }
-
+    
         .suggestion-item {
             background: linear-gradient(135deg, #f8f6f4, #f0ede8);
             border: 1px solid #e5e0db;
@@ -523,38 +525,38 @@
             display: block;
             line-height: 1.3;
         }
-
+    
         .suggestion-item:last-child {
             margin-bottom: 0;
         }
-
+    
         .suggestion-item:hover {
-            background: linear-gradient(135deg, #EC9787, #e8826f);
+            background: linear-gradient(135deg, #EC9787, #E28877);
             color: white;
             transform: translateX(4px);
             box-shadow: 0 3px 12px rgba(236, 151, 135, 0.25);
             border-color: #EC9787;
         }
-
+    
         .suggestion-item:active {
             transform: translateX(2px);
         }
-
+    
         /* 입력 영역 위치 조정 */
         .input-area {
             position: fixed;
-            bottom: 60px; /* 네비게이션바 위에 위치 */
+            bottom: 60px;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             max-width: 390px;
             padding: 15px 20px;
-            background: #f0e6d6;
+            background: linear-gradient(135deg, #F2E9E0, #EDE4DB);
             border-radius: 0;
             z-index: 200;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
-
+    
         /* 확장 시 배경 오버레이 */
         .suggestions-overlay {
             position: fixed;
@@ -568,31 +570,31 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
+    
         .suggestions-overlay.show {
             opacity: 1;
             visibility: visible;
         }
-
+    
         /* 스크롤바 커스텀 */
         .chat-area::-webkit-scrollbar {
             width: 6px;
         }
-
+    
         .chat-area::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 3px;
         }
-
+    
         .chat-area::-webkit-scrollbar-thumb {
             background: #ccc;
             border-radius: 3px;
         }
-
+    
         .chat-area::-webkit-scrollbar-thumb:hover {
             background: #999;
         }
-
+    
         /* 말투 설정 모달 */
         .modal-overlay {
             position: fixed;
@@ -606,7 +608,7 @@
             align-items: center;
             z-index: 1000;
         }
-
+    
         .modal {
             background: white;
             border-radius: 20px;
@@ -616,7 +618,7 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             animation: modalSlideIn 0.3s ease-out;
         }
-
+    
         @keyframes modalSlideIn {
             from {
                 opacity: 0;
@@ -627,31 +629,31 @@
                 transform: translateY(0) scale(1);
             }
         }
-
+    
         .modal-header {
             text-align: center;
             margin-bottom: 25px;
         }
-
+    
         .modal-title {
             font-size: 20px;
             font-weight: bold;
             color: #333;
             margin-bottom: 10px;
         }
-
+    
         .modal-subtitle {
             font-size: 14px;
             color: #666;
         }
-
+    
         .tone-options {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-bottom: 25px;
         }
-
+    
         .tone-option {
             padding: 15px 20px;
             border: 2px solid #f0f0f0;
@@ -663,26 +665,26 @@
             font-size: 16px;
             font-weight: 500;
         }
-
+    
         .tone-option:hover {
             border-color: #EC9787;
             background: #fef8f7;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(236, 151, 135, 0.2);
         }
-
+    
         .tone-option.selected {
             border-color: #EC9787;
             background: #EC9787;
             color: white;
         }
-
+    
         .modal-buttons {
             display: flex;
             gap: 10px;
             justify-content: center;
         }
-
+    
         .modal-btn {
             padding: 12px 25px;
             border: none;
@@ -692,23 +694,81 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
+    
         .modal-btn.cancel {
             background: #f0f0f0;
             color: #666;
         }
-
+    
         .modal-btn.cancel:hover {
             background: #e0e0e0;
         }
-
+    
         .modal-btn.confirm {
             background: #EC9787;
             color: white;
         }
-
+    
         .modal-btn.confirm:hover {
-            background: #e8826f;
+            background: #E28877;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 0 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
+        }
+
+        .nav-item:hover {
+            background: #faf8f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: #EC9787;
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 하단 패딩 */
+        .bottom-padding {
+            height: 90px;
         }
     </style>
 </head>
@@ -779,7 +839,9 @@
                 <div class="input-container">
                     <input type="text" class="input-field" id="messageInput" placeholder="메시지 입력">
                     <button class="send-btn" id="sendBtn">
-                        <span>→</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -794,7 +856,7 @@
 
     <!-- 하단 네비게이션 -->
     <nav class="bottom-nav">
-        <div class="nav-item" onclick="navigateTo('community')">
+        <div class="nav-item" onclick="navigateTo('community', this)">
             <div class="nav-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -807,7 +869,33 @@
             <div class="nav-label">커뮤니티</div>
         </div>
         
-        <div class="nav-item" onclick="navigateTo('home')">
+        <div class="nav-item" onclick="navigateTo('chatbot', this)" ondblclick="uploadChatbotIcon()">
+            <div class="nav-icon" id="chatbotIcon">
+                <svg width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
+                    <!-- 메인 얼굴 -->
+                    <rect x="130" y="180" width="252" height="200" rx="60" fill="currentColor"/>
+                    <!-- 왼쪽 귀 -->
+                    <ellipse cx="160" cy="160" rx="35" ry="45" fill="currentColor"/>
+                    <!-- 오른쪽 귀 -->
+                    <ellipse cx="350" cy="160" rx="35" ry="45" fill="currentColor"/>
+                    <!-- 작은 하트 -->
+                    <path d="M256 120 C250 110, 240 110, 240 120 C240 110, 230 110, 230 120 C230 130, 240 140, 256 150 C270 140, 280 130, 280 120 C280 110, 270 110, 270 120 C270 110, 260 110, 256 120 Z" fill="#ffb3ba"/>
+                    <!-- 왼쪽 눈 -->
+                    <circle cx="190" cy="240" r="18" fill="white"/>
+                    <circle cx="190" cy="235" r="7" fill="currentColor"/>
+                    <!-- 오른쪽 눈 -->
+                    <circle cx="320" cy="240" r="18" fill="white"/>
+                    <circle cx="320" cy="235" r="7" fill="currentColor"/>
+                    <!-- 입 (두 개의 둥근 사각형) -->
+                    <rect x="200" y="310" width="45" height="30" rx="15" fill="white"/>
+                    <rect x="265" y="310" width="45" height="30" rx="15" fill="white"/>
+                    <line x1="255" y1="310" x2="255" y2="340" stroke="currentColor" stroke-width="5"/>
+                </svg>
+            </div>
+            <div class="nav-label">챗봇</div>
+        </div>
+
+        <div class="nav-item active" onclick="navigateTo('home', this)">
             <div class="nav-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -816,29 +904,16 @@
             <div class="nav-label">홈</div>
         </div>
         
-        <div class="nav-item active" onclick="navigateTo('chatbot')">
+        <div class="nav-item" onclick="navigateTo('health', this)">
             <div class="nav-icon">
-                <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor">
-                    <!-- 배경 사각형 (더 짧아짐) -->
-                    <rect x="120" y="130" width="272" height="252" rx="50" fill="currentColor"/>
-                    <!-- 귀 (더 작아짐) -->
-                    <circle cx="150" cy="130" r="35" fill="currentColor"/>
-                    <circle cx="360" cy="130" r="35" fill="currentColor"/>
-                    <!-- 눈 (약간 작아짐) -->
-                    <ellipse cx="200" cy="220" rx="18" ry="30" fill="white"/>
-                    <ellipse cx="310" cy="220" rx="18" ry="30" fill="white"/>
-                    <rect x="196" y="208" width="8" height="24" fill="currentColor"/>
-                    <rect x="306" y="208" width="8" height="24" fill="currentColor"/>
-                    <!-- 입 (더 작아짐) -->
-                    <rect x="210" y="320" width="45" height="30" rx="4" fill="white"/>
-                    <rect x="260" y="320" width="45" height="30" rx="4" fill="white"/>
-                    <line x1="255" y1="320" x2="255" y2="350" stroke="currentColor" stroke-width="8" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
                 </svg>
             </div>
-            <div class="nav-label">챗봇</div>
+            <div class="nav-label">내 건강</div>
         </div>
         
-        <div class="nav-item" onclick="navigateTo('more')">
+        <div class="nav-item" onclick="navigateTo('more', this)">
             <div class="nav-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <circle cx="5" cy="12" r="2"/>
@@ -915,7 +990,7 @@
         const suggestionsScroll = document.getElementById('suggestionsScroll');
         const suggestionsHeader = document.getElementById('suggestionsHeader');
         const bottomContainer = document.getElementById('bottomContainer');
-
+    
         // 메시지 배열
         let messages = [];
         let isTyping = false;
@@ -924,7 +999,7 @@
         let selectedRole = 'general'; // 기본 역할
         let currentRole = 'general';
         let suggestionsExpanded = false;
-
+    
         // 역할별 추천 질문 데이터
         const suggestionsByRole = {
             general: [
@@ -982,7 +1057,7 @@
                 "건강한 생활습관은 뭐가 있나요?"
             ]
         };
-
+    
         // 네비게이션 함수
         function navigateTo(page) {
             // 활성 상태 변경
@@ -1010,7 +1085,7 @@
                     break;
             }
         }
-
+    
         // 추천 질문 표시 함수
         function showSuggestions() {
             const suggestions = suggestionsByRole[currentRole] || suggestionsByRole.general;
@@ -1027,7 +1102,7 @@
                 suggestionsScroll.appendChild(item);
             });
         }
-
+    
         // 추천 질문 확장/축소 함수
         function toggleSuggestions() {
             suggestionsExpanded = !suggestionsExpanded;
@@ -1040,7 +1115,7 @@
                 bottomContainer.classList.remove('expanded');
             }
         }
-
+    
         // 추천 질문 전송 함수
         function sendSuggestion(suggestion) {
             // 입력창에 텍스트 설정
@@ -1054,33 +1129,33 @@
                 toggleSuggestions();
             }
         }
-
+    
         // 토글 스위치 이벤트
         toggleSwitch.addEventListener('click', function() {
             this.classList.toggle('off');
         });
-
+    
         // 메시지 전송 함수
         function sendMessage() {
             const message = messageInput.value.trim();
             if (message === '' || isTyping) return;
-
+    
             // 플레이스홀더 숨기기
             placeholder.style.display = 'none';
-
+    
             // 사용자 메시지 추가
             addMessage(message, 'user');
             messageInput.value = '';
-
+    
             // 봇 응답 시뮬레이션
             simulateBotResponse(message);
         }
-
+    
         // 메시지 추가 함수
         function addMessage(text, sender) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
-
+    
             if (sender === 'bot') {
                 messageDiv.innerHTML = `
                     <div class="bot-avatar"></div>
@@ -1091,17 +1166,17 @@
                     <div class="message-bubble">${text}</div>
                 `;
             }
-
+    
             chatArea.appendChild(messageDiv);
             chatArea.scrollTop = chatArea.scrollHeight;
             messages.push({ text, sender });
         }
-
+    
         // 봇 응답 시뮬레이션
         function simulateBotResponse(userMessage) {
             isTyping = true;
             sendBtn.disabled = true;
-
+    
             // 타이핑 인디케이터 표시
             const typingMessage = document.createElement('div');
             typingMessage.className = 'message bot typing-message';
@@ -1117,22 +1192,22 @@
             `;
             chatArea.appendChild(typingMessage);
             chatArea.scrollTop = chatArea.scrollHeight;
-
+    
             // 2초 후 응답 생성
             setTimeout(() => {
                 // 타이핑 인디케이터 제거
                 chatArea.removeChild(typingMessage);
-
+    
                 // 말투별 응답 생성
                 const responses = getRoleBasedResponses(userMessage, currentRole, currentTone);
                 const randomResponse = responses[Math.floor(Math.random() * responses.length)];
                 addMessage(randomResponse, 'bot');
-
+    
                 isTyping = false;
                 sendBtn.disabled = false;
             }, 2000);
         }
-
+    
         // 역할과 말투를 조합한 응답 생성 함수
         function getRoleBasedResponses(userMessage, role, tone) {
             const roleResponses = {
@@ -1305,19 +1380,19 @@
                     ]
                 }
             };
-
+    
             return roleResponses[role]?.[tone] || roleResponses.general[tone];
         }
-
+    
         // 이벤트 리스너
         sendBtn.addEventListener('click', sendMessage);
-
+    
         messageInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
-
+    
         // 컨트롤 버튼 이벤트
         voiceBtn.addEventListener('click', function() {
             toneModal.style.display = 'flex';
@@ -1329,7 +1404,7 @@
                 }
             });
         });
-
+    
         memoryBtn.addEventListener('click', function() {
             roleModal.style.display = 'flex';
             // 현재 선택된 역할 표시
@@ -1340,7 +1415,7 @@
                 }
             });
         });
-
+    
         // 역할 선택 이벤트
         roleOptions.forEach(option => {
             option.addEventListener('click', function() {
@@ -1349,12 +1424,12 @@
                 selectedRole = this.dataset.role;
             });
         });
-
+    
         // 역할 모달 닫기 이벤트
         cancelRole.addEventListener('click', function() {
             roleModal.style.display = 'none';
         });
-
+    
         confirmRole.addEventListener('click', function() {
             currentRole = selectedRole;
             roleModal.style.display = 'none';
@@ -1374,27 +1449,19 @@
             // 추천 질문 업데이트
             showSuggestions();
         });
-
+    
         // 역할 모달 오버레이 클릭시 닫기
         roleModal.addEventListener('click', function(e) {
             if (e.target === roleModal) {
                 roleModal.style.display = 'none';
             }
         });
-
+    
         // 추천 질문 헤더 클릭 이벤트
         suggestionsHeader.addEventListener('click', function() {
             toggleSuggestions();
         });
-
-        // 기존 네비게이션 이벤트 (사용하지 않음)
-        // navItems.forEach(item => {
-        //     item.addEventListener('click', function() {
-        //         navItems.forEach(nav => nav.classList.remove('active'));
-        //         this.classList.add('active');
-        //     });
-        // });
-
+    
         // 말투 선택 이벤트
         toneOptions.forEach(option => {
             option.addEventListener('click', function() {
@@ -1403,12 +1470,12 @@
                 selectedTone = this.dataset.tone;
             });
         });
-
+    
         // 모달 닫기 이벤트
         cancelTone.addEventListener('click', function() {
             toneModal.style.display = 'none';
         });
-
+    
         confirmTone.addEventListener('click', function() {
             currentTone = selectedTone;
             toneModal.style.display = 'none';
@@ -1423,14 +1490,14 @@
             
             addMessage(`말투를 ${toneNames[currentTone]} 버전으로 변경했습니다! 😊`, 'bot');
         });
-
+    
         // 모달 오버레이 클릭시 닫기
         toneModal.addEventListener('click', function(e) {
             if (e.target === toneModal) {
                 toneModal.style.display = 'none';
             }
         });
-
+    
         // 초기 환영 메시지
         setTimeout(() => {
             placeholder.style.display = 'none';
@@ -1440,5 +1507,5 @@
             showSuggestions();
         }, 1000);
     </script>
-</body>
-</html>
+    </body>
+    </html>
