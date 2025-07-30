@@ -1,0 +1,2341 @@
+
+        <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티 - 영양제 관리 앱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F2E9E0;
+            min-height: 100vh;
+            color: #5a4a3a;
+        }
+        
+        .container {
+            max-width: 390px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* 헤더 */
+        .header {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            padding: 15px 20px;
+            color: white;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .community-icon {
+            font-size: 24px;
+        }
+        
+        .page-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        /* 소통방 섹션 */
+        .chat-section {
+            padding: 20px;
+            background: #faf8f6;
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .chat-icon {
+            font-size: 20px;
+        }
+        
+        .chat-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8b6f47;
+        }
+        
+        .chat-banner {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-banner:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+        }
+        
+        /* 게시물 섹션 */
+        .posts-section {
+            padding: 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #8b6f47;
+        }
+        
+        .add-btn {
+            background: #E79787;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .add-btn:hover {
+            background: #d88577;
+            transform: scale(1.1);
+        }
+        
+        .post-item {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .post-item:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .post-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .post-content {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .expert-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .write-post-btn {
+            background: #E79787;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .write-post-btn:hover {
+            background: #d88577;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(231, 151, 135, 0.4);
+        }
+        
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+        
+        .nav-item:hover {
+            background: #faf8f6;
+            transform: translateY(-2px);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #e9bf94, #d4a574);
+            color: white;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav-icon svg {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover .nav-icon svg {
+            transform: scale(1.1);
+        }
+        
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 하단 패딩 */
+        .bottom-padding {
+            height: 90px;
+        }
+        
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #F5F5F5;
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
+            position: relative;
+            animation: modalSlideUp 0.3s ease;
+            overflow-y: auto;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(100%);
+            }
+        }
+        
+        // 별점 표시 생성
+        function generateStarsDisplay(rating) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    starsHtml += '<span class="star filled">★</span>';
+                } else if (i - 0.5 <= rating) {
+                    starsHtml += '<span class="star half">★</span>';
+                } else {
+                    starsHtml += '<span class="star">★</span>';
+                }
+            }
+            return starsHtml;
+        }
+        
+        // 인터랙티브 별점 생성
+        function generateInteractiveStars(answerId) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                starsHtml += `<span class="star" onclick="rateAnswer(${answerId}, ${i})" data-rating="${i}">★</span>`;
+            }
+            return starsHtml;
+        }
+        
+        // 답변 별점 평가
+        function rateAnswer(answerId, rating) {
+            // 해당 답변의 별점 섹션 찾기
+            const ratingSection = event.target.closest('.stars-interactive');
+            const stars = ratingSection.querySelectorAll('.star');
+            
+            // 별점 시각적 업데이트
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            });
+            
+            alert(`${rating}점으로 평가해주셨습니다! 감사합니다.`);
+            
+            // 실제 구현에서는 서버에 평점 데이터 전송
+            console.log(`답변 ID: ${answerId}, 평점: ${rating}`);
+        }
+        
+        // 신고 관련 변수
+        let currentReportAnswerId = null;
+        let selectedReportReason = null;
+        
+        // 신고 모달 열기
+        function openReportModal(answerId) {
+            currentReportAnswerId = answerId;
+            selectedReportReason = null;
+            
+            // 선택된 사유 초기화
+            document.querySelectorAll('.report-reason').forEach(reason => {
+                reason.classList.remove('selected');
+            });
+            
+            document.getElementById('reportModal').classList.add('show');
+        }
+        
+        // 신고 모달 닫기
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('show');
+            currentReportAnswerId = null;
+            selectedReportReason = null;
+        }
+        
+        // 신고 사유 선택
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.report-reason').forEach(reason => {
+                reason.addEventListener('click', function() {
+                    // 기존 선택 해제
+                    document.querySelectorAll('.report-reason').forEach(r => r.classList.remove('selected'));
+                    // 새로운 선택
+                    this.classList.add('selected');
+                    selectedReportReason = this.dataset.reason;
+                });
+            });
+        });
+        
+        // 신고 제출
+        function submitReport() {
+            if (!selectedReportReason) {
+                alert('신고 사유를 선택해주세요.');
+                return;
+            }
+            
+            const reasonNames = {
+                advertising: '광고 및 홍보',
+                profanity: '욕설 및 비방',
+                spam: '스팸 또는 도배',
+                inappropriate: '부적절한 내용',
+                misinformation: '잘못된 의학정보',
+                other: '기타'
+            };
+            
+            // 실제 구현에서는 서버에 신고 데이터 전송
+            console.log(`답변 ID: ${currentReportAnswerId}, 신고 사유: ${selectedReportReason}`);
+            
+            alert(`신고가 접수되었습니다.\n사유: ${reasonNames[selectedReportReason]}\n\n관리자가 검토 후 적절한 조치를 취하겠습니다.`);
+            closeReportModal();
+        }
+        
+        // 답변 좋아요
+        function likeAnswer(answerId) {
+            alert('답변에 좋아요를 눌렀습니다!');
+        }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #F5F5F5;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .close-btn {
+            background: #E79787;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #d88577;
+            transform: scale(1.05);
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .photo-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .photo-btn:hover {
+            background: #E0E0E0;
+            color: #E79787;
+        }
+        
+        .modal-body {
+            padding: 0;
+        }
+        
+        .input-section {
+            background: white;
+            margin: 0;
+        }
+        
+        .title-input {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-bottom: 1px solid #E0E0E0;
+            font-size: 16px;
+            background: white;
+            outline: none;
+        }
+        
+        .title-input::placeholder {
+            color: #999;
+        }
+        
+        .content-input {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            font-size: 16px;
+            background: white;
+            outline: none;
+            min-height: 200px;
+            resize: none;
+            font-family: inherit;
+        }
+        
+        .content-input::placeholder {
+            color: #999;
+        }
+        
+        .photo-preview {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .photo-preview.show {
+            display: block;
+        }
+        
+        .preview-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .remove-photo-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .remove-photo-btn:hover {
+            background: #dd3333;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 모달 하단 섹션 */
+        .modal-bottom {
+            background: #F5F5F5;
+            padding: 20px;
+        }
+        
+        .rules-section {
+            margin-bottom: 25px;
+        }
+        
+        .rules-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .rules-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .rules-list li {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            padding-left: 0;
+        }
+        
+        .rules-warning {
+            font-size: 11px;
+            color: #999;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        
+        .bottom-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            gap: 5px;
+        }
+        
+        .action-btn:hover {
+            background: #E0E0E0;
+            color: #E79787;
+        }
+        
+        .action-btn.active {
+            color: #E79787;
+        }
+        
+        .action-icon {
+            font-size: 24px;
+            color: #999;
+        }
+        
+        .action-icon svg {
+            transition: all 0.3s ease;
+        }
+        
+        .action-label {
+            font-size: 10px;
+            color: #888;
+        }
+        
+        .action-btn:hover .action-label,
+        .action-btn.active .action-label {
+            color: #E79787;
+        }
+        
+        .action-btn:hover .action-icon,
+        .action-btn.active .action-icon {
+            color: #E79787;
+        }
+        
+        /* 모달 네비게이션 */
+        .modal-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-top: 1px solid #E0E0E0;
+            display: flex;
+            padding: 15px 0;
+            z-index: 1001;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .modal-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            margin: 0 5px;
+        }
+        
+        .modal-nav-item:hover {
+            background: #f5f5f5;
+        }
+        
+        .modal-nav-item.submit {
+            background: #E79787;
+            color: white;
+        }
+        
+        .modal-nav-item.submit:hover {
+            background: #d88577;
+        }
+        
+        .nav-item-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .nav-item-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* 확인 모달 */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .confirm-modal.show {
+            display: flex;
+        }
+        
+        .confirm-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            animation: confirmSlideIn 0.3s ease;
+            margin: 0 auto;
+        }
+        
+        @keyframes confirmSlideIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .confirm-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .confirm-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        
+        .confirm-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .confirm-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .confirm-btn.back {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .confirm-btn.back:hover {
+            background: #e0e0e0;
+        }
+        
+        .confirm-btn.exit {
+            background: #E79787;
+            color: white;
+        }
+        
+        .confirm-btn.exit:hover {
+            background: #d88577;
+            transform: translateY(-1px);
+        }
+        
+        /* 질문 상세 모달 */
+        .question-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .question-modal.show {
+            display: flex;
+        }
+        
+        .question-content {
+            background: #F5F5F5;
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
+            position: relative;
+            animation: modalSlideUp 0.3s ease;
+            overflow-y: auto;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #F5F5F5;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .question-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .question-title-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .question-body {
+            background: white;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .question-info {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .question-title-main {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .question-content-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .question-meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .question-author {
+            font-weight: 500;
+        }
+        
+        .answers-section {
+            margin-top: 20px;
+        }
+        
+        .answers-header {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .answer-count {
+            background: #E79787;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+        
+        .answer-item {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .answer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .answer-author-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .expert-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .expert-badge.pharmacist {
+            background: #4CAF50;
+        }
+        
+        .expert-badge.doctor {
+            background: #2196F3;
+        }
+        
+        .expert-badge.nutritionist {
+            background: #FF9800;
+        }
+        
+        .regular-user {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .answer-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .answer-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #999;
+            margin-top: 10px;
+        }
+        
+        .answer-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .like-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .like-btn:hover {
+            background: #f0f0f0;
+            color: #E79787;
+        }
+        
+        .no-answers {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            padding: 30px;
+            background: #fafafa;
+            border-radius: 10px;
+            border: 1px dashed #ddd;
+        }
+        
+        .answer-form {
+            background: white;
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 20px;
+        }
+        
+        .answer-form-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .answer-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .answer-submit-btn {
+            background: #E79787;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-submit-btn:hover {
+            background: #d88577;
+            transform: translateY(-1px);
+        }
+        
+        /* 별점 평가 */
+        .rating-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .stars-display {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        
+        .stars-interactive {
+            display: flex;
+            gap: 2px;
+            margin-left: 10px;
+        }
+        
+        .star {
+            font-size: 16px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star.filled {
+            color: #FFD700;
+        }
+        
+        .star.half {
+            background: linear-gradient(90deg, #FFD700 50%, #ddd 50%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .star:hover {
+            transform: scale(1.1);
+        }
+        
+        .rating-info {
+            font-size: 11px;
+            color: #666;
+            margin-left: 5px;
+        }
+        
+        .rate-label {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        /* 신고 기능 */
+        .report-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .report-btn:hover {
+            background: #f0f0f0;
+            color: #E79787;
+        }
+        
+        /* 신고 모달 */
+        .report-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1003;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .report-modal.show {
+            display: flex;
+        }
+        
+        .report-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            animation: confirmSlideIn 0.3s ease;
+            margin: 0 auto;
+        }
+        
+        .report-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .report-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .report-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .report-reason {
+            padding: 12px 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .report-reason:hover {
+            border-color: #E79787;
+            background: #fef8f7;
+        }
+        
+        .report-reason.selected {
+            border-color: #E79787;
+            background: #E79787;
+            color: white;
+        }
+        
+        .report-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .report-btn-action {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .report-btn-cancel {
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .report-btn-cancel:hover {
+            background: #e0e0e0;
+        }
+        
+        .report-btn-submit {
+            background: #E79787;
+            color: white;
+        }
+        
+        .report-btn-submit:hover {
+            background: #d88577;
+        }
+        
+        /* 전체 리스트 모달 */
+        .full-list-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .full-list-modal.show {
+            display: flex;
+        }
+        
+        .full-list-content {
+            background: #F5F5F5;
+            width: 100%;
+            max-width: 390px;
+            height: 100vh;
+            position: relative;
+            animation: modalSlideUp 0.3s ease;
+            overflow-y: auto;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .full-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #F5F5F5;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .full-list-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .full-list-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .full-list-body {
+            background: white;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .full-list-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
+        }
+        
+        .full-list-section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #8b6f47;
+            margin-bottom: 20px;
+        }
+        
+        .full-post-item {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .full-post-item:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .full-post-item:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()">←</button>
+                <div class="community-icon">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            <circle cx="18.5" cy="10" r="2.5"/>
+                            <circle cx="5.5" cy="10" r="2.5"/>
+                            <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                            <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="page-title">소통방</div>
+            </div>
+        </header>
+        
+        <!-- 소통방 섹션 -->
+        <section class="chat-section">
+            <div class="chat-header">
+                <span class="chat-icon">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            <circle cx="18.5" cy="10" r="2.5"/>
+                            <circle cx="5.5" cy="10" r="2.5"/>
+                            <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                            <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                        </svg>
+                    </div>
+                </span>
+                <span class="chat-title">소통방</span>
+            </div>
+            <div class="chat-banner" onclick="enterChatRoom()">
+                광고 배너
+            </div>
+        </section>
+        
+        <!-- 게시물 섹션 -->
+        <section class="posts-section">
+            <!-- 인기 게시물 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <span>🔥</span>
+                        <span>인기 게시물</span>
+                    </div>
+                    <button class="add-btn" onclick="showFullList('popular')">+</button>
+                </div>
+                <div id="popular-posts">
+                    <div class="post-item" onclick="viewPost('popular', 0)">
+                        <div class="post-content">유산균 보관 어떻게 해요?</div>
+                        <div class="post-meta">
+                            <div class="post-stats">
+                                <span>조회 234</span>
+                                <span>추천 12</span>
+                            </div>
+                            <div class="expert-indicator">
+                                💊 약사 답변완료
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-item" onclick="viewPost('popular', 1)">
+                        <div class="post-content">오메가3 뇌에 좋아요?</div>
+                        <div class="post-meta">
+                            <div class="post-stats">
+                                <span>조회 156</span>
+                                <span>추천 8</span>
+                            </div>
+                            <div class="expert-indicator">
+                                🩺 의사 답변완료
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 새로운 게시물 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <span>📝</span>
+                        <span>새로운 게시물</span>
+                    </div>
+                    <button class="add-btn" onclick="showFullList('new')">+</button>
+                </div>
+                <div id="new-posts">
+                    <div class="post-item" onclick="viewPost('new', 0)">
+                        <div class="post-content">함량 높은 게 좋은가요?</div>
+                        <div class="post-meta">
+                            <div class="post-stats">
+                                <span>조회 89</span>
+                                <span>추천 5</span>
+                            </div>
+                            <div style="color: #999; font-size: 10px;">답변대기</div>
+                        </div>
+                    </div>
+                    <div class="post-item" onclick="viewPost('new', 1)">
+                        <div class="post-content">피부 좋아지게 하는 영양제</div>
+                        <div class="post-meta">
+                            <div class="post-stats">
+                                <span>조회 67</span>
+                                <span>추천 7</span>
+                            </div>
+                            <div class="expert-indicator">
+                                💊 약사 답변완료
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 내가 작성한 게시물 -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <span>✏️</span>
+                        <span>내가 작성한 게시물</span>
+                    </div>
+                    <button class="add-btn" onclick="showMorePosts('my')">+</button>
+                </div>
+                <div class="post-item" onclick="viewPost('my', 0)">
+                    <div class="post-content">다이어트 도움되는 영양제</div>
+                    <div class="post-meta">
+                        <div class="post-stats">
+                            <span>조회 45</span>
+                            <span>추천 2</span>
+                        </div>
+                        <div style="color: #999; font-size: 10px;">답변대기</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="write-post-btn" onclick="openPostModal()">
+                게시물 작성하기
+            </button>
+        </section>
+        
+        <!-- 하단 패딩 -->
+        <div class="bottom-padding"></div>
+        
+        <!-- 하단 네비게이션 -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="navigateTo('community')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <circle cx="18.5" cy="10" r="2.5"/>
+                        <circle cx="5.5" cy="10" r="2.5"/>
+                        <path d="M18.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                        <path d="M5.5 12.5c-1.33 0-4 0.67-4 2v1.5h8V14.5c0-1.33-2.67-2-4-2z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">커뮤니티</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('home')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                </div>
+                <div class="nav-label">홈</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('chatbot')">
+                <div class="nav-icon">
+                    <svg width="20" height="20" viewBox="0 0 512 512" fill="currentColor">
+                        <!-- 곰 얼굴 배경 -->
+                        <rect x="100" y="100" width="312" height="312" rx="50" fill="currentColor"/>
+                        <!-- 귀 -->
+                        <circle cx="140" cy="100" r="40" fill="currentColor"/>
+                        <circle cx="370" cy="100" r="40" fill="currentColor"/>
+                        <!-- 눈 -->
+                        <ellipse cx="190" cy="210" rx="20" ry="35" fill="white"/>
+                        <ellipse cx="320" cy="210" rx="20" ry="35" fill="white"/>
+                        <rect x="185" y="195" width="10" height="30" fill="currentColor"/>
+                        <rect x="315" y="195" width="10" height="30" fill="currentColor"/>
+                        <!-- 입 -->
+                        <rect x="190" y="320" width="60" height="40" rx="5" fill="white"/>
+                        <rect x="260" y="320" width="60" height="40" rx="5" fill="white"/>
+                        <line x1="250" y1="320" x2="250" y2="360" stroke="currentColor" stroke-width="10" />
+                    </svg>
+                </div>
+                <div class="nav-label">챗봇</div>
+            </div>
+            
+            <div class="nav-item" onclick="navigateTo('more')">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="2"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <circle cx="19" cy="12" r="2"/>
+                    </svg>
+                </div>
+                <div class="nav-label">더보기</div>
+            </div>
+        </nav>
+        
+        <!-- 게시물 작성 모달 -->
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header-left">
+                        <button class="close-btn" onclick="showExitConfirm()">×</button>
+                        <div class="modal-title">게시물 작성</div>
+                    </div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="photo-preview" id="photoPreview">
+                        <img id="previewImage" class="preview-image" src="" alt="미리보기">
+                        <button class="remove-photo-btn" onclick="removePhoto()">사진 삭제</button>
+                    </div>
+                    
+                    <div class="input-section">
+                        <input type="text" class="title-input" id="postTitle" placeholder="제목을 입력해주세요">
+                        <textarea class="content-input" id="postContent" placeholder="내용을 작성해주세요"></textarea>
+                    </div>
+                    
+                    <div class="modal-bottom">
+                        <div class="rules-section">
+                            <div class="rules-title">소통방 규칙</div>
+                            <ol class="rules-list">
+                                <li>1. 정치, 사회 관련 행위 금지</li>
+                                <li>2. 광고, 홍보, 판매 관련 행위 금지</li>
+                                <li>3. 불법 활동을 유통 금지</li>
+                                <li>4. 욕설 및 타인의 권리 침해, 불쾌감을 주는 행위 금지</li>
+                                <li>5. 명예를 훼손하는 행위 금지</li>
+                                <li>6. 스포일러 금지</li>
+                                <li>7. 공포물 올리거나 협박하는 행위 금지</li>
+                            </ol>
+                            <div class="rules-warning">
+                                이 밖의 자세한 규칙 사항들은 아래 경로 참고<br>
+                                설정 > 규칙 > 게시물 규칙<br><br>
+                                규칙을 어길 시 소통방 활동이 제한될 수 있습니다.
+                            </div>
+                        </div>
+                        
+                        <div class="bottom-actions">
+                            <button class="action-btn" id="photoActionBtn" onclick="selectPhoto()">
+                                <div class="action-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" opacity="0.6"/>
+                                        <circle cx="12" cy="12" r="3" opacity="0.6"/>
+                                    </svg>
+                                </div>
+                                <div class="action-label">사진 업로드</div>
+                            </button>
+                            <button class="action-btn" id="privateBtn" onclick="togglePrivate()">
+                                <div class="action-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6 10V8C6 5.79 7.79 4 10 4H14C16.21 4 18 5.79 18 8V10H19C19.55 10 20 10.45 20 11V20C20 20.55 19.55 21 19 21H5C4.45 21 4 20.55 4 20V11C4 10.45 4.45 10 5 10H6ZM8 8V10H16V8C16 6.9 15.1 6 14 6H10C8.9 6 8 6.9 8 8Z" opacity="0.6"/>
+                                    </svg>
+                                </div>
+                                <div class="action-label">나만보기</div>
+                            </button>
+                        </div>
+                        
+                        <!-- 하단 패딩 (네비게이션 공간 확보) -->
+                        <div style="height: 80px;"></div>
+                    </div>
+                </div>
+                
+                <input type="file" id="photoInput" class="hidden" accept="image/*" onchange="handlePhotoSelect(event)">
+                
+                <!-- 모달 네비게이션 -->
+                <div class="modal-nav">
+                    <div class="modal-nav-item" onclick="showExitConfirm()">
+                        <div class="nav-item-icon">×</div>
+                        <div class="nav-item-label">취소</div>
+                    </div>
+                    <div class="modal-nav-item submit" onclick="submitPost()">
+                        <div class="nav-item-icon">✓</div>
+                        <div class="nav-item-label">완료</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 신고 모달 -->
+        <div id="reportModal" class="report-modal">
+            <div class="report-content">
+                <div class="report-title">답변 신고</div>
+                <div class="report-subtitle">부적절한 답변을 신고하는 이유를 선택해주세요</div>
+                
+                <div class="report-reasons">
+                    <div class="report-reason" data-reason="advertising">광고 및 홍보</div>
+                    <div class="report-reason" data-reason="profanity">욕설 및 비방</div>
+                    <div class="report-reason" data-reason="spam">스팸 또는 도배</div>
+                    <div class="report-reason" data-reason="inappropriate">부적절한 내용</div>
+                    <div class="report-reason" data-reason="misinformation">잘못된 의학정보</div>
+                    <div class="report-reason" data-reason="other">기타</div>
+                </div>
+                
+                <div class="report-buttons">
+                    <button class="report-btn-action report-btn-cancel" onclick="closeReportModal()">취소</button>
+                    <button class="report-btn-action report-btn-submit" onclick="submitReport()">신고하기</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 전체 리스트 모달 -->
+        <div id="fullListModal" class="full-list-modal">
+            <div class="full-list-content">
+                <div class="full-list-header">
+                    <div class="full-list-header-left">
+                        <button class="close-btn" onclick="closeFullListModal()">×</button>
+                        <div class="full-list-title" id="fullListTitle">전체 리스트</div>
+                    </div>
+                </div>
+                
+                <div class="full-list-body" id="fullListBody">
+                    <!-- 전체 리스트 내용이 여기에 동적으로 생성됩니다 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 질문 상세 모달 -->
+        <div id="questionModal" class="question-modal">
+            <div class="question-content">
+                <div class="question-header">
+                    <div class="question-header-left">
+                        <button class="close-btn" onclick="closeQuestionModal()">×</button>
+                        <div class="question-title-text">질문 상세</div>
+                    </div>
+                </div>
+                
+                <div class="question-body" id="questionBody">
+                    <!-- 질문 내용이 여기에 동적으로 생성됩니다 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 나가기 확인 모달 -->
+        <div id="confirmModal" class="confirm-modal">
+            <div class="confirm-content">
+                <div class="confirm-title">잠시만요!</div>
+                <div class="confirm-message">게시물이 저장되지 않고 삭제됩니다</div>
+                <div class="confirm-buttons">
+                    <button class="confirm-btn back" onclick="goBackToPost()">돌아가기</button>
+                    <button class="confirm-btn exit" onclick="exitToMain()">나가기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 게시물 데이터 (확장된 데이터)
+        const postsData = {
+            popular: [
+                { 
+                    id: 1,
+                    title: "유산균 보관 어떻게 해요?", 
+                    content: "유산균을 올바르게 보관하는 방법이 궁금합니다.",
+                    author: "건강한사람",
+                    date: "2024-01-15",
+                    views: 234,
+                    likes: 12,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "유산균은 냉장 보관하시는 것이 가장 좋습니다. 특히 프로바이오틱스의 경우 온도에 민감하므로 2-8도 사이에서 보관하시기 바랍니다.",
+                            author: "김약사",
+                            expertType: "pharmacist",
+                            verified: true,
+                            date: "2024-01-15",
+                            likes: 25,
+                            rating: 4.3,
+                            ratingCount: 12
+                        },
+                        {
+                            id: 2,
+                            content: "저도 냉장고에 보관하고 있어요. 효과가 더 좋은 것 같아요!",
+                            author: "일반사용자1",
+                            expertType: null,
+                            verified: false,
+                            date: "2024-01-16",
+                            likes: 3,
+                            rating: 2.8,
+                            ratingCount: 5
+                        }
+                    ]
+                },
+                { 
+                    id: 2,
+                    title: "오메가3 뇌에 좋아요?", 
+                    content: "오메가3가 정말 뇌 건강에 도움이 되는지 궁금해요.",
+                    author: "궁금이",
+                    date: "2024-01-14",
+                    views: 156,
+                    likes: 8,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "네, 오메가3는 뇌 건강에 매우 도움이 됩니다. DHA는 뇌 세포막의 주요 구성 성분이며, EPA는 항염 작용을 통해 뇌 건강을 보호합니다.",
+                            author: "이내과의사",
+                            expertType: "doctor",
+                            verified: true,
+                            date: "2024-01-14",
+                            likes: 18
+                        }
+                    ]
+                },
+                {
+                    id: 6,
+                    title: "멀티비타민 언제 먹는게 좋나요?",
+                    content: "멀티비타민을 언제 복용하는 것이 가장 효과적인지 궁금합니다.",
+                    author: "건강챙기기",
+                    date: "2024-01-13",
+                    views: 189,
+                    likes: 15,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "멀티비타민은 아침 식후에 복용하시는 것이 가장 좋습니다. 지용성 비타민의 흡수율을 높이기 위해서입니다.",
+                            author: "정약사",
+                            expertType: "pharmacist",
+                            verified: true,
+                            date: "2024-01-13",
+                            likes: 22
+                        }
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "철분제 복용 시 주의사항",
+                    content: "철분제를 처음 복용하는데 주의할 점이 있을까요?",
+                    author: "빈혈걱정",
+                    date: "2024-01-12",
+                    views: 145,
+                    likes: 9,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "철분제는 공복에 복용하면 흡수율이 높지만, 위장장애가 있을 수 있습니다. 처음에는 식후 복용을 권장합니다.",
+                            author: "최의사",
+                            expertType: "doctor",
+                            verified: true,
+                            date: "2024-01-12",
+                            likes: 16
+                        }
+                    ]
+                },
+                {
+                    id: 8,
+                    title: "칼슘 마그네슘 같이 먹어도 되나요?",
+                    content: "칼슘과 마그네슘을 동시에 복용해도 괜찮은지 궁금해요.",
+                    author: "뼈건강",
+                    date: "2024-01-11",
+                    views: 167,
+                    likes: 11,
+                    answers: []
+                }
+            ],
+            new: [
+                { 
+                    id: 3,
+                    title: "함량 높은 게 좋은가요?", 
+                    content: "영양제 함량이 높을수록 효과가 좋은 건가요?",
+                    author: "초보자",
+                    date: "2024-01-16",
+                    views: 89,
+                    likes: 5,
+                    answers: []
+                },
+                { 
+                    id: 4,
+                    title: "피부 좋아지게 하는 영양제", 
+                    content: "피부에 좋은 영양제 추천해주세요!",
+                    author: "예쁘고싶어",
+                    date: "2024-01-16",
+                    views: 67,
+                    likes: 7,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "콜라겐, 비타민C, 비타민E가 피부에 좋습니다. 특히 콜라겐은 저분자 형태로 섭취하시는 것이 흡수율이 높습니다.",
+                            author: "박약사",
+                            expertType: "pharmacist",
+                            verified: true,
+                            date: "2024-01-16",
+                            likes: 12
+                        }
+                    ]
+                },
+                {
+                    id: 9,
+                    title: "프로바이오틱스 추천해주세요",
+                    content: "장 건강을 위한 프로바이오틱스 제품 추천 부탁드려요.",
+                    author: "장건강챙기기",
+                    date: "2024-01-16",
+                    views: 78,
+                    likes: 6,
+                    answers: []
+                },
+                {
+                    id: 10,
+                    title: "비타민D 결핍 증상",
+                    content: "비타민D가 부족하면 어떤 증상이 나타나나요?",
+                    author: "햇빛부족",
+                    date: "2024-01-15",
+                    views: 123,
+                    likes: 8,
+                    answers: [
+                        {
+                            id: 1,
+                            content: "비타민D 결핍 시 피로감, 근육통, 골밀도 감소 등이 나타날 수 있습니다. 혈액검사로 확인해보시길 권합니다.",
+                            author: "한의사",
+                            expertType: "doctor",
+                            verified: true,
+                            date: "2024-01-15",
+                            likes: 14
+                        }
+                    ]
+                },
+                {
+                    id: 11,
+                    title: "글루코사민 효과 있나요?",
+                    content: "관절에 글루코사민이 정말 도움이 될까요?",
+                    author: "관절아픔",
+                    date: "2024-01-15",
+                    views: 134,
+                    likes: 10,
+                    answers: []
+                }
+            ],
+            my: [
+                { 
+                    id: 5,
+                    title: "다이어트 도움되는 영양제", 
+                    content: "다이어트에 도움이 되는 영양제가 있을까요?",
+                    author: "나",
+                    date: "2024-01-15",
+                    views: 45,
+                    likes: 2,
+                    answers: []
+                }
+            ]
+        };
+        
+        // 각 섹션별 표시된 게시글 수 추적
+        const displayedPosts = {
+            popular: 2,
+            new: 2,
+            my: 1
+        };
+        
+        // 전문가 타입 정보
+        const expertTypes = {
+            pharmacist: {
+                name: "약사",
+                color: "#4CAF50",
+                badge: "💊"
+            },
+            doctor: {
+                name: "의사",
+                color: "#2196F3", 
+                badge: "🩺"
+            },
+            nutritionist: {
+                name: "영양사",
+                color: "#FF9800",
+                badge: "🥗"
+            }
+        };
+        
+        // 뒤로가기
+        function goBack() {
+            // 홈 페이지로 이동
+            window.location.href = '#home';
+            // 또는 실제 홈 페이지 URL로 이동하려면:
+            // window.location.href = 'index.html';
+        }
+        
+        // 채팅방 입장
+        function enterChatRoom() {
+            alert('채팅방으로 이동합니다');
+        }
+        
+        // 게시물 보기
+        function viewPost(category, index) {
+            const post = postsData[category][index];
+            showQuestionDetail(post);
+        }
+        
+        // 질문 상세 모달 표시
+        function showQuestionDetail(post) {
+            const modal = document.getElementById('questionModal');
+            const body = document.getElementById('questionBody');
+            
+            // 전문가 답변이 있는지 확인
+            const expertAnswers = post.answers.filter(answer => answer.verified);
+            const hasExpertAnswer = expertAnswers.length > 0;
+            
+            body.innerHTML = `
+                <div class="question-info">
+                    <div class="question-title-main">${post.title}</div>
+                    <div class="question-content-text">${post.content}</div>
+                    <div class="question-meta-info">
+                        <div>
+                            <span class="question-author">${post.author}</span> • ${post.date}
+                        </div>
+                        <div>조회 ${post.views} • 추천 ${post.likes}</div>
+                    </div>
+                </div>
+                
+                <div class="answers-section">
+                    <div class="answers-header">
+                        💬 답변 
+                        <span class="answer-count">${post.answers.length}</span>
+                        ${hasExpertAnswer ? '<span style="color: #4CAF50; font-size: 12px; margin-left: 8px;">✓ 전문가 답변 포함</span>' : ''}
+                    </div>
+                    
+                    ${post.answers.length > 0 ? 
+                        post.answers.map(answer => `
+                            <div class="answer-item">
+                                <div class="answer-header">
+                                    <div class="answer-author-info">
+                                        ${answer.verified ? 
+                                            `<div class="expert-badge ${answer.expertType}">
+                                                ${expertTypes[answer.expertType].badge} ${expertTypes[answer.expertType].name} 인증
+                                            </div>` : 
+                                            `<div class="regular-user">${answer.author}</div>`
+                                        }
+                                        <span style="font-size: 11px; color: #999;">${answer.date}</span>
+                                    </div>
+                                    <button class="report-btn" onclick="openReportModal(${answer.id})" title="신고하기">⋯</button>
+                                </div>
+                                <div class="answer-content">${answer.content}</div>
+                                <div class="rating-section">
+                                    <div class="stars-display">
+                                        ${generateStarsDisplay(answer.rating || 0)}
+                                        <span class="rating-info">${answer.rating ? answer.rating.toFixed(1) : '0.0'} (${answer.ratingCount || 0}명)</span>
+                                    </div>
+                                    <div class="stars-interactive">
+                                        <span class="rate-label">평가:</span>
+                                        ${generateInteractiveStars(answer.id)}
+                                    </div>
+                                </div>
+                                <div class="answer-meta">
+                                    <span>${answer.date}</span>
+                                    <div class="answer-actions">
+                                        <button class="like-btn" onclick="likeAnswer(${answer.id})">
+                                            👍 ${answer.likes}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('') : 
+                        '<div class="no-answers">아직 답변이 없습니다.<br>전문가의 답변을 기다려주세요!</div>'
+                    }
+                </div>
+                
+                <div class="answer-form">
+                    <div class="answer-form-title">답변 작성</div>
+                    <textarea class="answer-textarea" placeholder="도움이 되는 답변을 작성해주세요..."></textarea>
+                    <button class="answer-submit-btn" onclick="submitAnswer()">답변 등록</button>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 질문 상세 모달 닫기
+        function closeQuestionModal() {
+            document.getElementById('questionModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 별점 표시 생성
+        function generateStarsDisplay(rating) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(rating)) {
+                    starsHtml += '<span class="star filled">★</span>';
+                } else if (i - 0.5 <= rating) {
+                    starsHtml += '<span class="star half">★</span>';
+                } else {
+                    starsHtml += '<span class="star">★</span>';
+                }
+            }
+            return starsHtml;
+        }
+        
+        // 인터랙티브 별점 생성
+        function generateInteractiveStars(answerId) {
+            let starsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                starsHtml += `<span class="star" onclick="rateAnswer(${answerId}, ${i})" data-rating="${i}">★</span>`;
+            }
+            return starsHtml;
+        }
+        
+        // 답변 별점 평가
+        function rateAnswer(answerId, rating) {
+            // 해당 답변의 별점 섹션 찾기
+            const ratingSection = event.target.closest('.stars-interactive');
+            const stars = ratingSection.querySelectorAll('.star');
+            
+            // 별점 시각적 업데이트
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('filled');
+                } else {
+                    star.classList.remove('filled');
+                }
+            });
+            
+            alert(`${rating}점으로 평가해주셨습니다! 감사합니다.`);
+            
+            // 실제 구현에서는 서버에 평점 데이터 전송
+            console.log(`답변 ID: ${answerId}, 평점: ${rating}`);
+        }
+        
+        // 신고 관련 변수
+        let currentReportAnswerId = null;
+        let selectedReportReason = null;
+        
+        // 신고 모달 열기
+        function openReportModal(answerId) {
+            currentReportAnswerId = answerId;
+            selectedReportReason = null;
+            
+            // 선택된 사유 초기화
+            document.querySelectorAll('.report-reason').forEach(reason => {
+                reason.classList.remove('selected');
+            });
+            
+            document.getElementById('reportModal').classList.add('show');
+        }
+        
+        // 신고 모달 닫기
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('show');
+            currentReportAnswerId = null;
+            selectedReportReason = null;
+        }
+        
+        // 신고 사유 선택
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.report-reason').forEach(reason => {
+                reason.addEventListener('click', function() {
+                    // 기존 선택 해제
+                    document.querySelectorAll('.report-reason').forEach(r => r.classList.remove('selected'));
+                    // 새로운 선택
+                    this.classList.add('selected');
+                    selectedReportReason = this.dataset.reason;
+                });
+            });
+        });
+        
+        // 신고 제출
+        function submitReport() {
+            if (!selectedReportReason) {
+                alert('신고 사유를 선택해주세요.');
+                return;
+            }
+            
+            const reasonNames = {
+                advertising: '광고 및 홍보',
+                profanity: '욕설 및 비방',
+                spam: '스팸 또는 도배',
+                inappropriate: '부적절한 내용',
+                misinformation: '잘못된 의학정보',
+                other: '기타'
+            };
+            
+            // 실제 구현에서는 서버에 신고 데이터 전송
+            console.log(`답변 ID: ${currentReportAnswerId}, 신고 사유: ${selectedReportReason}`);
+            
+            alert(`신고가 접수되었습니다.\n사유: ${reasonNames[selectedReportReason]}\n\n관리자가 검토 후 적절한 조치를 취하겠습니다.`);
+            closeReportModal();
+        }
+        
+        // 답변 제출
+        function submitAnswer() {
+            const textarea = document.querySelector('.answer-textarea');
+            const content = textarea.value.trim();
+            
+            if (!content) {
+                alert('답변 내용을 입력해주세요.');
+                return;
+            }
+            
+            alert('답변이 등록되었습니다!\n전문가 인증을 받으시면 답변에 전문가 배지가 표시됩니다.');
+            textarea.value = '';
+        }
+        
+        // '+' 버튼 클릭 시 전체 리스트 페이지로 이동
+        function showFullList(category) {
+            const modal = document.getElementById('fullListModal');
+            const title = document.getElementById('fullListTitle');
+            const body = document.getElementById('fullListBody');
+            
+            // 카테고리별 타이틀 설정
+            const categoryTitles = {
+                popular: '🔥 인기 게시물 전체 보기',
+                new: '📝 새로운 게시물 전체 보기'
+            };
+            
+            title.textContent = categoryTitles[category];
+            
+            // 해당 카테고리의 모든 게시물 표시
+            const posts = postsData[category];
+            
+            body.innerHTML = `
+                <div class="full-list-section">
+                    <div class="full-list-section-title">
+                        ${category === 'popular' ? '🔥 인기 게시물' : '📝 새로운 게시물'}
+                        <span style="color: #999; font-size: 14px; font-weight: normal;">(총 ${posts.length}개)</span>
+                    </div>
+                    ${posts.map((post, index) => {
+                        // 전문가 답변 여부 확인
+                        const hasExpertAnswer = post.answers.some(answer => answer.verified);
+                        let expertIndicator = '';
+                        
+                        if (hasExpertAnswer) {
+                            const expertAnswer = post.answers.find(answer => answer.verified);
+                            const expertInfo = expertTypes[expertAnswer.expertType];
+                            expertIndicator = `
+                                <div class="expert-indicator">
+                                    ${expertInfo.badge} ${expertInfo.name} 답변완료
+                                </div>
+                            `;
+                        } else {
+                            expertIndicator = '<div style="color: #999; font-size: 10px;">답변대기</div>';
+                        }
+                        
+                        return `
+                            <div class="full-post-item" onclick="viewPostFromFullList('${category}', ${index})">
+                                <div class="post-content">${post.title}</div>
+                                <div class="post-meta">
+                                    <div class="post-stats">
+                                        <span>조회 ${post.views}</span>
+                                        <span>추천 ${post.likes}</span>
+                                    </div>
+                                    ${expertIndicator}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 전체 리스트 모달 닫기
+        function closeFullListModal() {
+            document.getElementById('fullListModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 전체 리스트에서 게시물 보기
+        function viewPostFromFullList(category, index) {
+            const post = postsData[category][index];
+            closeFullListModal(); // 전체 리스트 모달 닫기
+            setTimeout(() => {
+                showQuestionDetail(post); // 질문 상세 모달 열기
+            }, 300);
+        }
+        
+        // 게시물 작성 모달 열기 (하단 버튼용)
+        function openPostModal() {
+            const modal = document.getElementById('postModal');
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+            // 사진 미리보기 초기화
+            document.getElementById('photoPreview').classList.remove('show');
+            document.getElementById('previewImage').src = '';
+            // 나만보기 상태 초기화
+            document.getElementById('privateBtn').classList.remove('active');
+            modal.classList.add('show');
+            // 모달이 열릴 때 스크롤 방지
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 나가기 확인 모달 표시
+        function showExitConfirm() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            
+            // 입력된 내용이 있을 때만 확인 모달 표시
+            if (title || content) {
+                document.getElementById('confirmModal').classList.add('show');
+            } else {
+                // 입력된 내용이 없으면 바로 닫기
+                closePostModal();
+            }
+        }
+        
+        // 게시물 작성으로 돌아가기
+        function goBackToPost() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+        
+        // 커뮤니티로 나가기
+        function exitToMain() {
+            document.getElementById('confirmModal').classList.remove('show');
+            closePostModal();
+        }
+        
+        // 게시물 작성 모달 닫기
+        function closePostModal() {
+            document.getElementById('postModal').classList.remove('show');
+            // 모달이 닫힐 때 스크롤 복원
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 사진 선택 버튼 클릭
+        function selectPhoto() {
+            document.getElementById('photoInput').click();
+        }
+        
+        // 사진 선택 처리
+        function handlePhotoSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('photoPreview').classList.add('show');
+                    // 사진 업로드 버튼 활성화 표시
+                    document.getElementById('photoActionBtn').classList.add('active');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // 사진 삭제
+        function removePhoto() {
+            document.getElementById('photoPreview').classList.remove('show');
+            document.getElementById('previewImage').src = '';
+            document.getElementById('photoInput').value = '';
+            // 사진 업로드 버튼 비활성화 표시
+            document.getElementById('photoActionBtn').classList.remove('active');
+        }
+        
+        // 나만보기 토글
+        function togglePrivate() {
+            const privateBtn = document.getElementById('privateBtn');
+            privateBtn.classList.toggle('active');
+        }
+        
+        // 게시물 제출
+        function submitPost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const hasPhoto = document.getElementById('previewImage').src !== '';
+            const isPrivate = document.getElementById('privateBtn').classList.contains('active');
+            
+            if (!title || !content) {
+                alert('제목과 내용을 모두 입력해주세요.');
+                return;
+            }
+            
+            let message = '게시물이 성공적으로 작성되었습니다!';
+            if (hasPhoto && isPrivate) {
+                message = '사진과 함께 나만보기 게시물이 작성되었습니다!';
+            } else if (hasPhoto) {
+                message = '사진과 함께 게시물이 성공적으로 작성되었습니다!';
+            } else if (isPrivate) {
+                message = '나만보기 게시물이 성공적으로 작성되었습니다!';
+            }
+            
+            alert(message);
+            closePostModal();
+        }
+        
+        // 네비게이션
+        function navigateTo(page) {
+            // 기존 활성화 제거
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 클릭된 아이템 활성화
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // 페이지별 동작
+            switch(page) {  
+                case 'community':
+                    // 현재 페이지이므로 아무 동작 안함
+                    break;
+                case 'home':
+                    // 홈 페이지로 이동
+                    window.location.href = '#home';
+                    // 또는 실제 홈 페이지 URL로 이동하려면:
+                    // window.location.href = 'index.html';
+                    break;
+                case 'chatbot':
+                    alert('곰돌이 챗봇 페이지로 이동합니다! 🐻');
+                    break;
+                case 'more':
+                    alert('더보기 페이지로 이동합니다');
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
